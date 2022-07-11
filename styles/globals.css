@@ -1,6 +1,7 @@
 @tailwind basse;
 @tailwind components;
 @tailwind utilities;
+
 html,
 body {
   padding: 0;

@@ -4,7 +4,7 @@ import Link from 'next/link';
 import { Store } from '../utils/Store';
 
 export default function Layout({ title, children }) {
-  const { state, dipatch } = useContext(Store);
+  const { state, dispatch } = useContext(Store);
   const { cart } = state;
   return (
     <>

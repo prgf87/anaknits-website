@@ -5,8 +5,9 @@ import Layout from '../components/Layout';
 import { Store } from '../utils/Store';
 import { XCircleIcon } from '@heroicons/react/outline';
 import { useRouter } from 'next/router';
+import dynamic from 'next/dynamic';
 
-export default function CartScreen() {
+function CartScreen() {
   const router = useRouter();
   const { state, dispatch } = useContext(Store);
   const {
@@ -42,7 +43,7 @@ export default function CartScreen() {
               </thead>
               <tbody>
                 {cartItems.map((item) => (
-                  <tr key={item.slug} classNameborder-b>
+                  <tr key={item.slug} className="border-b">
                     <td>
                       <Link href={`/product/$(item.slug)`}>
                         <a className="flex items-center">
@@ -105,3 +106,5 @@ export default function CartScreen() {
     </Layout>
   );
 }
+
+export default dynamic(() => Promise.resolve(CartScreen), { ssr: false });

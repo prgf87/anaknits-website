@@ -57,7 +57,7 @@ export default function LoginScreen() {
           {errors.password && (
             <div className="text-red-500">{errors.password.message}</div>
           )}
-          <div className="mb-4 pt-8">
+          <div className="mb-4 pt-6">
             <button className="primary-button">Login</button>
           </div>
           <div className="mb-4">

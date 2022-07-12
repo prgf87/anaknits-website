@@ -42,7 +42,7 @@ export default function CartScreen() {
               </thead>
               <tbody>
                 {cartItems.map((item) => (
-                  <tr key={item.slug} classNameborder-b>
+                  <tr key={item.slug} className="border-b">
                     <td>
                       <Link href={`/product/$(item.slug)`}>
                         <a className="flex items-center">

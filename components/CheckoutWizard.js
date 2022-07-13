@@ -14,7 +14,6 @@ export default function CheckoutWizard({ activeStep = 0 }) {
                 : 'border-gray-400 text-gray-400'
             }
             
-            
             `}
           >
             {step}

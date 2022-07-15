@@ -144,7 +144,7 @@ export default function PlaceOrderScreen() {
             </div>
           </div>
           <div className="card p-5">
-            <h2 classname="mb-2 flex justify-between">Order Summary</h2>
+            <h2 className="mb-2 flex justify-between">Order Summary</h2>
             <ul>
               <li>
                 <div className="mb-2 flex justify-between">

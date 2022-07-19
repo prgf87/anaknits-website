@@ -1,16 +1,15 @@
-import React, { useContext, useState } from 'react';
-import Layout from '../components/Layout';
-import CheckoutWizard from '../components/CheckoutWizard';
-import { Store } from '../utils/Store';
-import Link from 'next/link';
 import Image from 'next/image';
-import { Router } from 'next/router';
+import Link from 'next/link';
 import { useRouter } from 'next/router';
-import { useEffect } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
+import CheckoutWizard from '../components/CheckoutWizard';
+import Layout from '../components/Layout';
+import { Store } from '../utils/Store';
 import { getError } from '../utils/error';
+import { toast } from 'react-toastify';
 import axios from 'axios';
 import Cookies from 'js-cookie';
-import { toast } from 'react-toastify';
+
 
 export default function PlaceOrderScreen() {
   const { state, dispatch } = useContext(Store);
@@ -58,7 +57,7 @@ export default function PlaceOrderScreen() {
         })
       );
 
-      router.push(`/order/${data._id}`);
+    router.push(`/order/${data._id}`);
     } catch (err) {
       setLoading(false);
       toast.error(getError(err));
@@ -71,7 +70,7 @@ export default function PlaceOrderScreen() {
       <h1 className="mb-4 text-xl">Place Order</h1>
       {cartItems.length === 0 ? (
         <div>
-          Cart is empty. <Link href="/">Go shopping</Link>
+          Your cart is empty. <Link href="/">Go back to shopping.</Link>
         </div>
       ) : (
         <div className="grid md:grid-cols-4 md:gap-5">
@@ -100,9 +99,9 @@ export default function PlaceOrderScreen() {
                 <thead className="border-b">
                   <tr>
                     <th className="px-5 text-left">Item</th>
-                    <th className="px-5 text-left">Quanity</th>
-                    <th className="px-5 text-left">Price</th>
-                    <th className="px-5 text-left">Subtotal</th>
+                    <th className="px-5 text-right">Quantity</th>
+                    <th className="px-5 text-right">Price</th>
+                    <th className="p-5">Action</th>
                   </tr>
                 </thead>
                 <tbody>
@@ -136,45 +135,43 @@ export default function PlaceOrderScreen() {
               </div>
             </div>
           </div>
-          <div>
-            <div className="card p-5">
-              <h2 className="mb-2 text-lg">Order Summary</h2>
-              <ul>
-                <li>
-                  <div className="mb-2 flex justify-between">
-                    <div>Items</div>
-                    <div>£{itemsPrice}</div>
-                  </div>
-                </li>
-                <li>
-                  <div className="mb-2 flex justify-between">
-                    <div>Tax</div>
-                    <div>£{taxPrice}</div>
-                  </div>
-                </li>
-                <li>
-                  <div className="mb-2 flex justify-between">
-                    <div>Shipping</div>
-                    <div>£{shippingPrice}</div>
-                  </div>
-                </li>
-                <li>
-                  <div className="mb-2 flex justify-between">
-                    <div>Total</div>
-                    <div>£{totalPrice}</div>
-                  </div>
-                </li>
-                <li>
-                  <button
-                    disabled={loading}
-                    onClick={placeOrderHandler}
-                    className="primary-button w-full"
-                  >
-                    {loading ? 'Loading...' : 'Place Order'}
-                  </button>
-                </li>
-              </ul>
-            </div>
+          <div className="card p-5">
+            <h2 className="mb-2 flex justify-between">Order Summary</h2>
+            <ul>
+              <li>
+                <div className="mb-2 flex justify-between">
+                  <div>Items</div>
+                  <div>£{itemsPrice}</div>
+                </div>
+              </li>
+              <li>
+                <div className="mb-2 flex justify-between">
+                  <div>Tax</div>
+                  <div>£{taxPrice}</div>
+                </div>
+              </li>
+              <li>
+                <div className="mb-2 flex justify-between">
+                  <div>Shipping</div>
+                  <div>£{shippingPrice}</div>
+                </div>
+              </li>
+              <li>
+                <div className="mb-2 flex justify-between">
+                  <div>Total</div>
+                  <div>£{totalPrice}</div>
+                </div>
+              </li>
+              <li>
+                <button
+                  disabled={loading}
+                  onClick={placeOrderHandler}
+                  className="primary-button w-full"
+                >
+                  {loading ? 'Loading...' : 'Place Your Order'}
+                </button>
+              </li>
+            </ul>
           </div>
         </div>
       )}

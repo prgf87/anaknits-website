@@ -34,14 +34,12 @@ function OrderScreen() {
   const { query } = useRouter();
   const orderId = query.id;
 
-  const [
-    { loading, error, order, successPay, loadingPay },
-    dispatch,
-  ] = useReducer(reducer, {
-    loading: true,
-    order: {},
-    error: '',
-  });
+  const [{ loading, error, order, successPay, loadingPay }, dispatch] =
+    useReducer(reducer, {
+      loading: true,
+      order: {},
+      error: '',
+    });
   useEffect(() => {
     const fetchOrder = async () => {
       try {
@@ -87,37 +85,37 @@ function OrderScreen() {
   } = order;
 
   function createOrder(data, actions) {
-    return actions.order.create({
-      purchase_units: [
-        {
-          amount: { value: totalPrice },
-        },
-      ],
-    });
-    .then((orderID) => {
-      return orderID;
-    });
+    return actions.order
+      .create({
+        purchase_units: [
+          {
+            amount: { value: totalPrice },
+          },
+        ],
+      })
+      .then((orderID) => {
+        return orderID;
+      });
   }
   function onApprove(data, actions) {
     return actions.order.capture().then(async function (details) {
       try {
-        dispatch ({ type: 'PAY_REQUEST' });
+        dispatch({ type: 'PAY_REQUEST' });
         const { data } = await axios.put(
-        `/api/order/${order._id}/pay`,
-        details
-      );
-      dispatch({ type: 'PAY_SUCCESS', payload: data})
-          toast.success('Your order has been paid successfully!')
-      
-    } catch (err) {
-      dispatch({ type: 'PAY_FAIL', payload:getError(err) });
-      toast.error(getError(err));
-    }
-  });
-}
-function onError(err) {
-  toast.error(getError(err));
-}
+          `/api/orders${order._id}/pay`,
+          details
+        );
+        dispatch({ type: 'PAY_SUCCESS', payload: data });
+        toast.success('Your order has been paid successfully!');
+      } catch (err) {
+        dispatch({ type: 'PAY_FAIL', payload: getError(err) });
+        toast.error(getError(err));
+      }
+    });
+  }
+  function onError(err) {
+    toast.error(getError(err));
+  }
   return (
     <Layout title={`Order ${orderId}`}>
       <h1 className="mb-4 text-xl">{`Order ${orderId}`}</h1>

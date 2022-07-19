@@ -10,6 +10,7 @@ import { toast } from 'react-toastify';
 import axios from 'axios';
 import Cookies from 'js-cookie';
 
+
 export default function PlaceOrderScreen() {
   const { state, dispatch } = useContext(Store);
   const { cart } = state;
@@ -20,19 +21,9 @@ export default function PlaceOrderScreen() {
   const itemsPrice = round2(
     cartItems.reduce((a, c) => a + c.quantity * c.price, 0)
   );
-  const shippingPrice =
-    itemsPrice > 100 ? (
-      15
-    ) : (
-      <a
-        href="https://www.theupsstore.com/tools/estimate-shipping-cost"
-        target="_blank"
-        rel="external"
-      >
-        UPS
-      </a>
-    );
-  const taxPrice = round2(itemsPrice * 0.2);
+
+  const shippingPrice = itemsPrice > 200 ? 0 : 15;
+  const taxPrice = round2(itemsPrice * 0.15);
   const totalPrice = round2(itemsPrice + shippingPrice + taxPrice);
 
   const router = useRouter();
@@ -65,7 +56,8 @@ export default function PlaceOrderScreen() {
           cartItems: [],
         })
       );
-      router.push(`/order/${data._id}`);
+
+    router.push(`/order/${data._id}`);
     } catch (err) {
       setLoading(false);
       toast.error(getError(err));

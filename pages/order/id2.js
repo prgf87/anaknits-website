@@ -64,7 +64,7 @@ function OrderScreen() {
           type: 'resetOptions',
           value: {
             'client-id': clientId,
-            currency: 'GBP',
+            currency: 'USD',
           },
         });
         paypalDispatch({ type: 'setLoadingStatus', value: 'pending' });
@@ -109,7 +109,7 @@ function OrderScreen() {
           details
         );
         dispatch({ type: 'PAY_SUCCESS', payload: data });
-        toast.success('Your order has been paid successfully!');
+        toast.success('Order is paid successully');
       } catch (err) {
         dispatch({ type: 'PAY_FAIL', payload: getError(err) });
         toast.error(getError(err));
@@ -160,8 +160,8 @@ function OrderScreen() {
                 <thead className="border-b">
                   <tr>
                     <th className="px-5 text-left">Item</th>
-                    <th className="p-5 text-right">Quantity</th>
-                    <th className="p-5 text-right">Price</th>
+                    <th className="    p-5 text-right">Quantity</th>
+                    <th className="  p-5 text-right">Price</th>
                     <th className="p-5 text-right">Subtotal</th>
                   </tr>
                 </thead>
@@ -183,9 +183,9 @@ function OrderScreen() {
                         </Link>
                       </td>
                       <td className=" p-5 text-right">{item.quantity}</td>
-                      <td className="p-5 text-right">£{item.price}</td>
+                      <td className="p-5 text-right">${item.price}</td>
                       <td className="p-5 text-right">
-                        £{item.quantity * item.price}
+                        ${item.quantity * item.price}
                       </td>
                     </tr>
                   ))}
@@ -200,25 +200,25 @@ function OrderScreen() {
                 <li>
                   <div className="mb-2 flex justify-between">
                     <div>Items</div>
-                    <div>£{itemsPrice}</div>
+                    <div>${itemsPrice}</div>
                   </div>
                 </li>{' '}
                 <li>
                   <div className="mb-2 flex justify-between">
                     <div>Tax</div>
-                    <div>£{taxPrice}</div>
+                    <div>${taxPrice}</div>
                   </div>
                 </li>
                 <li>
                   <div className="mb-2 flex justify-between">
                     <div>Shipping</div>
-                    <div>£{shippingPrice}</div>
+                    <div>${shippingPrice}</div>
                   </div>
                 </li>
                 <li>
                   <div className="mb-2 flex justify-between">
                     <div>Total</div>
-                    <div>£{totalPrice}</div>
+                    <div>${totalPrice}</div>
                   </div>
                 </li>
                 {!isPaid && (

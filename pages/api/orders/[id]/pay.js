@@ -5,7 +5,7 @@ import db from '../../../../utils/db';
 const handler = async (req, res) => {
   const session = await getSession({ req });
   if (!session) {
-    return res.status(401).send('Error: signin required');
+    return res.status(401).send('Error: Sign-in required');
   }
 
   await db.connect();
@@ -23,7 +23,10 @@ const handler = async (req, res) => {
     };
     const paidOrder = await order.save();
     await db.disconnect();
-    res.send({ message: 'order has been paid successfully', order: paidOrder });
+    res.send({
+      message: 'Your order has been paid successfully',
+      order: paidOrder,
+    });
   } else {
     await db.disconnect();
     res.status(404).send({ message: 'Error: order is not found' });

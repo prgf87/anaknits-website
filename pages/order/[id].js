@@ -194,7 +194,7 @@ function OrderScreen() {
             </div>
           </div>
           <div>
-            <div className="card  p-5">
+            <div className="card p-5">
               <h2 className="mb-2 text-lg">Order Summary</h2>
               <ul>
                 <li>
@@ -226,7 +226,7 @@ function OrderScreen() {
                     {isPending ? (
                       <div>Loading...</div>
                     ) : (
-                      <div className="w-full">
+                      <div className="w-auto">
                         <PayPalButtons
                           createOrder={createOrder}
                           onApprove={onApprove}

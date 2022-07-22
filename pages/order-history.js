@@ -16,11 +16,10 @@ function reducer(state, action) {
       return state;
   }
 }
-
 function OrderHistoryScreen() {
   const [{ loading, error, orders }, dispatch] = useReducer(reducer, {
     loading: true,
-    orders: {},
+    orders: [],
     error: '',
   });
 
@@ -64,16 +63,9 @@ function OrderHistoryScreen() {
                   <td className="p-5">{order.createdAt.substring(0, 10)}</td>
                   <td className="p-5">£{order.totalPrice}</td>
                   <td className="p-5">
-                    £
                     {order.isPaid
                       ? `${order.paidAt.substring(0, 10)}`
                       : 'Not paid'}
-                  </td>
-                  <td className="p-5">
-                    £
-                    {order.isDelivered
-                      ? `${order.deliveredAt.substring(0, 10)}`
-                      : 'Not delivered'}
                   </td>
                   <td className="p-5">
                     {order.isDelivered

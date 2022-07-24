@@ -6,8 +6,8 @@ import db from '../../../utils/db';
 
 const handler = async (req, res) => {
   const session = await getSession({ req });
-  if (!session || (session && !session.user.isAdmin)) {
-    return res.status(401).send('Sign-in is Required');
+  if (!session || !session.user.isAdmin) {
+    return res.status(401).send('Error: Admin sign-in is Required');
   }
 
   await db.connect();

@@ -17,7 +17,6 @@ function reducer(state, action) {
       return { ...state, loading: false, order: action.payload, error: '' };
     case 'FETCH_FAIL':
       return { ...state, loading: false, error: action.payload };
-
     case 'PAY_REQUEST':
       return { ...state, loadingPay: true };
     case 'PAY_SUCCESS':
@@ -38,7 +37,6 @@ function reducer(state, action) {
         ...state,
         loadingDeliver: false,
         successDeliver: false,
-        errorDeliver: '',
       };
 
     default:
@@ -69,7 +67,6 @@ function OrderScreen() {
     order: {},
     error: '',
   });
-
   useEffect(() => {
     const fetchOrder = async () => {
       try {

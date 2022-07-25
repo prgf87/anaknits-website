@@ -98,7 +98,7 @@ function AdminDashboardScreen() {
             </li>
           </ul>
         </div>
-        <div className="md:col-span-3">
+        <div className="lg:col-span-3 md:col-span-4">
           <h1 className="mb-4 text-xl">Admin Dashboard</h1>
           {loading ? (
             <div>Loading content...</div>

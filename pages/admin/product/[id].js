@@ -89,7 +89,7 @@ export default function AdminProductEditScreen() {
 
       dispatch({ type: 'UPLOAD_SUCCESS' });
       setValue(imageField, data.secure_url);
-      toast.success('Your file has been uplpoaded successfully!');
+      toast.success('Your file has been uploaded successfully!');
     } catch (err) {
       dispatch({ type: 'UPLOAD_FAIL', payload: getError(err) });
       toast.error(getError(err));

@@ -57,7 +57,7 @@ export default function AdminProductScreen() {
             </li>
           </ul>
         </div>
-        <div className="overflow-x-auto md:col-span-3">
+        <div className="overflow-x-auto lg:col-span-3 md:col-span-4">
           <h1 className="mb-4 text-xl">Products</h1>
           {loading ? (
             <div>Loading content....</div>
@@ -87,12 +87,14 @@ export default function AdminProductScreen() {
                       <td className="p-5">{product.countInStock}</td>
                       <td className="p-5">{product.rating}</td>
 
-                      <td className="p-5">
+                      <td className="p-5 flex">
                         <Link href={`/admin/product/${product._id}`}>
-                          <button className="primary-button w-1/3">Edit</button>
+                          <button className="primary-button w-auto">
+                            Edit
+                          </button>
                         </Link>
                         &nbsp;
-                        <button className="secondary-button w-1/3">
+                        <button className="secondary-button w-auto">
                           Delete
                         </button>
                       </td>

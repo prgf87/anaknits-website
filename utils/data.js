@@ -9,7 +9,7 @@ const data = {
       isAdmin: true,
     },
     {
-      name: 'Pedro',
+      name: 'Pedro Ferreira',
       email: 'prgf2011@gmail.com',
       password: bcrypt.hashSync('SuperStrongPa55Word'),
       isAdmin: true,

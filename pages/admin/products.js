@@ -29,7 +29,7 @@ function reducer(state, action) {
     case 'DELETE_RESET':
       return { ...state, loadingDelete: false, successDelete: false };
     default:
-      state;
+      return state;
   }
 }
 
@@ -93,7 +93,7 @@ export default function AdminProductsScreen() {
   };
 
   return (
-    <Layout title="Admin Products">
+    <Layout title="Admin Dashboard - Products">
       <div className="grid md:grid-cols-4 md:gap-5">
         <div>
           <ul>

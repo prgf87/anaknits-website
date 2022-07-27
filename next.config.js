@@ -15,10 +15,16 @@ module.exports = {
         source: '/api/:path*',
         headers: [
           { key: 'Access-Control-Allow-Credentials', value: 'true' },
-          { key: 'Access-Control-Allow-Origin', value: 'anaknits.com' },
+          {
+            key: 'Access-Control-Allow-Origin',
+            value: [
+              'https://anaknits.com',
+              'https://8xuuc.mongodb.net/anaknits-website',
+            ],
+          },
           {
             key: 'Access-Control-Allow-Methods',
-            value: 'GET',
+            value: 'GET,OPTIONS,PATCH,DELETE,POST,PUT',
           },
           {
             key: 'Access-Control-Allow-Headers',

@@ -227,11 +227,11 @@ export default function AdminUserEditScreen() {
                 <label htmlFor="isAdmin">Administrator</label>
                 <br></br>
                 <input
-                  type="chekbox"
+                  type="checkbox"
                   id="isAdmin"
                   {...register('isAdmin', { value: true })}
                 />
-                <label for="isAdminTrue">True</label>
+                <label htmlFor="isAdminTrue">True</label>
                 &nbsp;
                 {/* <input
                   type="radio"

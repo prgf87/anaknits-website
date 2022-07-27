@@ -1,4 +1,4 @@
 {
-  "env": { "broswer": true, "node": true, "es6": true },
+  "env": { "browser": true, "node": true, "es6": true },
   "extends": ["eslint:recommended", "next/core-web-vitals"]
 }

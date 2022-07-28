@@ -10,7 +10,6 @@ import { toast } from 'react-toastify';
 import axios from 'axios';
 import Cookies from 'js-cookie';
 
-
 export default function PlaceOrderScreen() {
   const { state, dispatch } = useContext(Store);
   const { cart } = state;
@@ -57,7 +56,7 @@ export default function PlaceOrderScreen() {
         })
       );
 
-    router.push(`/order/${data._id}`);
+      router.push(`/order/${data._id}`);
     } catch (err) {
       setLoading(false);
       toast.error(getError(err));

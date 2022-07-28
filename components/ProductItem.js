@@ -1,15 +1,19 @@
 /* eslint-disable @next/next/no-img-element */
 import React from 'react';
 import Link from 'next/link';
+import Image from 'next/image';
 
 export default function ProductItem({ product, addToCartHandler }) {
   return (
     <div className="card">
       <Link href={`/product/${product.slug}`}>
         <a>
-          <img
+          <Image
             src={product.image}
             alt={product.name}
+            width={320}
+            height={640}
+            layout={'responsive'}
             className="rounded shadow object-cover"
           />
         </a>

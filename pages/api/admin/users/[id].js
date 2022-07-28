@@ -1,19 +1,19 @@
 import { getSession } from 'next-auth/react';
-import User from '../../../../../models/User';
-import db from '../../../../../utils/db';
+import User from '../../../../models/User';
+import db from '../../../../utils/db';
 
 const handler = async (req, res) => {
   const session = await getSession({ req });
   if (!session || (session && !session.user.isAdmin)) {
     return res.status(401).send('Error: Admin sign-in is required');
   }
-  const { user } = session;
+  // const { user } = session;
   if (req.method === 'GET') {
-    return getHandler(req, res, user);
+    return getHandler(req, res);
   } else if (req.method === 'PUT') {
-    return putHandler(req, res, user);
+    return putHandler(req, res);
   } else if (req.method === 'DELETE') {
-    return deleteHandler(req, res, user);
+    return deleteHandler(req, res);
   } else {
     return res.status(400).send({ message: 'Method not allowed' });
   }
@@ -32,7 +32,7 @@ const putHandler = async (req, res) => {
   if (user) {
     user.name = req.body.name;
     user.email = req.body.email;
-    user.password = req.body.password;
+    // user.password = req.body.password;
     user.isAdmin = req.body.isAdmin;
     await user.save();
     await db.disconnect();

@@ -1,6 +1,5 @@
 import axios from 'axios';
 import Link from 'next/link';
-import { useRouter } from 'next/router';
 import React, { useEffect, useReducer } from 'react';
 import { toast } from 'react-toastify';
 import Layout from '../../components/Layout';
@@ -14,12 +13,7 @@ function reducer(state, action) {
       return { ...state, loading: false, users: action.payload, error: '' };
     case 'FETCH_FAIL':
       return { ...state, loading: false, error: action.payload };
-    case 'CREATE_REQUEST':
-      return { ...state, loadingCreate: true };
-    case 'CREATE_SUCCESS':
-      return { ...state, loadingCreate: false };
-    case 'CREATE_FAIL':
-      return { ...state, loadingCreate: false };
+
     case 'DELETE_REQUEST':
       return { ...state, loadingDelete: true };
     case 'DELETE_SUCCESS':
@@ -34,31 +28,12 @@ function reducer(state, action) {
 }
 
 function AdminUsersScreen() {
-  const router = useRouter();
-  const [
-    { loading, error, users, loadingCreate, successDelete, loadingDelete },
-    dispatch,
-  ] = useReducer(reducer, {
-    loading: true,
-    users: [],
-    error: '',
-  });
-
-  const createHandler = async () => {
-    if (!window.confirm('Are you sure?')) {
-      return;
-    }
-    try {
-      dispatch({ type: 'CREATE_REQUEST' });
-      const { data } = await axios.post(`/api/admin/users`);
-      dispatch({ type: 'CREATE_SUCCESS' });
-      toast.success('Your new user has been created successfully!');
-      router.push(`/admin/user/${data.user._id}`);
-    } catch (err) {
-      dispatch({ type: 'CREATE_FAIL' });
-      toast.error(getError(err));
-    }
-  };
+  const [{ loading, error, users, successDelete, loadingDelete }, dispatch] =
+    useReducer(reducer, {
+      loading: true,
+      users: [],
+      error: '',
+    });
 
   useEffect(() => {
     const fetchData = async () => {
@@ -114,17 +89,8 @@ function AdminUsersScreen() {
           </ul>
         </div>
         <div className="overflow-x-auto md:col-span-3">
-          <div className="flex justify-between">
-            <h1 className="mb-4 text-xl">Users</h1>
-            {loadingDelete && <div>Deleting user...</div>}
-            <button
-              disabled={loadingCreate}
-              onClick={createHandler}
-              className="primary-button"
-            >
-              {loadingCreate ? 'Loading' : 'Create'}
-            </button>
-          </div>
+          <h1 className="mb-4 text-xl">Users</h1>
+          {loadingDelete && <div>Deleting user...</div>}
           {loading ? (
             <div>Loading content...</div>
           ) : error ? (
@@ -150,7 +116,10 @@ function AdminUsersScreen() {
                       <td className="p-5">{user.isAdmin ? 'Yes' : 'No'}</td>
                       <td className="p-5">
                         <Link href={`/admin/user/${user._id}`}>
-                          <button className="primary-button w-auto">
+                          <button
+                            type="button"
+                            className="primary-button w-auto"
+                          >
                             Edit
                           </button>
                         </Link>

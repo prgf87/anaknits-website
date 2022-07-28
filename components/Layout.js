@@ -45,7 +45,11 @@ function Layout({ title, children }) {
         <header>
           <nav className="flex h-50 item-center px-4 justify-between shawdow-md pt-4">
             <div className="w-auto h-auto mx-auto">
-              <Image src={logo} alt={'/'} width={600} height={200} />
+              <Link href="/">
+                <a>
+                  <Image src={logo} alt={'/'} width={600} height={200} />
+                </a>
+              </Link>
             </div>
             <div>
               <Link href="/cart">
@@ -135,7 +139,7 @@ function Layout({ title, children }) {
             </ul>
           </div>
         </header>
-        <main className="container m-auto mt-4 px-4">{children}</main>
+        <main className="container m-auto mt-4 px-20">{children}</main>
         <footer className="h-40">
           <div className="p-10">
             <div className="max-w-7xl mx-auto">

@@ -1,5 +1,6 @@
 import axios from 'axios';
 import { signIn, useSession } from 'next-auth/react';
+import Link from 'next/link';
 import React, { useEffect } from 'react';
 import { useForm } from 'react-hook-form';
 import { toast } from 'react-toastify';
@@ -128,8 +129,13 @@ export default function ProfileScreen() {
             errors.confirmPassword.type === 'validate' && (
               <div className="text-red-500">Passwords do not match!</div>
             )}
-          <div className="mb-4 pt-6">
-            <button className="primary-button">Update Profile</button>
+          <div>
+            <div className="mb-4 pt-6">
+              <button className="primary-button">Update Profile</button>
+            </div>
+            <Link href="/" className="mb-4 pt-6">
+              <button className="thirdary-button">Back to Home</button>
+            </Link>
           </div>
         </div>
       </form>

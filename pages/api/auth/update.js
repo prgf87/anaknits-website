@@ -9,7 +9,7 @@ async function handler(req, res) {
   }
   const session = await getSession({ req });
   if (!session) {
-    return res.status(401).send('Error: Sign-in required');
+    return res.status(401).send({ message: 'Sign-in is required' });
   }
   const { user } = session;
 

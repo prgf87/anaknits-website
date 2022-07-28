@@ -38,7 +38,6 @@ export default function AdminUserEditScreen() {
     handleSubmit,
     formState: { errors },
     setValue,
-    getValues,
   } = useForm();
 
   useEffect(() => {
@@ -49,7 +48,6 @@ export default function AdminUserEditScreen() {
         dispatch({ type: 'FETCH_SUCCESS' });
         setValue('name', data.name);
         setValue('email', data.email);
-        setValue('password', data.password);
         setValue('isAdmin', data.isAdmin);
       } catch (err) {
         dispatch({ type: 'FETCH_FAIL', payload: getError(err) });
@@ -61,13 +59,12 @@ export default function AdminUserEditScreen() {
 
   const router = useRouter();
 
-  const submitHandler = async ({ name, email, password, isAdmin }) => {
+  const submitHandler = async ({ name, email, isAdmin }) => {
     try {
       dispatch({ type: 'UPDATE_REQUEST' });
       await axios.put(`/api/admin/users/${userId}`, {
         name,
         email,
-        password,
         isAdmin,
       });
       dispatch({ type: 'UPDATE_SUCCESS' });
@@ -80,7 +77,7 @@ export default function AdminUserEditScreen() {
   };
 
   return (
-    <Layout title={`Edit User ${userId}`}>
+    <Layout title={`Edit User ${userId.substring(0, 4)}`}>
       <div className="grid md:grid-cols-4 md:gap-5">
         <div>
           <ul>
@@ -143,86 +140,7 @@ export default function AdminUserEditScreen() {
                 {errors.email && (
                   <div className="text-red-500">{errors.email.message}</div>
                 )}
-              </div>
-              {/* <div className="mb-4">
-                <label htmlFor="password">Password</label>
-                <input
-                  type="password"
-                  {...register('password', {
-                    minLength: {
-                      value: 8,
-                      message: 'Password must be 8 characters or more',
-                    },
-                  })}
-                  className="w-full"
-                  id="password"
-                ></input>
-                {errors.password && (
-                  <div className="text-red-500">{errors.password.message}</div>
-                )}
-              </div>
-
-              <div className="mb-4">
-                <label htmlFor="confirmPassword">Confirm your Password</label>
-                <input
-                  type="password"
-                  className="w-full"
-                  id="confirmPassword"
-                  {...register('confirmPassword', {
-                    validate: () => `${password}` === `${confirmPassword}`,
-                    minLength: {
-                      value: 8,
-                      message:
-                        'Password must match your password and be 8 characters or more.',
-                    },
-                  })}
-                /> */}
-              <div className="mb-4">
-                <label htmlFor="password">Password</label>
-                <input
-                  type="password"
-                  {...register('password', {
-                    required: 'Please enter your password',
-                    minLength: {
-                      value: 8,
-                      message: 'Password must be 8 characters or more',
-                    },
-                  })}
-                  className="w-full"
-                  id="password"
-                  autoFocus
-                ></input>
-                {errors.password && (
-                  <div className="text-red-500">{errors.password.message}</div>
-                )}
-              </div>
-
-              <div className="mb-4">
-                <label htmlFor="confirmPassword">Confirm your Password</label>
-                <input
-                  type="password"
-                  className="w-full"
-                  id="confirmPassword"
-                  {...register('confirmPassword', {
-                    required:
-                      'Please confirm your password, make sure they are the same',
-                    validate: (value) => value === getValues('password'),
-                    minLength: {
-                      value: 8,
-                      message:
-                        'Password must match your password and be 8 characters or more.',
-                    },
-                  })}
-                />
-              </div>
-              {/* 
-              {errors.confirmPassword && (
-                <div className="text-red-500">{errors.password.message}</div>
-              )} */}
-              {errors.confirmPassword &&
-                errors.confirmPassword.type === 'validate' && (
-                  <div className="text-red-500">Passwords do not match!</div>
-                )}
+              </div>              
               <div className="mb-4">
                 <label htmlFor="isAdmin">Administrator</label>
                 <br></br>
@@ -232,14 +150,6 @@ export default function AdminUserEditScreen() {
                   {...register('isAdmin', { value: true })}
                 />
                 <label htmlFor="isAdminTrue">True</label>
-                &nbsp;
-                {/* <input
-                  type="radio"
-                  id="isAdminFalse"
-                  className="p-5"
-                  {...register('isAdmin', { value: false })}
-                />
-                <label for="isAdminFalse">False</label> */}
               </div>
               <div className="mb-4">
                 <button disabled={loadingUpdate} className="primary-button">

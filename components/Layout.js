@@ -10,6 +10,7 @@ import DropdownLink from './DropdownLink';
 import Cookies from 'js-cookie';
 import Image from 'next/image';
 import logo from '../public/images/logov3.png';
+import hamicon from '../public/images/hamicon.png';
 import { ChevronRightIcon } from '@heroicons/react/solid';
 import facebook from '../public/images/facebookicon.png';
 import instagram from '../public/images/instaicon.png';
@@ -34,110 +35,122 @@ function Layout({ title, children }) {
   };
 
   return (
-    <>
+    <div>
       <Head>
         <title>{title ? title + ' - Anaknits' : 'Anaknits'}</title>
         <meta name="home page" content="Anaknits Website" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <ToastContainer position="bottom-center" limit={1} />
-      <div className="flex min-h-screen flex-col justify-between">
+      <div>
         <header>
-          <nav className="flex h-50 item-center px-4 justify-between shawdow-md pt-4">
-            <div className="w-auto h-auto mx-auto">
-              <Link href="/">
-                <a>
-                  <Image src={logo} alt={'/'} width={600} height={200} />
-                </a>
-              </Link>
-            </div>
-            <div>
-              <Link href="/cart">
-                <a className="p-2">
-                  Cart
-                  {cartItemsCount > 0 && (
-                    <span className="ml-1 rounded-full bg-blue-500 px-2 py-1 text-xs font-bold text-white">
-                      {cartItemsCount}
-                    </span>
-                  )}
-                </a>
-              </Link>
+          <nav>
+            <div className="topHeader flex px-2 py-1 justify-between">
+              <div className="sideBar">
+                <div className="sidebarIcon">
+                  <button>
+                    <Image src={hamicon} alt={Menu} height={24} width={24} />
+                  </button>
+                </div>
+              </div>
 
-              {status === 'loading' ? (
-                'Loading'
-              ) : session?.user ? (
-                <Menu as="div" className="relative inline-block">
-                  <Menu.Button className="text-blue-600">
-                    {session.user.name}
-                  </Menu.Button>
-                  <Menu.Items className="absolute right-0 w-56 origin-top-right  bg-white shadow-lg">
-                    <Menu.Item>
-                      <DropdownLink className="dropdown-link" href="/profile">
-                        Profile
-                      </DropdownLink>
-                    </Menu.Item>
-                    <Menu.Item>
-                      <DropdownLink
-                        className="dropdown-link"
-                        href="/order-history"
-                      >
-                        Order History
-                      </DropdownLink>
-                    </Menu.Item>
-                    {session.user.isAdmin && (
+              <div>
+                <Link href="/cart">
+                  <a className="p-2">
+                    Cart
+                    {cartItemsCount > 0 && (
+                      <span className="ml-1 rounded-full bg-blue-500 px-2 py-1 text-xs font-bold text-white">
+                        {cartItemsCount}
+                      </span>
+                    )}
+                  </a>
+                </Link>
+
+                {status === 'loading' ? (
+                  'Loading'
+                ) : session?.user ? (
+                  <Menu as="div" className="relative inline-block">
+                    <Menu.Button className="text-blue-600">
+                      {session.user.name}
+                    </Menu.Button>
+                    <Menu.Items className="absolute right-0 w-56 origin-top-right  bg-white shadow-lg">
+                      <Menu.Item>
+                        <DropdownLink className="dropdown-link" href="/profile">
+                          Profile
+                        </DropdownLink>
+                      </Menu.Item>
                       <Menu.Item>
                         <DropdownLink
                           className="dropdown-link"
-                          href="/admin/dashboard"
+                          href="/order-history"
                         >
-                          Admin Dashboard
+                          Order History
                         </DropdownLink>
                       </Menu.Item>
-                    )}
-                    <Menu.Item>
-                      <a
-                        className="dropdown-link"
-                        href="#"
-                        onClick={logoutClickHandler}
-                      >
-                        Logout
-                      </a>
-                    </Menu.Item>
-                  </Menu.Items>
-                </Menu>
-              ) : (
-                <Link href="/login">
-                  <a className="p-2">Login</a>
+                      {session.user.isAdmin && (
+                        <Menu.Item>
+                          <DropdownLink
+                            className="dropdown-link"
+                            href="/admin/dashboard"
+                          >
+                            Admin Dashboard
+                          </DropdownLink>
+                        </Menu.Item>
+                      )}
+                      <Menu.Item>
+                        <a
+                          className="dropdown-link"
+                          href="#"
+                          onClick={logoutClickHandler}
+                        >
+                          Logout
+                        </a>
+                      </Menu.Item>
+                    </Menu.Items>
+                  </Menu>
+                ) : (
+                  <Link href="/login">
+                    <a className="p-2">Login</a>
+                  </Link>
+                )}
+              </div>
+            </div>
+            <div className="flex flex-col justify-center items-center">
+              <div className="px-10 lg:px-5 md:px-20">
+                <Link href="/">
+                  <a className="flex w-full ">
+                    <Image src={logo} alt={'/'} width={880} height={160} />
+                  </a>
                 </Link>
-              )}
+              </div>
+            </div>
+            <div className="pb-5 pt-5 hidden md:block">
+              <ul className="flex lg:pl-20 lg:pr-20">
+                <li className="p-0.5 mx-auto text-gray-500 cursor-pointer hover:brightness-50">
+                  Home
+                </li>
+
+                <li className="p-0.5 mx-auto text-gray-500 cursor-pointer hover:brightness-50">
+                  Baby Knits
+                </li>
+                <li className="p-0.5 mx-auto text-gray-500 cursor-pointer hover:brightness-50">
+                  Kid Knits
+                </li>
+                <li className="p-0.5 mx-auto text-gray-500 cursor-pointer hover:brightness-50">
+                  Blanket & Socks
+                </li>
+                <li className="p-0.5 mx-auto text-gray-500 cursor-pointer hover:brightness-50">
+                  Knit Kits
+                </li>
+                <li className="p-0.5 mx-auto text-gray-500 cursor-pointer hover:brightness-50">
+                  Patterns
+                </li>
+                <li className="p-0.5 mx-auto text-gray-500 cursor-pointer hover:brightness-50">
+                  Contact Us
+                </li>
+              </ul>
             </div>
           </nav>
-          <div className="pb-5">
-            <ul className="flex pl-20 pr-20">
-              <li className="p-0.5 mx-auto text-gray-500 cursor-pointer hover:brightness-50">
-                Home
-              </li>
-
-              <li className="p-0.5 mx-auto text-gray-500 cursor-pointer hover:brightness-50">
-                Baby Knits
-              </li>
-              <li className="p-0.5 mx-auto text-gray-500 cursor-pointer hover:brightness-50">
-                Kid Knits
-              </li>
-              <li className="p-0.5 mx-auto text-gray-500 cursor-pointer hover:brightness-50">
-                Blanket & Socks
-              </li>
-              <li className="p-0.5 mx-auto text-gray-500 cursor-pointer hover:brightness-50">
-                Knit Kits
-              </li>
-              <li className="p-0.5 mx-auto text-gray-500 cursor-pointer hover:brightness-50">
-                Patterns
-              </li>
-              <li className="p-0.5 mx-auto text-gray-500 cursor-pointer hover:brightness-50">
-                Contact Us
-              </li>
-            </ul>
-          </div>
         </header>
         <main className="container m-auto mt-4 px-20">{children}</main>
         <footer className="h-40">
@@ -147,12 +160,9 @@ function Layout({ title, children }) {
                 <div className="mb-5">
                   <h4 className="font-bold text-2xl pb-4">Anaknits</h4>
                   <p className="text-gray-500">
-                    123 Test Street <br></br>
-                    USA, Georgia 1234 <br></br>
-                    America <br></br>
                     <strong>Phone: </strong>
-                    +1234 567 891 <br></br>
-                    <strong>Email: </strong>test@anaknits.com <br></br>
+                    +1 234-567-891 <br></br>
+                    <strong>Email: </strong>ana@anaknits.com <br></br>
                   </p>
                 </div>
                 <div className="mb-5">
@@ -225,7 +235,7 @@ function Layout({ title, children }) {
           </div>
         </footer>
       </div>
-    </>
+    </div>
   );
 }
 

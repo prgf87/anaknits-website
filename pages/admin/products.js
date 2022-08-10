@@ -139,7 +139,6 @@ export default function AdminProductsScreen() {
                     <th className="px-5 text-left">Price</th>
                     <th className="px-5 text-left">Category</th>
                     <th className="px-5 text-left">Count</th>
-                    <th className="px-5 text-left">Rating</th>
                     <th className="px-5 text-left">Actions</th>
                   </tr>
                 </thead>
@@ -151,7 +150,6 @@ export default function AdminProductsScreen() {
                       <td className="p-5">£{product.price}</td>
                       <td className="p-5">{product.category}</td>
                       <td className="p-5">{product.countInStock}</td>
-                      <td className="p-5">{product.rating}</td>
 
                       <td className="p-5 flex">
                         <Link href={`/admin/product/${product._id}`}>

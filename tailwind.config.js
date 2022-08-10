@@ -4,7 +4,12 @@ module.exports = {
     './components/**/*.{js,ts,jsx,tsx}',
   ],
   theme: {
-    extend: {},
+    extend: {
+      transitionProperty: {
+        width: 'width',
+        duration: 300,
+      },
+    },
     screens: {
       sm: '320px',
       md: '768px',

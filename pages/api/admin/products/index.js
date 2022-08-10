@@ -35,8 +35,6 @@ const postHandler = async (req, res) => {
     brand: 'Anaknits',
     countInStock: 0,
     description: 'Give this item a nice description',
-    rating: 0,
-    numReviews: 0,
   });
   const product = await newProduct.save();
   await db.disconnect();

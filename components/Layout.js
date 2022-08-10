@@ -66,11 +66,13 @@ function Layout({ title, children }) {
                 <button onClick={() => setOpen(!open)}>
                   <Image src={hamicon} alt={Menu} height={34} width={34} />
                 </button>
+
               </div>
 
               <div>
                 <Link href="/cart">
                   <a className="text-blue-600 p-2 hover:text-blue-100 hover:bg-blue-600 hover:rounded-full">
+
                     Cart
                     {cartItemsCount > 0 && (
                       <span className="ml-1 rounded-full bg-blue-500 px-2 py-1 text-xs font-bold text-white">
@@ -85,6 +87,7 @@ function Layout({ title, children }) {
                 ) : session?.user ? (
                   <Menu as="div" className="relative inline-block z-10">
                     <Menu.Button className="text-blue-600 p-2 hover:text-blue-100 hover:bg-blue-600 hover:rounded-full">
+
                       {session.user.name}
                     </Menu.Button>
                     <Menu.Items className="absolute right-0 w-56 origin-top-right  bg-white shadow-lg">
@@ -224,6 +227,7 @@ function Layout({ title, children }) {
                 </footer>
               </div>
             </div>
+
             <div className="flex flex-col justify-center items-center">
               <div className="px-10 lg:px-5 md:px-20">
                 <Link href="/">
@@ -255,6 +259,7 @@ function Layout({ title, children }) {
                   Patterns
                 </li>
                 <li className="text-sm text-gray-500 cursor-pointer hover:brightness-50">
+
                   Contact Us
                 </li>
               </ul>

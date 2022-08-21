@@ -7,7 +7,6 @@ const handler = async (req, res) => {
   if (!session || (session && !session.user.isAdmin)) {
     return res.status(401).send('Error: Admin sign-in is required');
   }
-  // const { user } = session;
   if (req.method === 'GET') {
     return getHandler(req, res);
   } else if (req.method === 'PUT') {

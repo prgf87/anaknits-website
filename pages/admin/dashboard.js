@@ -79,7 +79,7 @@ function AdminDashboardScreen() {
 
   return (
     <Layout title="Admin Dashboard">
-      <div className="grid md:grid-cols-4 md:gap-5">
+      <div className="grid md:grid-cols-3 md:gap-5">
         <div>
           <ul>
             <li>
@@ -106,7 +106,7 @@ function AdminDashboardScreen() {
             <div className="alert-error">{error}</div>
           ) : (
             <div>
-              <div className="grid grid-cols-1 md:grid-cols-4">
+              <div className="grid grid-cols-1 md:grid-cols-2">
                 <div className="card m-5 p-5">
                   <p className="text-3xl">£{summary.ordersPrice}</p>
                   <p>Sales</p>

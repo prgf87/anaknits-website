@@ -9,6 +9,11 @@ module.exports = {
         width: 'width',
         duration: 300,
       },
+
+      animation: {
+        fadein: 'fadein transition-opacity opacity-0 zoom-0',
+      },
+
     },
     screens: {
       sm: '320px',

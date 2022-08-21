@@ -40,14 +40,13 @@ function Layout({ title, children }) {
   };
 
   const [open, setOpen] = useState(false);
-  // const body = document.querySelector('body');
 
-  // if (open === true) {
-  //   body.style.overflow = 'hidden';
-  // }
-  // else (
-  //   body.style.overflow = 'auto');
-  // }
+  if (typeof document !== 'undefined') {
+    const body = document.querySelector('body');
+    if (open === true) {
+      body.style.overflow = 'hidden';
+    } else body.style.overflow = 'auto';
+  }
 
   // eslint-disable-next-line no-unused-vars
   const [categories, setCategories] = useState([]);
@@ -349,10 +348,10 @@ function Layout({ title, children }) {
                     <div className="max-w-7xl mx-auto">
                       <div className="grid grid-cols-1 gap-2">
                         <div className="mb-5 md:mb-0">
-                          <h4 className="font-bold text-lg pb-2 flex justify-center">
+                          <h4 className="font-bold text-xs lg:text-lg pb-2 flex justify-center">
                             Check Out Our Socials
                           </h4>
-                          <p className="text-sm italic flex justify-center">
+                          <p className="text-xs lg:text-sm italic flex justify-center">
                             Come and say hello over on our social media pages:
                             Facebook, Instagram, send us a message on WhatsApp
                             or even send us an email!
@@ -401,7 +400,7 @@ function Layout({ title, children }) {
                               </Link>
                               <Link
                                 href={
-                                  'mailto:ana@anaknits.com?body=Hi Ana, this is my question...'
+                                  'mailto:info@anaknits.com?body=Hi Ana, this is my question...'
                                 }
                                 target="_blank"
                               >
@@ -426,7 +425,7 @@ function Layout({ title, children }) {
             <div className="flex flex-col justify-center items-center">
               <div className="px-10 lg:px-5 md:px-20">
                 <Link href="/">
-                  <a className="mainlogo flex w-full p-2">
+                  <a className="mainlogo flex w-full px-[17.5%] mb-2 md:px-0 md:mb-0">
                     <Image src={logo} alt={'/'} width={580} height={100} />
                   </a>
                 </Link>
@@ -618,7 +617,7 @@ function Layout({ title, children }) {
                       </Link>
                       <Link
                         href={
-                          'mailto:ana@anaknits.com?body=Hi Ana, this is my question...'
+                          'mailto:info@anaknits.com?body=Hi Ana, this is my question...'
                         }
                         target="_blank"
                       >

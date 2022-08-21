@@ -20,7 +20,7 @@ export default function DisclaimerPage() {
         <li>
           <strong>Company</strong> (referred to as either &quot;the
           Company&quot;, &quot;We&quot;, &quot;Us&quot; or &quot;Our&quot; in
-          this Disclaimer) refers to AnaKnits LLC, 1203 Eat Ridge Road.
+          this Disclaimer) refers to AnaKnits LLC, PLACE PO-BOX ADDRESS HERE.
         </li>
         <li>
           <strong>Service</strong> refers to the Website.

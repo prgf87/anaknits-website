@@ -56,7 +56,7 @@ export default function Search(props) {
   }) => {
     const path = router.pathname;
     const { query } = router;
-    if (page) query.page = page + 1;
+    if (page) query.page = page;
     if (searchQuery) query.searchQuery = searchQuery;
     if (sort) query.sort = sort;
     if (category) query.category = category;
@@ -73,9 +73,8 @@ export default function Search(props) {
   const categoryHandler = (e) => {
     filterSearch({ category: e.target.value });
   };
-  const pageHandler = (e) => {
-    const page = e.selected;
-    console.log(e.selected);
+  const pageHandler = (_e) => {
+    const page = _e.selected + 1;
     filterSearch({ page });
   };
   const sortHandler = (e) => {
@@ -258,16 +257,21 @@ export default function Search(props) {
           previousLabel="<"
           nextLabel=">"
           breakLabel={'...'}
+          onPageChange={pageHandler}
+          intialPage={parseInt(query.page || '1')}
+          previousClassName={
+            'py-2 px-3 leading-tight text-gray-500 bg-white border border-gray-300 hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white'
+          }
+          nextClassName={
+            'block py-2 px-3 leading-tight text-gray-500 bg-white rounded-r-lg border border-gray-300 hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white'
+          }
+          containerClassName={'inline-flex items-center -space-x-px'}
+          // className="flex inline-row m-auto px-2 justify-center inline-row w-40 text-lg m-1 bg-gray-200 border border-solid gap-2"
+          pageClassName="py-2 px-3 ml-0 leading-tight text-gray-500 bg-white rounded-lg border border-gray-300 hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white"
           breakClassName={'breakMe'}
           breakLinkClassName={'breakLink'}
-          onPageChange={pageHandler}
-          // onClick={}
-          // onPageActive={pageHandler - 1}
-          intialPage={parseInt(query.page || '1')}
-          // forcePage={props.currentPage - 1}
-          containerClassName={'border-2 rounded-full bg-gray-200'}
-          className="flex inline-row m-auto px-2 justify-center inline-row w-40 text-lg m-1 bg-gray-200 border border-solid gap-2"
-          pageClassName="border-2 p-1 bg-gray-200"
+          disabledClassName
+          disabledLinkClassName
           cursor-pointer
           renderOnZeroPageCount={null}
         ></ReactPaginate>

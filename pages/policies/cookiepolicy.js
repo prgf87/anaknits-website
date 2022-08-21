@@ -37,7 +37,8 @@ export default function PoliciesPage() {
         <li>
           <strong>Company</strong> (referred to as either &quot;the
           Company&quot;, &quot;We&quot;, &quot;Us&quot; or &quot;Our&quot; in
-          this Cookies Policy) refers to AnaKnits, 311 Retreat Street.
+          this Cookies Policy) refers to AnaKnits LLC, PLACE PO-BOX ADDRESS
+          HERE.
         </li>
         <li>
           <strong>Cookies</strong> means small files that are placed on Your

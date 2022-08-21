@@ -24,7 +24,6 @@ export default function ProductItem({ product, addToCartHandler }) {
             <h2 className="text-sm">{product.name}</h2>
           </a>
         </Link>
-        {/* <p className="mb-2">{product.brand}</p> */}
         <p className="text-sm">£{product.price}</p>
         <button
           className="primary-button text-sm"

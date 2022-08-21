@@ -11,7 +11,13 @@ body {
 }
 
 a {
-  @apply text-blue-600 hover:text-blue-800;
+  @apply text-gray-500;
+}
+p {
+  @apply pb-2;
+}
+link {
+  @apply text-gray-500 hover:brightness-50;
 }
 
 * {
@@ -34,8 +40,8 @@ a {
   @apply rounded bg-green-500 py-2 px-4 shadow outline-none hover:bg-green-400  active:bg-green-300;
 }
 
-.default-button {
-  @apply rounded bg-gray-100 py-2 px-4 text-black shadow outline-none hover:bg-gray-300 active:bg-gray-500;
+.sidebarLinkButton {
+  @apply rounded w-60 bg-gray-100 py-2 px-4 text-black shadow outline-none hover:bg-gray-400 active:bg-gray-200 active:text-white;
 }
 
 input,

@@ -20,6 +20,7 @@ import { getError } from '../utils/error';
 import axios from 'axios';
 import { useRouter } from 'next/router';
 
+
 function Layout({ title, children }) {
   const { status, data: session } = useSession();
 
@@ -41,6 +42,7 @@ function Layout({ title, children }) {
 
   const [open, setOpen] = useState(false);
 
+
   if (typeof document !== 'undefined') {
     const body = document.querySelector('body');
     if (open === true) {
@@ -53,6 +55,7 @@ function Layout({ title, children }) {
   const fetchCategories = async () => {
     try {
       const { data } = await axios.get(`/api/products/categories`);
+
       setCategories(data);
     } catch (err) {
       toast.error(getError(err));
@@ -61,6 +64,7 @@ function Layout({ title, children }) {
   useEffect(() => {
     fetchCategories();
   }, []);
+
 
   const [query, setQuery] = useState('');
   const queryChangeHandler = (e) => {
@@ -78,11 +82,14 @@ function Layout({ title, children }) {
         <meta name="home page" content="Anaknits Website" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
-      <ToastContainer position="top-center" limit={1} />
+
+      <ToastContainer position="bottom-center" limit={1} />
+
       <div>
         <header>
           <nav>
             <div className="topHeader flex px-1 py-1 justify-between">
+
               <div className={`sidebarIcon z-50 p-0`}>
                 <button onClick={() => setOpen(!open)}>
                   <Image src={hamicon} alt={Menu} height={34} width={34} />
@@ -119,11 +126,13 @@ function Layout({ title, children }) {
                     </button>
                   </form>
                 </div>
+
               </div>
 
               <div>
                 <Link href="/cart">
                   <a className="text-gray-500 p-2 hover:brightness-50">
+
                     Cart
                     {cartItemsCount > 0 && (
                       <span className="ml-1 rounded-full bg-blue-500 px-2 py-1 text-xs font-bold text-white">
@@ -136,11 +145,13 @@ function Layout({ title, children }) {
                 {status === 'loading' ? (
                   'Loading'
                 ) : session?.user ? (
+
                   <Menu
                     as="div"
                     className="relative inline-block z-10 hidden md:inline-block"
                   >
                     <Menu.Button className="text-gray-500 p-2 hover:brightness-50">
+
                       {session.user.name}
                     </Menu.Button>
                     <Menu.Items className="absolute right-0 w-56 origin-top-right  bg-white shadow-lg">
@@ -180,11 +191,14 @@ function Layout({ title, children }) {
                   </Menu>
                 ) : (
                   <Link href="/login">
+
                     <a className="p-2 hidden md:inline-block">Login</a>
+
                   </Link>
                 )}
               </div>
             </div>
+
             <div id="sidebar">
               <div
                 id="bgBlur"
@@ -194,10 +208,12 @@ function Layout({ title, children }) {
                     ? 'transition-opacity ease-in-out opacity-70 overscroll-hidden fixed'
                     : 'transition-opacity ease-in-out opacity-0 scale-0'
                 } ease-in-out duration-300`}
+
               ></div>
               <div
                 id="sidebarBg"
                 className={`absolute z-10 top-0 left-0 bg-white h-full ${
+
                   open
                     ? 'w-full md:w-4/12 lg:w-3/12 overscroll-hidden fixed'
                     : 'w-0'
@@ -211,11 +227,13 @@ function Layout({ title, children }) {
                   <div
                     className={`z-10 ${
                       open ? 'duration-300' : 'transition-opacity opacity-0'
+
                     } ease-in-out duration-300`}
                   >
                     <Image src={logo} alt={'/'} height={35} width={185} />
                   </div>
                 </div>
+
 
                 <table className="w-full">
                   <tbody
@@ -413,12 +431,14 @@ function Layout({ title, children }) {
                                   />
                                 </a>
                               </Link>
+
                             </div>
                           </div>
                         </div>
                       </div>
                     </div>
                   </div>
+
                 </div>
               </div>
             </div>
@@ -474,6 +494,7 @@ function Layout({ title, children }) {
                 </li>
               </ul>
             </div>
+
           </nav>
         </header>
         <main className="container md:mt-5 mx-auto md:px-[5%] max-h-max ">
@@ -484,6 +505,7 @@ function Layout({ title, children }) {
             <div className="max-w-7xl mx-auto jutify-center">
               <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-2">
                 <div className="mb-5">
+
                   <h4 className="font-bold text-2xl pb-4 flex place-content-center md:place-content-start">
                     Anaknits
                   </h4>
@@ -492,6 +514,7 @@ function Layout({ title, children }) {
                   </p>
                   <p className="text-gray-500 flex place-content-center md:place-content-start">
                     <strong>Email: </strong>&nbsp;info@anaknits.com
+
                   </p>
                 </div>
                 <div className="mb-5">

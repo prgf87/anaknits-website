@@ -69,7 +69,7 @@ function AdminUsersScreen() {
 
   return (
     <Layout title="Admin - Users">
-      <div className="grid md:grid-cols-4 md:gap-5">
+      <div className="grid md:grid-cols-3 md:gap-5">
         <div>
           <ul>
             <li>
@@ -118,7 +118,7 @@ function AdminUsersScreen() {
                         <Link href={`/admin/user/${user._id}`}>
                           <button
                             type="button"
-                            className="primary-button w-auto"
+                            className="primary-button w-full"
                           >
                             Edit
                           </button>

@@ -425,13 +425,13 @@ function Layout({ title, children }) {
             <div className="flex flex-col justify-center items-center">
               <div className="px-10 lg:px-5 md:px-20">
                 <Link href="/">
-                  <a className="mainlogo flex w-full px-[17.5%] mb-2 md:px-0 md:mb-0">
+                  <a className="mainlogo flex w-full px-[5%] md:px-[17.5%] md:px-0 md:mb-0">
                     <Image src={logo} alt={'/'} width={580} height={100} />
                   </a>
                 </Link>
               </div>
             </div>
-            <div className="py-3 hidden md:block shadow-md">
+            <div className="pt-2 hidden md:block shadow-md">
               <ul className="flex md:space-x-4 lg:space-x-20 justify-center items-center">
                 <li className="text-sm text-gray-500 cursor-pointer hover:brightness-50">
                   <Link href={'/'}>Home</Link>
@@ -476,16 +476,23 @@ function Layout({ title, children }) {
             </div>
           </nav>
         </header>
-        <main className="container md:mt-5 mx-auto md:px-[5%] max-h-max ">
+        <main className="container my-5 mx-auto px-[5%] md:px-[7%] lg:px-[10%] max-h-max ">
           {children}
+          <div className="w-full flex justify-center m-auto pt-5">
+            <button className="sidebarLinkButton border border-2 border-black hover:focus-cyan-500">
+              <Link href={'/search'}>
+                <a className="text-black">Browse more Products</a>
+              </Link>
+            </button>
+          </div>
         </main>
-        <footer className="h-40 md:px-[5%]">
+        <footer className="h-40 px-[5%] md:px-[15%] md:px-[10%]">
           <div className="p-10">
             <div className="max-w-7xl mx-auto jutify-center">
               <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-2">
                 <div className="mb-5">
                   <h4 className="font-bold text-2xl pb-4 flex place-content-center md:place-content-start">
-                    Anaknits
+                    AnaKnits
                   </h4>
                   <p className="text-gray-500 flex place-content-center md:place-content-start">
                     <strong>Phone: </strong>&nbsp; +1 234-567-891
@@ -493,6 +500,16 @@ function Layout({ title, children }) {
                   <p className="text-gray-500 flex place-content-center md:place-content-start">
                     <strong>Email: </strong>&nbsp;info@anaknits.com
                   </p>
+                  <p className="text-gray-500 flex place-content-center md:place-content-start">
+                    <strong>Copyright </strong>&nbsp;&copy;&nbsp;AnaKnits 2022
+                  </p>
+                  <div className="text-gray-500 flex cursor-pointer flex place-content-center md:place-content-start">
+                    <p className="hover:brightness-50">
+                      <Link href={'/policies/disclaimer'}>
+                        <strong>Disclaimer</strong>
+                      </Link>
+                    </p>
+                  </div>
                 </div>
                 <div className="mb-5">
                   <h4 className="font-bold text-2xl pb-4 flex place-content-center md:place-content-start">
@@ -579,7 +596,7 @@ function Layout({ title, children }) {
                         href={'https://facebook.com/anaknits'}
                         target="_blank"
                       >
-                        <a onClick={() => setOpen(!open)}>
+                        <a>
                           <Image
                             Link
                             src={facebook}
@@ -593,7 +610,7 @@ function Layout({ title, children }) {
                         href={'https://instagram.com/anaknits'}
                         target="_blank"
                       >
-                        <a onClick={() => setOpen(!open)}>
+                        <a>
                           <Image
                             src={instagram}
                             alt="/"
@@ -606,7 +623,7 @@ function Layout({ title, children }) {
                         href={'https://whatsapp.com/anaknits'}
                         target="_blank"
                       >
-                        <a onClick={() => setOpen(!open)}>
+                        <a>
                           <Image
                             src={whatsapp}
                             alt="/"
@@ -621,7 +638,7 @@ function Layout({ title, children }) {
                         }
                         target="_blank"
                       >
-                        <a onClick={() => setOpen(!open)}>
+                        <a>
                           <Image src={email} alt="/" width={35} height={35} />
                         </a>
                       </Link>

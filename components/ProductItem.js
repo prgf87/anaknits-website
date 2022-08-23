@@ -5,7 +5,7 @@ import Image from 'next/image';
 
 export default function ProductItem({ product, addToCartHandler }) {
   return (
-    <div className="card mx-0 md:mx-2">
+    <div className="card mx-0 md:mx-2 lg:mx-5">
       <Link href={`/product/${product.slug}`}>
         <a>
           <Image
@@ -18,19 +18,19 @@ export default function ProductItem({ product, addToCartHandler }) {
           />
         </a>
       </Link>
-      <div className="flex flex-col items-center justify-center p-1 md:p-3 lg:p-5">
+      <div className="flex flex-col items-center justify-center p-1 md:p-3">
         <Link href={`/product/${product.slug}`}>
           <a>
-            <h2 className="text-sm">{product.name}</h2>
+            <h2 className="text-sm md:text-lg">{product.name}</h2>
           </a>
         </Link>
         <p className="text-sm">£{product.price}</p>
         <button
-          className="primary-button text-sm"
+          className="primary-button text-sm md:text-lg"
           type="button"
           onClick={() => addToCartHandler(product)}
         >
-          Buy
+          Add to Cart
         </button>
       </div>
     </div>

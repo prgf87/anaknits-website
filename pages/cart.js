@@ -52,7 +52,7 @@ function CartScreen() {
                 {cartItems.map((item) => (
                   <tr key={item.slug} className="border-b">
                     <td>
-                      <Link href={`/product/$(item.slug)`}>
+                      <Link href={`/product/${item.slug}`}>
                         <a className="flex items-center">
                           <Image
                             src={item.image}

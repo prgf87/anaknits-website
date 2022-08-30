@@ -11,14 +11,16 @@ import Cookies from 'js-cookie';
 import Image from 'next/image';
 import logo from '../public/images/logov3.png';
 import hamicon from '../public/images/hamicon.png';
-import { ChevronRightIcon } from '@heroicons/react/solid';
 import facebook from '../public/images/facebookicon2.png';
 import instagram from '../public/images/instaicon2.png';
 import whatsapp from '../public/images/whatsappicon2.png';
-import email from '../public/images/emailicon2.png';
+import email from '../public/images/emailicon.png';
 import { getError } from '../utils/error';
 import axios from 'axios';
 import { useRouter } from 'next/router';
+import Footer from '../components/Footer';
+import SearchBar from '../components/SearchBar';
+import MainLogo from './MainLogo';
 
 function Layout({ title, children }) {
   const { status, data: session } = useSession();
@@ -82,14 +84,14 @@ function Layout({ title, children }) {
       <div>
         <header>
           <nav>
-            <div className="topHeader flex px-1 py-1 justify-between">
+            <div className="topHeader flex px-1 py-1 pb- 1 justify-between">
               <div className={`sidebarIcon z-50 p-0`}>
                 <button onClick={() => setOpen(!open)}>
                   <Image src={hamicon} alt={Menu} height={34} width={34} />
                 </button>
               </div>
               <div>
-                <div className="searchSection hidden md:block md:pl-[200px]">
+                <div className="searchSection hidden md:block md:pl-[125px]">
                   <form onSubmit={submitHandler} className="searchForm px-5">
                     <input
                       name="query"
@@ -408,8 +410,8 @@ function Layout({ title, children }) {
                                   <Image
                                     src={email}
                                     alt="/"
-                                    width={35}
-                                    height={35}
+                                    width={25}
+                                    height={20}
                                   />
                                 </a>
                               </Link>
@@ -424,234 +426,21 @@ function Layout({ title, children }) {
             </div>
             <div className="flex flex-col justify-center items-center">
               <div className="px-10 lg:px-5 md:px-20">
-                <Link href="/">
-                  <a className="mainlogo flex w-full px-[5%] md:px-[17.5%] md:px-0 md:mb-0">
-                    <Image src={logo} alt={'/'} width={580} height={100} />
-                  </a>
-                </Link>
+                <MainLogo />
               </div>
             </div>
-            <div className="pt-2 hidden md:block shadow-md">
-              <ul className="flex md:space-x-4 lg:space-x-20 justify-center items-center">
-                <li className="text-sm text-gray-500 cursor-pointer hover:brightness-50">
-                  <Link href={'/'}>Home</Link>
-                </li>
-                <li className="text-sm text-gray-500 cursor-pointer hover:brightness-50">
-                  <Link
-                    href={`/search?category%3Fbabyknits=&category=Baby+Knits`}
-                  >
-                    Baby Knits
-                  </Link>
-                </li>
-                <li className="text-sm text-gray-500 cursor-pointer hover:brightness-50">
-                  <Link
-                    href={`/search?category%3Fkidknits=&category=Kid+Knits`}
-                  >
-                    Kid Knits
-                  </Link>
-                </li>
-                <li className="text-sm text-gray-500 cursor-pointer hover:brightness-50">
-                  <Link
-                    href={`/search?category%3Fkidknits=&category=Blankets+%26+Socks`}
-                  >
-                    Blanket &amp; Socks
-                  </Link>
-                </li>
-                <li className="text-sm text-gray-500 cursor-pointer hover:brightness-50">
-                  <Link
-                    href={`/search?category%3Fkidknits=&category=Knit+Kits`}
-                  >
-                    Knit Kits
-                  </Link>
-                </li>
-                <li className="text-sm text-gray-500 cursor-pointer hover:brightness-50">
-                  <Link href={`/search?category%3Fkidknits=&category=Patterns`}>
-                    Patterns
-                  </Link>
-                </li>
-                <li className="text-sm text-gray-500 cursor-pointer hover:brightness-50">
-                  <Link href={'/contact'}>Contact Us</Link>
-                </li>
-              </ul>
-            </div>
+            <SearchBar />
           </nav>
         </header>
-        <main className="container my-5 mx-auto px-[5%] md:px-[7%] lg:px-[10%] max-h-max ">
+
+        <main className="container my-5 mx-20 lg:mx-auto px-[5%] md:px-[7%] lg:px-[10%] max-h-max pt-3">
           {children}
-          <div className="w-full flex justify-center m-auto pt-5">
-            <button className="sidebarLinkButton border border-2 border-black hover:focus-cyan-500">
-              <Link href={'/search'}>
-                <a className="text-black">Browse more Products</a>
-              </Link>
-            </button>
-          </div>
         </main>
         <footer className="h-40 px-[5%] md:px-[15%] md:px-[10%]">
-          <div className="p-10">
-            <div className="max-w-7xl mx-auto jutify-center">
-              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-2">
-                <div className="mb-5">
-                  <h4 className="font-bold text-2xl pb-4 flex place-content-center md:place-content-start">
-                    AnaKnits
-                  </h4>
-                  <p className="text-gray-500 flex place-content-center md:place-content-start">
-                    <strong>Phone: </strong>&nbsp; +1 234-567-891
-                  </p>
-                  <p className="text-gray-500 flex place-content-center md:place-content-start">
-                    <strong>Email: </strong>&nbsp;info@anaknits.com
-                  </p>
-                  <p className="text-gray-500 flex place-content-center md:place-content-start">
-                    <strong>Copyright </strong>&nbsp;&copy;&nbsp;AnaKnits 2022
-                  </p>
-                  <div className="text-gray-500 flex cursor-pointer flex place-content-center md:place-content-start">
-                    <p className="hover:brightness-50">
-                      <Link href={'/policies/disclaimer'}>
-                        <strong>Disclaimer</strong>
-                      </Link>
-                    </p>
-                  </div>
-                </div>
-                <div className="mb-5">
-                  <h4 className="font-bold text-2xl pb-4 flex place-content-center md:place-content-start">
-                    Useful Links
-                  </h4>
-                  <ul className="text-gray-500">
-                    <li className="flex cursor-pointer flex place-content-center md:place-content-start">
-                      <ChevronRightIcon className="h-5 w-5 pt-1 text-blue-500 " />
-                      <p className="hover:brightness-50">
-                        <Link href={'/'}>Home</Link>
-                      </p>
-                    </li>
-                    <li className="flex cursor-pointer flex place-content-center md:place-content-start">
-                      <ChevronRightIcon className="h-5 w-5 pt-1 text-blue-500 " />
-                      <p className="hover:brightness-50">
-                        <Link href={'/contact'}>About Us</Link>
-                      </p>
-                    </li>
-                    <li className="flex cursor-pointer flex place-content-center md:place-content-start">
-                      <ChevronRightIcon className="h-5 w-5 pt-1 text-blue-500 " />
-                      <p className="hover:brightness-50">
-                        <Link href={'/policies/tos'}>Terms of Services</Link>
-                      </p>
-                    </li>
-                    <li className="flex cursor-pointer flex place-content-center md:place-content-start">
-                      <ChevronRightIcon className="h-5 w-5 pt-1 text-blue-500 " />
-                      <p className="hover:brightness-50">
-                        <Link href={'/policies/privacypolicy'}>
-                          Privacy policy
-                        </Link>
-                      </p>
-                    </li>
-                  </ul>
-                </div>
-                <div className="mb-5">
-                  <h4 className="font-bold text-2xl pb-4 flex place-content-center md:place-content-start">
-                    Services
-                  </h4>
-                  <ul className="text-gray-500">
-                    <li className="flex  cursor-pointer flex place-content-center md:place-content-start">
-                      <ChevronRightIcon className="h-5 w-5 pt-1 text-blue-500 " />
-                      <p className="hover:brightness-50">
-                        <Link href={'/contact'}>Contact Us</Link>
-                      </p>
-                    </li>
-                    <li className="flex cursor-pointer flex place-content-center md:place-content-start">
-                      <ChevronRightIcon className="h-5 w-5 pt-1 text-blue-500 " />
-                      <p className="hover:brightness-50">
-                        <Link href={'/policies/returnspolicy'}>
-                          Returns Policy
-                        </Link>
-                      </p>
-                    </li>
-                    <li className="flex cursor-pointer flex place-content-center md:place-content-start">
-                      <ChevronRightIcon className="h-5 w-5 pt-1 text-blue-500 " />
-                      <p className="hover:brightness-50">
-                        <Link href={'/policies/shippingpolicy'}>
-                          Shipping Policy
-                        </Link>
-                      </p>
-                    </li>
-                    <li className="flex cursor-pointer flex place-content-center md:place-content-start">
-                      <ChevronRightIcon className="h-5 w-5 pt-1 text-blue-500 " />
-                      <p className="hover:brightness-50">
-                        <Link href={'/policies/cookiepolicy'}>
-                          Cookies Policy
-                        </Link>
-                      </p>
-                    </li>
-                  </ul>
-                </div>
-                <div className="mb-5">
-                  <h4 className="font-bold text pb-4 flex place-content-center md:place-content-start">
-                    Check Out Our Socials
-                  </h4>
-                  <p className="text-sm italic px-12 md:px-0">
-                    Come and say hello over on our social media pages: Facebook,
-                    Instagram, send us a message on WhatsApp or even send us an
-                    email!
-                  </p>
-                  <div className="w-full">
-                    <div className="flex gap-3 p-2 pr-1 justify-evenly place-items-center">
-                      <Link
-                        href={'https://facebook.com/anaknits'}
-                        target="_blank"
-                      >
-                        <a>
-                          <Image
-                            Link
-                            src={facebook}
-                            alt="/"
-                            width={25}
-                            height={25}
-                          />
-                        </a>
-                      </Link>
-                      <Link
-                        href={'https://instagram.com/anaknits'}
-                        target="_blank"
-                      >
-                        <a>
-                          <Image
-                            src={instagram}
-                            alt="/"
-                            width={25}
-                            height={25}
-                          />
-                        </a>
-                      </Link>
-                      <Link
-                        href={'https://whatsapp.com/anaknits'}
-                        target="_blank"
-                      >
-                        <a>
-                          <Image
-                            src={whatsapp}
-                            alt="/"
-                            width={25}
-                            height={25}
-                          />
-                        </a>
-                      </Link>
-                      <Link
-                        href={
-                          'mailto:info@anaknits.com?body=Hi Ana, this is my question...'
-                        }
-                        target="_blank"
-                      >
-                        <a>
-                          <Image src={email} alt="/" width={35} height={35} />
-                        </a>
-                      </Link>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
+          <Footer />
         </footer>
       </div>
     </div>
   );
 }
-
 export default Layout;

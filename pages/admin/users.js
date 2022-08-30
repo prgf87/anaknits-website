@@ -114,11 +114,11 @@ function AdminUsersScreen() {
                       <td className="p-5">{user.name}</td>
                       <td className="p-5">{user.email}</td>
                       <td className="p-5">{user.isAdmin ? 'Yes' : 'No'}</td>
-                      <td className="p-5">
+                      <td className="p-5 flex">
                         <Link href={`/admin/user/${user._id}`}>
                           <button
                             type="button"
-                            className="primary-button w-full"
+                            className="primary-button w-auto"
                           >
                             Edit
                           </button>
@@ -126,7 +126,7 @@ function AdminUsersScreen() {
                         &nbsp;
                         <button
                           type="button"
-                          className="secondary-button"
+                          className="secondary-button w-auto"
                           onClick={() => deleteHandler(user._id)}
                         >
                           Delete

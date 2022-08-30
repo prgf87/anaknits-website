@@ -134,6 +134,28 @@ export default function ShippingPolicyPage() {
           options. Once your request is received, our delivery agent will pick
           up your package. For detailed information, read our returns policy.
         </p>
+        <h1 className="font-bold text-xl py-2">Contact Us</h1>
+        <p>
+          If you have any questions about our Returns and Refunds Policy, please
+          contact us:
+        </p>
+        <ul>
+          <li>
+            <p>By email: info@anaknits.com</p>
+          </li>
+          <li>
+            <p>
+              By visiting this page on our website:{' '}
+              <a
+                href="https://www.anaknits.com/contact"
+                rel="external nofollow noopener noreferrer"
+                target="_blank"
+              >
+                https://www.anaknits.com/contact
+              </a>
+            </p>
+          </li>
+        </ul>
       </div>
     </Layout>
   );

@@ -18,13 +18,13 @@ export default function ProductItem({ product, addToCartHandler }) {
           />
         </a>
       </Link>
-      <div className="flex flex-col items-center justify-center p-1 md:p-3">
+      <div className="flex flex-col items-center justify-center p-1 md:p-3 h-[150px]">
         <Link href={`/product/${product.slug}`}>
           <a>
-            <h2 className="text-sm md:text-lg">{product.name}</h2>
+            <h2 className="text-sm">{product.name}</h2>
           </a>
         </Link>
-        <p className="text-sm">${product.price}</p>
+        <p className="text-md">${product.price}</p>
         <button
           className="primary-button text-sm md:text-lg"
           type="button"

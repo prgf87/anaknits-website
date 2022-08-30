@@ -189,11 +189,11 @@ export default function PoliciesPage() {
           <p>
             Or by visiting this page on our website:{' '}
             <a
-              href="https://www.anaknits.com/cookiepolicy"
+              href="https://www.anaknits.com/contact"
               rel="external nofollow noreferrer"
               target="_blank"
             >
-              https://www.anaknits.com/cookiepolicy
+              https://www.anaknits.com/contact
             </a>
           </p>
         </li>

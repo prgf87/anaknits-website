@@ -6,6 +6,7 @@ import db from '../utils/db';
 import { Store } from '../utils/Store';
 import axios from 'axios';
 import { toast } from 'react-toastify';
+import Link from 'next/link';
 
 export default function Home({ products }) {
   const { state, dispatch } = useContext(Store);
@@ -34,6 +35,13 @@ export default function Home({ products }) {
             addToCartHandler={addToCartHandler}
           ></ProductItem>
         ))}
+      </div>
+      <div className="w-full flex justify-center m-auto pt-5">
+        <button className="sidebarLinkButton border border-2 border-black hover:focus-cyan-500">
+          <Link href={'/search'}>
+            <a className="text-black">Browse more Products</a>
+          </Link>
+        </button>
       </div>
     </Layout>
   );

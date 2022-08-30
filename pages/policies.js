@@ -1,10 +1,55 @@
+import { ChevronRightIcon } from '@heroicons/react/solid';
+import Link from 'next/link';
 import React from 'react';
-import Layout from '../../components/Layout';
+import Layout from '../components/Layout';
 
 export default function DisclaimerPage() {
   return (
     <Layout>
-      <h1 className="font-bold text-xl py-2">Disclaimer</h1>
+      <ol className="text-lg">
+        <h1 className="text-xl font-bold pb-2">Links to all our Policies</h1>
+        <li>
+          <Link href={'/policies/terms'}>
+            <a className="flex">
+              <ChevronRightIcon className="h-6 w-6 pt-1 text-gray-500 " />
+              <div className="hover:brightness-50">Terms of Service</div>
+            </a>
+          </Link>
+        </li>
+        <li>
+          <Link href={'/policies/privacy'}>
+            <a className="flex">
+              <ChevronRightIcon className="h-6 w-6 pt-1 text-gray-500 " />
+              <div className="hover:brightness-50">Privacy Policy</div>
+            </a>
+          </Link>
+        </li>
+        <li>
+          <Link href={'/policies/shipping'}>
+            <a className="flex">
+              <ChevronRightIcon className="h-6 w-6 pt-1 text-gray-500 " />
+              <div className="hover:brightness-50">Shipping Policy</div>
+            </a>
+          </Link>
+        </li>
+        <li>
+          <Link href={'/policies/returns'}>
+            <a className="flex">
+              <ChevronRightIcon className="h-6 w-6 pt-1 text-gray-500 " />
+              <div className="hover:brightness-50">Returns Policy</div>
+            </a>
+          </Link>
+        </li>
+        <li>
+          <Link href={'/policies/cookies'}>
+            <a className="flex">
+              <ChevronRightIcon className="h-6 w-6 pt-1 text-gray-500 " />
+              <div className="hover:brightness-50">Cookie Policy</div>
+            </a>
+          </Link>
+        </li>
+      </ol>
+      <h1 className="font-bold text-xl pb-2 pt-8">Disclaimer</h1>
       <p>Last updated: August 19, 2022</p>
       <h1 className="font-bold text-xl py-2">Interpretation and Definitions</h1>
       <h2 className="font-bold text-lg">Interpretation</h2>
@@ -162,11 +207,11 @@ export default function DisclaimerPage() {
           <p>
             By visiting this page on our website:{' '}
             <a
-              href="https://www.anaknits.com/policies/disclaimer"
+              href="https://www.anaknits.com/contact"
               rel="external nofollow noopener noreferrer"
               target="_blank"
             >
-              https://www.anaknits.com/policies/disclaimer
+              https://www.anaknits.com/contact
             </a>
           </p>
         </li>

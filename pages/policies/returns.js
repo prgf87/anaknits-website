@@ -200,11 +200,11 @@ export default function ReturnsPolicyPage() {
           <p>
             By visiting this page on our website:{' '}
             <a
-              href="https://www.anaknits.com/policies/returnspolicy"
+              href="https://www.anaknits.com/contact"
               rel="external nofollow noopener noreferrer"
               target="_blank"
             >
-              https://www.anaknits.com/policies/returnspolicy
+              https://www.anaknits.com/contact
             </a>
           </p>
         </li>

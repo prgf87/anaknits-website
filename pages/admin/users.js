@@ -118,7 +118,7 @@ function AdminUsersScreen() {
                         <Link href={`/admin/user/${user._id}`}>
                           <button
                             type="button"
-                            className="primary-button w-auto"
+                            className="primary-button w-full"
                           >
                             Edit
                           </button>

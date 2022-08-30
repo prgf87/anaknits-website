@@ -1,20 +1,65 @@
+import { ChevronRightIcon } from '@heroicons/react/solid';
+import Link from 'next/link';
 import React from 'react';
-import Layout from '../../components/Layout';
+import Layout from '../components/Layout';
 
 export default function DisclaimerPage() {
   return (
     <Layout>
-      <h1>Disclaimer</h1>
+      <ol className="text-lg">
+        <h1 className="text-xl font-bold pb-2">Links to all our Policies</h1>
+        <li>
+          <Link href={'/policies/terms'}>
+            <a className="flex">
+              <ChevronRightIcon className="h-6 w-6 pt-1 text-gray-500 " />
+              <div className="hover:brightness-50">Terms of Service</div>
+            </a>
+          </Link>
+        </li>
+        <li>
+          <Link href={'/policies/privacy'}>
+            <a className="flex">
+              <ChevronRightIcon className="h-6 w-6 pt-1 text-gray-500 " />
+              <div className="hover:brightness-50">Privacy Policy</div>
+            </a>
+          </Link>
+        </li>
+        <li>
+          <Link href={'/policies/shipping'}>
+            <a className="flex">
+              <ChevronRightIcon className="h-6 w-6 pt-1 text-gray-500 " />
+              <div className="hover:brightness-50">Shipping Policy</div>
+            </a>
+          </Link>
+        </li>
+        <li>
+          <Link href={'/policies/returns'}>
+            <a className="flex">
+              <ChevronRightIcon className="h-6 w-6 pt-1 text-gray-500 " />
+              <div className="hover:brightness-50">Returns Policy</div>
+            </a>
+          </Link>
+        </li>
+        <li>
+          <Link href={'/policies/cookies'}>
+            <a className="flex">
+              <ChevronRightIcon className="h-6 w-6 pt-1 text-gray-500 " />
+              <div className="hover:brightness-50">Cookie Policy</div>
+            </a>
+          </Link>
+        </li>
+      </ol>
+      <h1 className="font-bold text-xl pb-2 pt-8">Disclaimer</h1>
       <p>Last updated: August 19, 2022</p>
-      <h1>Interpretation and Definitions</h1>
-      <h2>Interpretation</h2>
+      <h1 className="font-bold text-xl py-2">Interpretation and Definitions</h1>
+      <h2 className="font-bold text-lg">Interpretation</h2>
       <p>
         The words of which the initial letter is capitalized have meanings
         defined under the following conditions. The following definitions shall
         have the same meaning regardless of whether they appear in singular or
         in plural.
       </p>
-      <h2>Definitions</h2>
+      <h2 className="font-bold text-lg">Definitions</h2>
       <p>For the purposes of this Disclaimer:</p>
       <ul>
         <li>
@@ -41,7 +86,7 @@ export default function DisclaimerPage() {
           </a>
         </li>
       </ul>
-      <h1>Disclaimer</h1>
+      <h1 className="font-bold text-xl py-2">Disclaimer</h1>
       <p>
         The information contained on the Service is for general information
         purposes only.
@@ -57,22 +102,13 @@ export default function DisclaimerPage() {
         arising out of or in connection with the use of the Service or the
         contents of the Service. The Company reserves the right to make
         additions, deletions, or modifications to the contents on the Service at
-        any time without prior notice. This Disclaimer has been created with the
-        help of the{' '}
-        <a
-          href="https://www.termsfeed.com/disclaimer-generator/"
-          target="_blank"
-          rel="noreferrer"
-        >
-          TermsFeed Disclaimer Generator
-        </a>
-        .
+        any time without prior notice.
       </p>
       <p>
         The Company does not warrant that the Service is free of viruses or
         other harmful components.
       </p>
-      <h1>External Links Disclaimer</h1>
+      <h1 className="font-bold text-xl py-2">External Links Disclaimer</h1>
       <p>
         The Service may contain links to external websites that are not provided
         or maintained by or in any way affiliated with the Company.
@@ -82,7 +118,9 @@ export default function DisclaimerPage() {
         timeliness, or completeness of any information on these external
         websites.
       </p>
-      <h1>Errors and Omissions Disclaimer</h1>
+      <h1 className="font-bold text-xl py-2">
+        Errors and Omissions Disclaimer
+      </h1>
       <p>
         The information given by the Service is for general guidance on matters
         of interest only. Even if the Company takes every precaution to insure
@@ -95,7 +133,7 @@ export default function DisclaimerPage() {
         The Company is not responsible for any errors or omissions, or for the
         results obtained from the use of this information.
       </p>
-      <h1>Fair Use Disclaimer</h1>
+      <h1 className="font-bold text-xl py-2">Fair Use Disclaimer</h1>
       <p>
         The Company may use copyrighted material which has not always been
         specifically authorized by the copyright owner. The Company is making
@@ -112,7 +150,7 @@ export default function DisclaimerPage() {
         purposes that go beyond fair use, You must obtain permission from the
         copyright owner.
       </p>
-      <h1>Views Expressed Disclaimer</h1>
+      <h1 className="font-bold text-xl py-2">Views Expressed Disclaimer</h1>
       <p>
         The Service may contain views and opinions which are those of the
         authors and do not necessarily reflect the official policy or position
@@ -127,7 +165,7 @@ export default function DisclaimerPage() {
         comment published by users and reserves the right to delete any comment
         for any reason whatsoever.
       </p>
-      <h1>No Responsibility Disclaimer</h1>
+      <h1 className="font-bold text-xl py-2">No Responsibility Disclaimer</h1>
       <p>
         The information on the Service is provided with the understanding that
         the Company is not herein engaged in rendering legal, accounting, tax,
@@ -141,7 +179,9 @@ export default function DisclaimerPage() {
         arising out of or in connection with your access or use or inability to
         access or use the Service.
       </p>
-      <h1>&quot;Use at Your Own Risk&quot; Disclaimer</h1>
+      <h1 className="font-bold text-xl py-2">
+        &quot;Use at Your Own Risk&quot; Disclaimer
+      </h1>
       <p>
         All information in the Service is provided &quot;as is&quot;, with no
         guarantee of completeness, accuracy, timeliness or of the results
@@ -155,7 +195,7 @@ export default function DisclaimerPage() {
         or for any consequential, special or similar damages, even if advised of
         the possibility of such damages.
       </p>
-      <h1>Contact Us</h1>
+      <h1 className="font-bold text-xl py-2">Contact Us</h1>
       <p>
         If you have any questions about this Disclaimer, You can contact Us:
       </p>
@@ -167,11 +207,11 @@ export default function DisclaimerPage() {
           <p>
             By visiting this page on our website:{' '}
             <a
-              href="https://www.anaknits.com/policies/disclaimer"
+              href="https://www.anaknits.com/contact"
               rel="external nofollow noopener noreferrer"
               target="_blank"
             >
-              https://www.anaknits.com/policies/disclaimer
+              https://www.anaknits.com/contact
             </a>
           </p>
         </li>

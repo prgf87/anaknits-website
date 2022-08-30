@@ -36,17 +36,17 @@ export default function ProductScreen(props) {
       <div className="py-2">
         <Link href="/">Back to Product Page</Link>
       </div>
-      <div className="grid md:grid-cols-4 md:gap-3">
+      <div className="grid md:grid-cols-5 md:gap-3">
         <div className="md:col-span-2">
           <Image
             src={product.image}
             alt={product.name}
             width={400}
-            height={600}
-            layout="responsive"
+            height={800}
+            className="object-cover"
           />
         </div>
-        <div>
+        <div className="md:col-span-2">
           <ul>
             <li>
               <h1 className="text-lg">{product.name}</h1>
@@ -61,7 +61,7 @@ export default function ProductScreen(props) {
             <div className="mb-2 flex justify-between">
               <div>Price</div>
 
-              <div>£{product.price}</div>
+              <div>${product.price}</div>
             </div>
             <div>Status</div>
             <div>{product.countInStock > 0 ? 'In Stock' : 'Unavaialble'}</div>

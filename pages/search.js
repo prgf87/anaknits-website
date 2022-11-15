@@ -102,8 +102,8 @@ export default function Search(props) {
 
   return (
     <Layout title="Search">
-      <div>
-        <div className="grid grid-cols-2 md:grid-cols-4 mx-5 gap-10 h-auto md:max-h-[50px] mb-3">
+      <div className="border-b-2 border-gray-300 pb-6 mb-4">
+        <div className="grid grid-cols-1 sm:grid-cols-4 mx-5 sm:gap-2 gap-10 md:max-h-[50px]">
           <div className="w-full">
             <h1 className="flex text-sm justify-center">Categories</h1>
             <div className="flex justify-center">
@@ -262,20 +262,8 @@ export default function Search(props) {
           </div>
         ))}
       </div>
-      {/* <div className="flex justify-center pb-5">
-        <select
-          value={PAGE_SIZE[0].value}
-          className="px-5 rounded-full border-gray-500"
-          // onChange={handleChange}
-        >
-          {PAGE_SIZE.map((pageSize) => {
-            <option key={pageSize.value} value={pageSize.value}>
-              {pageSize.text}
-            </option>;
-          })}
-        </select>
-      </div> */}
-      <div className="flex justify-center">
+
+      <div className="flex justify-center border-y-2 border-gray-300 py-4">
         <ReactPaginate
           pageCount={pages}
           pageRangeDisplayed={0}

@@ -37,7 +37,7 @@ export default function Home({ products }) {
         ))}
       </div>
       <div className="w-full flex justify-center m-auto pt-5">
-        <button className="sidebarLinkButton border border-2 border-black hover:focus-cyan-500">
+        <button className="sidebarLinkButton border-2 border-black hover:focus-cyan-500">
           <Link href={'/search'}>
             <a className="text-black">Browse more Products</a>
           </Link>

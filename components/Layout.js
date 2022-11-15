@@ -194,6 +194,7 @@ function Layout({ title, children }) {
                 className={`absolute top-0 left-0 bg-black z-10 h-full w-full overscroll-hidden fixed ${
                   open ? 'opacity-70' : 'opacity-0 scale-0'
                 } transition-opacity ease-in-out duration-300`}
+
               ></div>
               <div
                 id="sidebarBg"
@@ -210,8 +211,10 @@ function Layout({ title, children }) {
                 >
                   <div
                     className={`z-10 ${
+
                       open ? 'opacity-100' : ' opacity-0'
                     } transition-opacity ease-in-out duration-300`}
+
                   >
                     <Image src={logo} alt={'/'} height={35} width={185} />
                   </div>
@@ -431,10 +434,12 @@ function Layout({ title, children }) {
           </nav>
         </header>
 
+
         <main className="container p-0 m-0 md:my-5 md:mx-auto lg:mx-auto px-[5%] md:px-[7%] lg:px-[10%] min-h-[600px] pt-3">
           {children}
         </main>
         <footer className="h-40 px-[5%] md:px-[10%]">
+
           <Footer />
         </footer>
       </div>

@@ -39,7 +39,9 @@ function MyApp({ Component, pageProps: { session, ...pageProps } }) {
             </Auth>
           ) : (
             <>
+
               <div className="absolute w-full ml-[2px] mt-[158px] hidden md:block">
+
                 <Breadcrumb>
                   <BreadcrumbItem href="/">Home</BreadcrumbItem>
                   {breadcrumbs &&

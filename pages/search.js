@@ -1,3 +1,4 @@
+
 import axios from 'axios';
 import { useRouter } from 'next/router';
 import React, { useContext } from 'react';
@@ -102,8 +103,10 @@ export default function Search(props) {
 
   return (
     <Layout title="Search">
+
       <div className="border-b-2 border-gray-300 pb-6 mb-4">
         <div className="grid grid-cols-1 sm:grid-cols-4 mx-5 sm:gap-2 gap-10 md:max-h-[50px]">
+
           <div className="w-full">
             <h1 className="flex text-sm justify-center">Categories</h1>
             <div className="flex justify-center">

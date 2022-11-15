@@ -103,8 +103,10 @@ export default function Search(props) {
 
   return (
     <Layout title="Search">
-      <div>
-        <div className="grid grid-cols-2 md:grid-cols-4 mx-5 gap-10 h-auto md:max-h-[50px] mb-3">
+
+      <div className="border-b-2 border-gray-300 pb-6 mb-4">
+        <div className="grid grid-cols-1 sm:grid-cols-4 mx-5 sm:gap-2 gap-10 md:max-h-[50px]">
+
           <div className="w-full">
             <h1 className="flex text-sm justify-center">Categories</h1>
             <div className="flex justify-center">
@@ -263,7 +265,8 @@ export default function Search(props) {
           </div>
         ))}
       </div>
-      <div className="flex justify-center">
+
+      <div className="flex justify-center border-y-2 border-gray-300 py-4">
         <ReactPaginate
           pageCount={pages}
           pageRangeDisplayed={0}
@@ -278,11 +281,11 @@ export default function Search(props) {
           nextClassName={
             'block py-2 px-3 leading-tight text-gray-500 bg-white rounded-r-lg border border-gray-300 hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white'
           }
-          containerClassName={'inline-flex items-center -space-x-px'}
+          containerClassName="inline-flex items-center -space-x-px"
           pageClassName="py-2 px-3 ml-0 leading-tight text-gray-500 bg-white border border-gray-300 hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white"
-          activeLinkClassName="bg-gray-100 text-black border border-2 border-gray-400 rounded-full px-4 py-2"
-          breakClassName={'breakMe'}
-          breakLinkClassName={'breakLink'}
+          activeLinkClassName="bg-gray-100 text-black border border-1 border-gray-400 rounded-full px-4 py-2"
+          breakClassName
+          breakLinkClassName
           disabledClassName
           disabledLinkClassName
           cursor-pointer

@@ -17,22 +17,25 @@ export default function FooterInfo() {
             <h4 className="font-bold text-2xl pb-4 flex place-content-center md:place-content-start">
               AnaKnits
             </h4>
-            <p className="text-gray-500 flex place-content-center md:place-content-start">
+
+            {/* <p className="text-gray-500 flex place-content-center md:place-content-start">
               <strong>Phone: </strong>&nbsp; +1 234-567-891
-            </p>
-            <p className="text-gray-500 flex place-content-center md:place-content-start">
-              <strong>Email: </strong>&nbsp;info@anaknits.com
-            </p>
-            <p className="text-gray-500 flex place-content-center md:place-content-start">
-              <strong>Copyright </strong>&nbsp;&copy;&nbsp;AnaKnits 2022
-            </p>
-            <div className="text-gray-500 flex cursor-pointer flex place-content-center md:place-content-start">
+            </p> */}
+            <div className="text-gray-500 flex cursor-pointer place-content-center md:place-content-start">
               <p className="hover:brightness-50">
                 <Link href={'/policies'}>
                   <strong>Disclaimer</strong>
                 </Link>
               </p>
             </div>
+
+            <p className="text-gray-500 flex place-content-center md:place-content-start">
+              <strong>Email: </strong>&nbsp;info@anaknits.com
+            </p>
+            <p className="text-gray-500 flex place-content-center md:place-content-start">
+              <strong>Copyright </strong>&nbsp;&copy;&nbsp;AnaKnits 2022
+            </p>
+
           </div>
           <div className="mb-5">
             <h4 className="font-bold text-2xl pb-4 flex place-content-center md:place-content-start">

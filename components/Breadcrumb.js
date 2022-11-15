@@ -3,13 +3,11 @@ import React, { Children, Fragment } from 'react';
 
 const Breadcrumb = ({ children }) => {
   const childrenArray = Children.toArray(children);
-
-  console.log(childrenArray);
-
   const childrenWithSeparator = childrenArray.map((child, index) => {
     if (index !== childrenArray.length - 1) {
       return (
-        <Fragment key={index}>
+        <Fragment key={index} className>
+
           {child}
           <ChevronRightIcon className="flex inline h-5 w-5 pt-1 text-gray-600 " />
         </Fragment>

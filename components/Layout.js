@@ -191,19 +191,18 @@ function Layout({ title, children }) {
               <div
                 id="bgBlur"
                 onClick={() => setOpen(!open)}
-                className={`absolute top-0 left-0 bg-black z-10 h-full w-full ${
-                  open
-                    ? 'transition-opacity ease-in-out opacity-70 overscroll-hidden fixed'
-                    : 'transition-opacity ease-in-out opacity-0 scale-0'
-                } ease-in-out duration-300`}
+                className={`absolute top-0 left-0 bg-black z-10 h-full w-full overscroll-hidden fixed ${
+                  open ? 'opacity-70' : 'opacity-0 scale-0'
+                } transition-opacity ease-in-out duration-300`}
+
               ></div>
               <div
                 id="sidebarBg"
                 className={`absolute z-10 top-0 left-0 bg-white h-full ${
                   open
-                    ? 'w-full md:w-4/12 lg:w-3/12 overscroll-hidden fixed'
-                    : 'w-0'
-                } ease-in-out duration-300`}
+                    ? 'w-full opacity-100 md:w-4/12 lg:w-3/12 overscroll-hidden fixed'
+                    : 'w-0 opacity-0'
+                } transition-opacity ease-in-out duration-300`}
               >
                 <div
                   className={`flex flex-col justify-center items-center pl-3 pt-0.5 ${
@@ -212,8 +211,10 @@ function Layout({ title, children }) {
                 >
                   <div
                     className={`z-10 ${
-                      open ? 'duration-300' : 'transition-opacity opacity-0'
-                    } ease-in-out duration-300`}
+
+                      open ? 'opacity-100' : ' opacity-0'
+                    } transition-opacity ease-in-out duration-300`}
+
                   >
                     <Image src={logo} alt={'/'} height={35} width={185} />
                   </div>
@@ -343,8 +344,8 @@ function Layout({ title, children }) {
                 </table>
                 <div
                   className={`bottom-20 h-40 z-10 ${
-                    open ? 'opactity-100' : 'opacity-0'
-                  } transition-opacity ease-in-out duration-300`}
+                    open ? 'opactity-70' : 'opacity-0'
+                  } transition-opacity`}
                 >
                   <div className="p-7 md:p-0 md:px-7 md:pt-3">
                     <div className="max-w-7xl mx-auto">
@@ -433,10 +434,12 @@ function Layout({ title, children }) {
           </nav>
         </header>
 
-        <main className="container my-5 mx-20 lg:mx-auto px-[5%] md:px-[7%] lg:px-[10%] max-h-max pt-3">
+
+        <main className="container p-0 m-0 md:my-5 md:mx-auto lg:mx-auto px-[5%] md:px-[7%] lg:px-[10%] min-h-[600px] pt-3">
           {children}
         </main>
-        <footer className="h-40 px-[5%] md:px-[15%] md:px-[10%]">
+        <footer className="h-40 px-[5%] md:px-[10%]">
+
           <Footer />
         </footer>
       </div>

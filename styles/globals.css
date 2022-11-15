@@ -2,6 +2,12 @@
 @tailwind components;
 @tailwind utilities;
 
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
 html,
 body {
   padding: 0;
@@ -18,10 +24,6 @@ p {
 }
 link {
   @apply text-gray-500 hover:brightness-50;
-}
-
-* {
-  box-sizing: border-box;
 }
 
 .card {

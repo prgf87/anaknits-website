@@ -262,6 +262,19 @@ export default function Search(props) {
           </div>
         ))}
       </div>
+      {/* <div className="flex justify-center pb-5">
+        <select
+          value={PAGE_SIZE[0].value}
+          className="px-5 rounded-full border-gray-500"
+          // onChange={handleChange}
+        >
+          {PAGE_SIZE.map((pageSize) => {
+            <option key={pageSize.value} value={pageSize.value}>
+              {pageSize.text}
+            </option>;
+          })}
+        </select>
+      </div> */}
       <div className="flex justify-center">
         <ReactPaginate
           pageCount={pages}
@@ -277,11 +290,11 @@ export default function Search(props) {
           nextClassName={
             'block py-2 px-3 leading-tight text-gray-500 bg-white rounded-r-lg border border-gray-300 hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white'
           }
-          containerClassName={'inline-flex items-center -space-x-px'}
+          containerClassName="inline-flex items-center -space-x-px"
           pageClassName="py-2 px-3 ml-0 leading-tight text-gray-500 bg-white border border-gray-300 hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white"
-          activeLinkClassName="bg-gray-100 text-black border border-2 border-gray-400 rounded-full px-4 py-2"
-          breakClassName={'breakMe'}
-          breakLinkClassName={'breakLink'}
+          activeLinkClassName="bg-gray-100 text-black border border-1 border-gray-400 rounded-full px-4 py-2"
+          breakClassName
+          breakLinkClassName
           disabledClassName
           disabledLinkClassName
           cursor-pointer

@@ -57,6 +57,7 @@ export default function AdminProductEditScreen() {
         setValue('slug', data.slug);
         setValue('price', data.price);
         setValue('image', data.image);
+        setValue('images', data.images);
         setValue('category', data.category);
         setValue('brand', data.brand);
         setValue('countInStock', data.countInStock);
@@ -71,7 +72,7 @@ export default function AdminProductEditScreen() {
 
   const router = useRouter();
 
-  const uploadHandler = async (e, imageField = 'image') => {
+  const uploadHandler = async (e, imageField = 'image' || 'images') => {
     const url = `https://api.cloudinary.com/v1_1/${process.env.NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME}/upload`;
     try {
       dispatch({ type: 'UPLOAD_REQUEST' });
@@ -86,10 +87,11 @@ export default function AdminProductEditScreen() {
       formData.append('timestamp', timestamp);
       formData.append('api_key', process.env.NEXT_PUBLIC_CLOUDINARY_API_KEY);
       const { data } = await axios.post(url, formData);
-
       dispatch({ type: 'UPLOAD_SUCCESS' });
       setValue(imageField, data.secure_url);
-      toast.success('Your file has been uploaded successfully!');
+      toast.success(
+        'Your file has been uploaded successfully, remember to click Apply!'
+      );
     } catch (err) {
       dispatch({ type: 'UPLOAD_FAIL', payload: getError(err) });
       toast.error(getError(err));
@@ -102,6 +104,7 @@ export default function AdminProductEditScreen() {
     price,
     category,
     image,
+    images,
     brand,
     countInStock,
     description,
@@ -114,6 +117,7 @@ export default function AdminProductEditScreen() {
         price,
         category,
         image,
+        images,
         brand,
         countInStock,
         description,

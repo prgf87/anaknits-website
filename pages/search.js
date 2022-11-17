@@ -102,19 +102,19 @@ export default function Search(props) {
 
   return (
     <Layout title="Search">
-      <div>
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-4 w-auto h-40 md:max-h-[50px] mb-10">
+      <div className="border-b-2 border-gray-300 pb-6 mb-4">
+        <div className="grid grid-cols-1 sm:grid-cols-4 mx-5 sm:gap-2 gap-10 md:max-h-[50px]">
           <div className="w-full">
             <h1 className="flex text-sm justify-center">Categories</h1>
             <div className="flex justify-center">
-              <div className="mb-3 md:mr-2">
+              <div className="mb-3">
                 <select
                   value={category}
                   onChange={categoryHandler}
                   className="
                       form-select 
                       block
-                      w-auto md:w-[155px] lg:w-[250px]                    
+                      w-[125px] md:w-[142px] lg:w-[224px]                   
                       text-sm
                       font-normal
                       text-gray-700
@@ -146,14 +146,14 @@ export default function Search(props) {
           <div className="container w-full">
             <h1 className="flex text-sm justify-center">Price</h1>
             <div className="flex justify-center">
-              <div className="mb-3 md:mr-2">
+              <div className="mb-3">
                 <select
                   value={price}
                   onChange={priceHandler}
                   className="
                       form-select 
                       block
-                      w-auto md:w-[155px] lg:w-[250px]                      
+                      w-[125px] md:w-[142px] lg:w-[224px]                      
                       text-sm
                       font-normal
                       text-gray-700
@@ -185,14 +185,14 @@ export default function Search(props) {
           <div className="container w-full max-h-20">
             <h1 className="flex text-sm justify-center">Sort By</h1>
             <div className="flex justify-center">
-              <div className="mb-3 md:mr-4 md:ml-2">
+              <div className="mb-3">
                 <select
                   value={sort}
                   onChange={sortHandler}
                   className="
                       form-select 
                       block
-                      w-auto md:w-[155px] lg:w-[250px]                    
+                      w-[125px] md:w-[142px] lg:w-[224px]                    
                       text-sm
                       font-normal
                       text-gray-700
@@ -214,8 +214,7 @@ export default function Search(props) {
               </div>
             </div>
           </div>
-
-          <div className="flex text-sm justify-center mt-2 w-auto">
+          <div className="flex text-sm justify-center w-auto">
             <h1>
               {products.length === 0 ? 'No' : countProducts} Results
               {query !== 'all' && query !== '' && ' : ' + query}
@@ -226,21 +225,34 @@ export default function Search(props) {
               price !== 'all' ? (
                 <button
                   onClick={() => router.push(`/search`)}
-                  className="flex justify-center border px-10 pl-10 pr-10 mt-2 text-black-700 px-[10px] bg-red-500 rounded-full border border-2 border-black hover:text-black-300 hover:bg-red-300"
+                  className="flex justify-center pl-1 pr-1 m-auto text-black-700 px-[10px] rounded-full hover:bg-red-600 border-4 border-black bg-red-400 hover:border-gray-700 w-[125px] md:w-[142px] lg:w-[224px]"
                 >
-                  {' '}
-                  Cancel
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    className="h-4 w-4"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                    stroke="currentColor"
+                    strokeWidth="3"
+                  >
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      d="M6 18L18 6M6 6l12 12"
+                    />
+                  </svg>
                 </button>
               ) : null}
             </h1>
           </div>
         </div>
       </div>
-      <div className="grid w-full grid-cols-1 md:grid-cols-4 mt-1 gap-1">
+
+      <div className="grid w-full h-auto grid-cols-1 md:grid-cols-4 mx-auto">
         {products.map((product) => (
           // eslint-disable-next-line react/jsx-key
           <div className="grid grid-cols-1 w-auto justify-between">
-            <div>
+            <div key={product.name}>
               <ProductItem
                 product={product}
                 key={product.slug}
@@ -250,7 +262,8 @@ export default function Search(props) {
           </div>
         ))}
       </div>
-      <div className="flex justify-center">
+
+      <div className="flex justify-center border-y-2 border-gray-300 py-4">
         <ReactPaginate
           pageCount={pages}
           pageRangeDisplayed={0}
@@ -260,16 +273,16 @@ export default function Search(props) {
           onPageChange={pageHandler}
           intialPage={parseInt(query.page || '1')}
           previousClassName={
-            'py-2 px-3 leading-tight text-gray-500 bg-white border border-gray-300 hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white'
+            'block py-2 px-3 leading-tight text-gray-500 bg-white  rounded-l-lg border border-gray-300 hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white'
           }
           nextClassName={
             'block py-2 px-3 leading-tight text-gray-500 bg-white rounded-r-lg border border-gray-300 hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white'
           }
-          containerClassName={'inline-flex items-center -space-x-px'}
-          // className="flex inline-row m-auto px-2 justify-center inline-row w-40 text-lg m-1 bg-gray-200 border border-solid gap-2"
-          pageClassName="py-2 px-3 ml-0 leading-tight text-gray-500 bg-white rounded-lg border border-gray-300 hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white"
-          breakClassName={'breakMe'}
-          breakLinkClassName={'breakLink'}
+          containerClassName="inline-flex items-center -space-x-px"
+          pageClassName="py-2 px-3 ml-0 leading-tight text-gray-500 bg-white border border-gray-300 hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white"
+          activeLinkClassName="bg-gray-100 text-black border border-1 border-gray-400 rounded-full px-4 py-2"
+          breakClassName
+          breakLinkClassName
           disabledClassName
           disabledLinkClassName
           cursor-pointer

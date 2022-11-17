@@ -7,6 +7,8 @@ import { Store } from '../utils/Store';
 import axios from 'axios';
 import { toast } from 'react-toastify';
 
+import Link from 'next/link';
+
 export default function Home({ products }) {
   const { state, dispatch } = useContext(Store);
   const { cart } = state;
@@ -17,7 +19,7 @@ export default function Home({ products }) {
     const { data } = await axios.get(`/api/products/${product._id}`);
 
     if (data.countInStock < quantity) {
-      return toast.error('Sorry, the product is not available');
+      return toast.error('Sorry, this product is now out of stock');
     }
     dispatch({ type: 'CART_ADD_ITEM', payload: { ...product, quantity } });
 
@@ -26,7 +28,7 @@ export default function Home({ products }) {
 
   return (
     <Layout title="Home Page">
-      <div className="grid grid-cols-1 gap-4 md:grid-cols-3 lg:grid-cols-3">
+      <div className="grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-3">
         {products.map((product) => (
           <ProductItem
             product={product}
@@ -35,13 +37,21 @@ export default function Home({ products }) {
           ></ProductItem>
         ))}
       </div>
+      <div className="w-full flex justify-center m-auto pt-5">
+        <button className="sidebarLinkButton border-2 border-black hover:focus-cyan-500">
+          <Link href={'/search'}>
+            <a className="text-black">Browse more Products</a>
+          </Link>
+        </button>
+      </div>
     </Layout>
   );
 }
 
 export async function getServerSideProps() {
   await db.connect();
-  const products = await Product.find().lean();
+
+  const products = await Product.find().lean().limit(6);
   return {
     props: {
       products: products.map(db.convertDocToObj),

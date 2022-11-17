@@ -11,7 +11,7 @@ import Cookies from 'js-cookie';
 import Image from 'next/image';
 import logo from '../public/images/logov3.png';
 import hamicon from '../public/images/hamicon.png';
-import { ChevronRightIcon } from '@heroicons/react/solid';
+// import { ChevronRightIcon } from '@heroicons/react/solid';
 import facebook from '../public/images/facebookicon2.png';
 import instagram from '../public/images/instaicon2.png';
 import whatsapp from '../public/images/whatsappicon2.png';
@@ -19,7 +19,7 @@ import email from '../public/images/emailicon2.png';
 import { getError } from '../utils/error';
 import axios from 'axios';
 import { useRouter } from 'next/router';
-
+import Footer from './Footer';
 
 function Layout({ title, children }) {
   const { status, data: session } = useSession();
@@ -41,7 +41,6 @@ function Layout({ title, children }) {
   };
 
   const [open, setOpen] = useState(false);
-
 
   if (typeof document !== 'undefined') {
     const body = document.querySelector('body');
@@ -65,7 +64,6 @@ function Layout({ title, children }) {
     fetchCategories();
   }, []);
 
-
   const [query, setQuery] = useState('');
   const queryChangeHandler = (e) => {
     setQuery(e.target.value);
@@ -76,7 +74,7 @@ function Layout({ title, children }) {
   };
 
   return (
-    <div>
+    <divdiv>
       <Head>
         <title>{title ? title + ' - Anaknits' : 'Anaknits'}</title>
         <meta name="home page" content="Anaknits Website" />
@@ -89,7 +87,6 @@ function Layout({ title, children }) {
         <header>
           <nav>
             <div className="topHeader flex px-1 py-1 justify-between">
-
               <div className={`sidebarIcon z-50 p-0`}>
                 <button onClick={() => setOpen(!open)}>
                   <Image src={hamicon} alt={Menu} height={34} width={34} />
@@ -126,13 +123,11 @@ function Layout({ title, children }) {
                     </button>
                   </form>
                 </div>
-
               </div>
 
               <div>
                 <Link href="/cart">
                   <a className="text-gray-500 p-2 hover:brightness-50">
-
                     Cart
                     {cartItemsCount > 0 && (
                       <span className="ml-1 rounded-full bg-blue-500 px-2 py-1 text-xs font-bold text-white">
@@ -145,13 +140,11 @@ function Layout({ title, children }) {
                 {status === 'loading' ? (
                   'Loading'
                 ) : session?.user ? (
-
                   <Menu
                     as="div"
                     className="relative inline-block z-10 hidden md:inline-block"
                   >
                     <Menu.Button className="text-gray-500 p-2 hover:brightness-50">
-
                       {session.user.name}
                     </Menu.Button>
                     <Menu.Items className="absolute right-0 w-56 origin-top-right  bg-white shadow-lg">
@@ -191,9 +184,7 @@ function Layout({ title, children }) {
                   </Menu>
                 ) : (
                   <Link href="/login">
-
                     <a className="p-2 hidden md:inline-block">Login</a>
-
                   </Link>
                 )}
               </div>
@@ -208,12 +199,10 @@ function Layout({ title, children }) {
                     ? 'transition-opacity ease-in-out opacity-70 overscroll-hidden fixed'
                     : 'transition-opacity ease-in-out opacity-0 scale-0'
                 } ease-in-out duration-300`}
-
               ></div>
               <div
                 id="sidebarBg"
                 className={`absolute z-10 top-0 left-0 bg-white h-full ${
-
                   open
                     ? 'w-full md:w-4/12 lg:w-3/12 overscroll-hidden fixed'
                     : 'w-0'
@@ -227,13 +216,11 @@ function Layout({ title, children }) {
                   <div
                     className={`z-10 ${
                       open ? 'duration-300' : 'transition-opacity opacity-0'
-
                     } ease-in-out duration-300`}
                   >
                     <Image src={logo} alt={'/'} height={35} width={185} />
                   </div>
                 </div>
-
 
                 <table className="w-full">
                   <tbody
@@ -431,14 +418,12 @@ function Layout({ title, children }) {
                                   />
                                 </a>
                               </Link>
-
                             </div>
                           </div>
                         </div>
                       </div>
                     </div>
                   </div>
-
                 </div>
               </div>
             </div>
@@ -494,18 +479,17 @@ function Layout({ title, children }) {
                 </li>
               </ul>
             </div>
-
           </nav>
         </header>
         <main className="container md:mt-5 mx-auto md:px-[5%] max-h-max ">
           {children}
         </main>
         <footer className="h-40 md:px-[5%]">
-          <div className="p-10">
+          <Footer />
+          {/* <div className="p-10">
             <div className="max-w-7xl mx-auto jutify-center">
               <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-2">
                 <div className="mb-5">
-
                   <h4 className="font-bold text-2xl pb-4 flex place-content-center md:place-content-start">
                     Anaknits
                   </h4>
@@ -514,7 +498,6 @@ function Layout({ title, children }) {
                   </p>
                   <p className="text-gray-500 flex place-content-center md:place-content-start">
                     <strong>Email: </strong>&nbsp;info@anaknits.com
-
                   </p>
                 </div>
                 <div className="mb-5">
@@ -522,25 +505,25 @@ function Layout({ title, children }) {
                     Useful Links
                   </h4>
                   <ul className="text-gray-500">
-                    <li className="flex cursor-pointer flex place-content-center md:place-content-start">
+                    <li className="flex cursor-pointer place-content-center md:place-content-start">
                       <ChevronRightIcon className="h-5 w-5 pt-1 text-blue-500 " />
                       <p className="hover:brightness-50">
                         <Link href={'/'}>Home</Link>
                       </p>
                     </li>
-                    <li className="flex cursor-pointer flex place-content-center md:place-content-start">
+                    <li className="flex cursor-pointer place-content-center md:place-content-start">
                       <ChevronRightIcon className="h-5 w-5 pt-1 text-blue-500 " />
                       <p className="hover:brightness-50">
                         <Link href={'/contact'}>About Us</Link>
                       </p>
                     </li>
-                    <li className="flex cursor-pointer flex place-content-center md:place-content-start">
+                    <li className="flex cursor-pointer place-content-center md:place-content-start">
                       <ChevronRightIcon className="h-5 w-5 pt-1 text-blue-500 " />
                       <p className="hover:brightness-50">
                         <Link href={'/policies/tos'}>Terms of Services</Link>
                       </p>
                     </li>
-                    <li className="flex cursor-pointer flex place-content-center md:place-content-start">
+                    <li className="flex cursor-pointer place-content-center md:place-content-start">
                       <ChevronRightIcon className="h-5 w-5 pt-1 text-blue-500 " />
                       <p className="hover:brightness-50">
                         <Link href={'/policies/privacypolicy'}>
@@ -555,13 +538,13 @@ function Layout({ title, children }) {
                     Services
                   </h4>
                   <ul className="text-gray-500">
-                    <li className="flex  cursor-pointer flex place-content-center md:place-content-start">
+                    <li className="flex  cursor-pointer place-content-center md:place-content-start">
                       <ChevronRightIcon className="h-5 w-5 pt-1 text-blue-500 " />
                       <p className="hover:brightness-50">
                         <Link href={'/contact'}>Contact Us</Link>
                       </p>
                     </li>
-                    <li className="flex cursor-pointer flex place-content-center md:place-content-start">
+                    <li className="flex cursor-pointer place-content-center md:place-content-start">
                       <ChevronRightIcon className="h-5 w-5 pt-1 text-blue-500 " />
                       <p className="hover:brightness-50">
                         <Link href={'/policies/returnspolicy'}>
@@ -569,7 +552,7 @@ function Layout({ title, children }) {
                         </Link>
                       </p>
                     </li>
-                    <li className="flex cursor-pointer flex place-content-center md:place-content-start">
+                    <li className="flex cursor-pointer place-content-center md:place-content-start">
                       <ChevronRightIcon className="h-5 w-5 pt-1 text-blue-500 " />
                       <p className="hover:brightness-50">
                         <Link href={'/policies/shippingpolicy'}>
@@ -577,7 +560,7 @@ function Layout({ title, children }) {
                         </Link>
                       </p>
                     </li>
-                    <li className="flex cursor-pointer flex place-content-center md:place-content-start">
+                    <li className="flex cursor-pointer place-content-center md:place-content-start">
                       <ChevronRightIcon className="h-5 w-5 pt-1 text-blue-500 " />
                       <p className="hover:brightness-50">
                         <Link href={'/policies/cookiepolicy'}>
@@ -653,10 +636,10 @@ function Layout({ title, children }) {
                 </div>
               </div>
             </div>
-          </div>
+          </div> */}
         </footer>
       </div>
-    </div>
+    </divdiv>
   );
 }
 

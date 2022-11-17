@@ -147,10 +147,9 @@ export default function AdminProductsScreen() {
                     <tr key={product._id} className="border-b">
                       <td className="p-5">{product._id.substring(20, 24)}</td>
                       <td className="p-5">{product.name}</td>
-                      <td className="p-5">£{product.price}</td>
+                      <td className="p-5">${product.price}</td>
                       <td className="p-5">{product.category}</td>
                       <td className="p-5">{product.countInStock}</td>
-
                       <td className="p-5 flex">
                         <Link href={`/admin/product/${product._id}`}>
                           <button className="primary-button w-auto">

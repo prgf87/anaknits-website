@@ -37,7 +37,7 @@ function CartScreen() {
           Cart is Empty. <Link href="/">Go back to Product Page</Link>
         </div>
       ) : (
-        <div className="grid md:grid-cols-4 md:gap-5">
+        <div className="grid md:grid-cols-4 md:gap-5 md:min-h-[25rem]">
           <div className="overflow-x-auto md:col-span-3">
             <table className="min-w-full">
               <thead className="border-d">
@@ -52,7 +52,7 @@ function CartScreen() {
                 {cartItems.map((item) => (
                   <tr key={item.slug} className="border-b">
                     <td>
-                      <Link href={`/product/$(item.slug)`}>
+                      <Link href={`/product/${item.slug}`}>
                         <a className="flex items-center">
                           <Image
                             src={item.image}
@@ -79,7 +79,8 @@ function CartScreen() {
                         ))}
                       </select>
                     </td>
-                    <td className="p-5 text-right">£{item.price}</td>
+
+                    <td className="p-5 text-right">${item.price}</td>
                     <td className="p-5 text-center">
                       <button onClick={() => removeItemHandler(item)}>
                         <XCircleIcon className="h-5 w-5"></XCircleIcon>
@@ -94,7 +95,7 @@ function CartScreen() {
             <ul>
               <li>
                 <div className="pb-3 text-xl">
-                  Subtotal ({cartItems.reduce((a, c) => a + c.quantity, 0)}) : £
+                  Subtotal ({cartItems.reduce((a, c) => a + c.quantity, 0)}) : $
                   {cartItems.reduce((a, c) => a + c.quantity * c.price, 0)}
                 </div>
               </li>
@@ -110,6 +111,13 @@ function CartScreen() {
           </div>
         </div>
       )}
+      <div className="w-full flex justify-center m-auto pt-5">
+        <button className="sidebarLinkButton border-2 border-black hover:focus-cyan-500">
+          <Link href={'/search'}>
+            <a className="text-black">Browse more Products</a>
+          </Link>
+        </button>
+      </div>
     </Layout>
   );
 }

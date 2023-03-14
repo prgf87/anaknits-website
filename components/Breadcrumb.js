@@ -1,5 +1,4 @@
 import { ChevronRightIcon } from '@heroicons/react/solid';
-import Link from 'next/link';
 import React, { Children, Fragment } from 'react';
 
 const Breadcrumb = ({ children }) => {
@@ -13,11 +12,7 @@ const Breadcrumb = ({ children }) => {
         </Fragment>
       );
     }
-    return (
-      <Link href={'/'} key={index}>
-        <a>{child}</a>
-      </Link>
-    );
+    return child;
   });
 
   return (

@@ -11,7 +11,7 @@ import email from '../public/images/emailicon.png';
 export default function FooterInfo() {
   return (
     <div className="p-10">
-      <div className="max-w-7xl mx-auto jutify-center">
+      <div className="max-w-7xl mx-auto justify-center">
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-2">
           <div className="mb-5">
             <h4 className="font-bold text-2xl pb-4 flex place-content-center md:place-content-start">
@@ -21,13 +21,14 @@ export default function FooterInfo() {
             {/* <p className="text-gray-500 flex place-content-center md:place-content-start">
               <strong>Phone: </strong>&nbsp; +1 234-567-891
             </p> */}
-            <div className="text-gray-500 flex cursor-pointer place-content-center md:place-content-start">
-              <p className="hover:brightness-50">
+            {/* <div className="text-gray-500 flex cursor-pointer place-content-center md:place-content-start">
+              <p className="hover:brightness-50 flex">
+                <ChevronRightIcon className="h-5 w-5 pt-1 text-blue-500 " />
                 <Link href={'/policies'}>
-                  <strong>Disclaimer</strong>
+                  <u>Disclaimer</u>
                 </Link>
               </p>
-            </div>
+            </div> */}
 
             <p className="text-gray-500 flex place-content-center md:place-content-start">
               <strong>Email: </strong>&nbsp;info@anaknits.com
@@ -35,6 +36,14 @@ export default function FooterInfo() {
             <p className="text-gray-500 flex place-content-center md:place-content-start">
               <strong>Copyright </strong>&nbsp;&copy;&nbsp;AnaKnits 2022
             </p>
+            <div className="text-gray-500 flex cursor-pointer place-content-left">
+              <p className="hover:brightness-50 flex">
+                <ChevronRightIcon className="h-5 w-5 pt-1 text-blue-500 " />
+                <Link href={'/policies'}>
+                  <u>Disclaimer</u>
+                </Link>
+              </p>
+            </div>
           </div>
           <div className="mb-5">
             <h4 className="font-bold text-2xl pb-4 flex place-content-center md:place-content-start">

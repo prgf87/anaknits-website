@@ -7,9 +7,8 @@ const Breadcrumb = ({ children }) => {
     if (index !== childrenArray.length - 1) {
       return (
         <Fragment key={index} className>
-
           {child}
-          <ChevronRightIcon className="flex inline h-5 w-5 pt-1 text-gray-600 " />
+          <ChevronRightIcon className="flex h-5 w-5 pt-1 text-gray-600 " />
         </Fragment>
       );
     }

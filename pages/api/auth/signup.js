@@ -4,7 +4,7 @@ import bcryptjs from 'bcryptjs';
 
 async function handler(req, res) {
   if (req.method !== 'POST') {
-    return;
+    return res.status(400).send({ message: `${req.method} not supported` });
   }
   const { name, email, password } = req.body;
   if (

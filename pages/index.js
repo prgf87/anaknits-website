@@ -12,7 +12,7 @@ import Link from 'next/link';
 export default function Home({ products }) {
   const { state, dispatch } = useContext(Store);
   const { cart } = state;
-  const [productLimit, setProductLimit] = useState(6);
+  // const [productLimit, setProductLimit] = useState(6);
 
   const addToCartHandler = async (product) => {
     const existItem = cart.cartItems.find((x) => x.slug === product.slug);
@@ -49,11 +49,10 @@ export default function Home({ products }) {
   );
 }
 
-
 export async function getServerSideProps() {
   await db.connect();
 
-  const products = await Product.find().lean().limit(productLimit);
+  const products = await Product.find().lean().limit(6);
   return {
     props: {
       products: products.map(db.convertDocToObj),

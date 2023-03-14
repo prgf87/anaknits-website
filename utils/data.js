@@ -14,18 +14,18 @@ const data = {
       password: bcrypt.hashSync('SuperStrongPa55Word'),
       isAdmin: true,
     },
-    {
-      name: 'Mum - The Boss',
-      email: 'ana_guimaraes@msn.com',
-      password: bcrypt.hashSync('change me'),
-      isAdmin: true,
-    },
-    {
-      name: 'Mafalda',
-      email: 'ana.m.guimaraes.ferreira@gmail.com',
-      password: bcrypt.hashSync('change me'),
-      isAdmin: false,
-    },
+    // {
+    //   name: 'Mum - The Boss',
+    //   email: 'ana_guimaraes@msn.com',
+    //   password: bcrypt.hashSync('change me'),
+    //   isAdmin: true,
+    // },
+    // {
+    //   name: 'Mafalda',
+    //   email: 'ana.m.guimaraes.ferreira@gmail.com',
+    //   password: bcrypt.hashSync('change me'),
+    //   isAdmin: false,
+    // },
   ],
   // products: [
   //   {

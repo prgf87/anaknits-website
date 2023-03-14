@@ -22,7 +22,7 @@ export default function SearchBar() {
           <Link
             href={`/search?category%3Fkidknits=&category=Blankets+%26+Socks`}
           >
-            Blanket &amp; Socks
+            Blankets &amp; Socks
           </Link>
         </li>
         <li className="text-lg text-gray-500 cursor-pointer hover:brightness-50">

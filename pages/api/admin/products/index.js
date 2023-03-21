@@ -31,7 +31,7 @@ const postHandler = async (req, res) => {
     slug: 'sample-name-' + Math.random(),
     image: 'Upload image using the link below',
     price: 0,
-    category: 'Product item catergory',
+    category: 'Product item category',
     brand: 'Anaknits',
     countInStock: 0,
     description: 'Give this item a nice description',

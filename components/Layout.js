@@ -11,10 +11,10 @@ import Cookies from 'js-cookie';
 import Image from 'next/image';
 import logo from '../public/images/logov3.png';
 import hamicon from '../public/images/hamicon.png';
-import facebook from '../public/images/facebookicon2.png';
-import instagram from '../public/images/instaicon2.png';
-import whatsapp from '../public/images/whatsappicon2.png';
-import email from '../public/images/emailicon2.png';
+// import facebook from '../public/images/facebookicon2.png';
+// import instagram from '../public/images/instaicon2.png';
+// import whatsapp from '../public/images/whatsappicon2.png';
+// import email from '../public/images/emailicon2.png';
 import { getError } from '../utils/error';
 import axios from 'axios';
 import { useRouter } from 'next/router';
@@ -190,7 +190,7 @@ function Layout({ title, children }) {
               </div>
             </div>
 
-            <div id="sidebar">
+            {/* <div id="sidebar">
               <div
                 id="bgBlur"
                 onClick={() => setOpen(!open)}
@@ -426,7 +426,8 @@ function Layout({ title, children }) {
                   </div>
                 </div>
               </div>
-            </div>
+            </div> */}
+
             <div className="flex flex-col justify-center items-center">
               <div className="px-10 lg:px-5 md:px-20">
                 <Link href="/">
@@ -436,6 +437,7 @@ function Layout({ title, children }) {
                 </Link>
               </div>
             </div>
+
             <div className="py-3 hidden md:block">
               <SearchBar />
             </div>

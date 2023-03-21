@@ -15,12 +15,14 @@ function reducer(state, action) {
       return { ...state, loading: false, error: '' };
     case 'FETCH_FAIL':
       return { ...state, loading: false, error: action.payload };
+
     case 'UPDATE_REQUEST':
       return { ...state, loadingUpdate: true, errorUpdate: '' };
     case 'UPDATE_SUCCESS':
       return { ...state, loadingUpdate: false, errorUpdate: '' };
     case 'UPDATE_FAIL':
       return { ...state, loadingUpdate: false, errorUpdate: action.payload };
+
     case 'UPLOAD_REQUEST':
       return { ...state, loadingUpload: true, errorUpload: '' };
     case 'UPLOAD_SUCCESS':
@@ -72,7 +74,7 @@ export default function AdminProductEditScreen() {
 
   const router = useRouter();
 
-  const uploadHandler = async (e, imageField = 'image' || 'images') => {
+  const uploadHandler = async (e, imageField = 'image') => {
     const url = `https://api.cloudinary.com/v1_1/${process.env.NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME}/upload`;
     try {
       dispatch({ type: 'UPLOAD_REQUEST' });
@@ -86,11 +88,12 @@ export default function AdminProductEditScreen() {
       formData.append('signature', signature);
       formData.append('timestamp', timestamp);
       formData.append('api_key', process.env.NEXT_PUBLIC_CLOUDINARY_API_KEY);
+
       const { data } = await axios.post(url, formData);
       dispatch({ type: 'UPLOAD_SUCCESS' });
       setValue(imageField, data.secure_url);
       toast.success(
-        'Your file has been uploaded successfully, remember to click Apply!'
+        'Your file has been uploaded successfully, remember to click Update to apply changes!'
       );
     } catch (err) {
       dispatch({ type: 'UPLOAD_FAIL', payload: getError(err) });
@@ -221,7 +224,7 @@ export default function AdminProductEditScreen() {
                 )}
               </div>
               <div className="mb-4">
-                <label htmlFor="image">Upload Product Image</label>
+                <label htmlFor="imageFile">Upload Product Image</label>
                 <input
                   type="file"
                   className="w-full"

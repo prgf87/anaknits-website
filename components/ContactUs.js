@@ -213,7 +213,7 @@ export default function ContactUs() {
                 </div>
                 <button
                   type="submit"
-                  className="inline-block self-end bg-gray-500 text-white font-bold rounded-lg px-6 py-2 uppercase text-sm"
+                  className="inline-block self-end bg-gray-500 text-white font-bold rounded-lg px-8 py-2 uppercase text-sm"
                 >
                   {buttonText}
                   <svg
@@ -233,12 +233,16 @@ export default function ContactUs() {
                 <div className="text-left">
                   {showSuccessMessage && (
                     <p className="text-green-500 font-semibold text-sm my-2">
-                      Thank-you! Your Message has been delivered.
+                      Thank you for getting in touch! Your message has been
+                      successfully delivered and we will reply as soon as
+                      possible.
                     </p>
                   )}
                   {showFailureMessage && (
                     <p className="text-red-500">
-                      Oops! Something went wrong, please try again.
+                      Oops! Something went wrong, please try again later or get
+                      in contact directly by sending an email to
+                      info@anaknits.com or by visiting our social media.
                     </p>
                   )}
                 </div>

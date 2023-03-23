@@ -3,7 +3,7 @@ import React from 'react';
 
 export default function SearchBar() {
   return (
-    <div className="py-1 hidden md:block shadow-md">
+    <div className="pb-2 pt-8 hidden md:block shadow-md">
       <ul className="flex md:space-x-4 lg:space-x-20 justify-center items-center">
         <li className="text-lg text-gray-500 cursor-pointer hover:brightness-50">
           <Link href={'/'}>Home</Link>

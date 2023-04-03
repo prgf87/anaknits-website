@@ -132,7 +132,7 @@ export default function AdminProductsScreen() {
           ) : (
             <div className="overflow-x-auto">
               <table className="min-w-full">
-                <thead className="border-b">
+                <thead className="border-b border-2">
                   <tr>
                     <th className="px-5 text-left">ID</th>
                     <th className="px-5 text-left">Name</th>

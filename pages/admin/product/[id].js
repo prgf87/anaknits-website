@@ -59,7 +59,6 @@ export default function AdminProductEditScreen() {
         setValue('slug', data.slug);
         setValue('price', data.price);
         setValue('image', data.image);
-        setValue('images', data.images);
         setValue('category', data.category);
         setValue('brand', data.brand);
         setValue('countInStock', data.countInStock);
@@ -216,7 +215,7 @@ export default function AdminProductEditScreen() {
                   className="w-full"
                   id="image"
                   {...register('image', {
-                    required: 'Please enter product image',
+                    required: 'Upload image using the link below',
                   })}
                 />
                 {errors.image && (
@@ -279,7 +278,9 @@ export default function AdminProductEditScreen() {
               </div>
               <div className="mb-4">
                 <label htmlFor="description">Product Description</label>
-                <input
+                <textarea
+                  cols={60}
+                  rows={5}
                   type="text"
                   className="w-full"
                   id="description"

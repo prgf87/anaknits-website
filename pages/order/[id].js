@@ -314,7 +314,7 @@ function OrderScreen() {
                   {orderItems.map((item) => (
                     <tr key={item._id} className="border-b">
                       <td>
-                        <Link href={`/product/${item.slug}`}>
+                        <Link href={`/products/${item.slug}`}>
                           <a className="flex items-center">
                             <Image
                               src={item.image}

@@ -120,7 +120,7 @@ function AdminDashboardScreen() {
                 <div className="card m-5 p-5">
                   <p className="text-3xl">{summary.productsCount}</p>
                   <p>Products</p>
-                  <Link href="/admin/products">View Products</Link>
+                  <Link href="/admin/product">View Products</Link>
                 </div>
                 <div className="card m-5 p-5">
                   <p className="text-3xl">{summary.usersCount}</p>

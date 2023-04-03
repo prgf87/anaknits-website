@@ -32,7 +32,7 @@ const postHandler = async (req, res) => {
     image: 'Upload image using the link below',
     price: 0,
     category: 'Product item category',
-    brand: 'Anaknits',
+    brand: 'Ana Knits',
     countInStock: 0,
     description: 'Give this item a nice description',
   });

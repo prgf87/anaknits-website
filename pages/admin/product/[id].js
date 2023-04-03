@@ -6,6 +6,7 @@ import { useForm } from 'react-hook-form';
 import { toast } from 'react-toastify';
 import Layout from '../../../components/Layout';
 import { getError } from '../../../utils/error';
+import { useState } from 'react';
 
 function reducer(state, action) {
   switch (action.type) {
@@ -133,6 +134,24 @@ export default function AdminProductEditScreen() {
     }
   };
 
+  var slugify = require('slugify');
+
+  const [name, setName] = useState('');
+  const [slug, setSlug] = useState('');
+
+  const handleNameChange = (e) => {
+    setName(e.target.value);
+  };
+
+  const handleButtonClick = () => {
+    const createSlug = (inputString) => {
+      const slug = slugify(inputString);
+      return slug;
+    };
+    const newSlug = createSlug(name.toLowerCase());
+    setSlug(newSlug);
+  };
+
   return (
     <Layout title={`Edit Product ${productId}`}>
       <div className="grid md:grid-cols-4 md:gap-5">
@@ -160,151 +179,168 @@ export default function AdminProductEditScreen() {
           ) : error ? (
             <div className="alert-error">{error}</div>
           ) : (
-            <form
-              className="mx-auto max-w-screen-md"
-              onSubmit={handleSubmit(submitHandler)}
-            >
-              <h1 className="mb-4 text-xl">{`Edit Product ${productId}`}</h1>
-              <div className="mb-4">
-                <label htmlFor="name">Product Name</label>
-                <input
-                  type="text"
-                  className="w-full"
-                  id="name"
-                  autoFocus
-                  {...register('name', {
-                    required: 'Please enter product name',
-                  })}
-                />
-                {errors.name && (
-                  <div className="text-red-500">{errors.name.message}</div>
-                )}
-              </div>
-              <div className="mb-4">
-                <label htmlFor="slug">Slug</label>
-                <input
-                  type="text"
-                  className="w-full"
-                  id="slug"
-                  {...register('slug', {
-                    required: 'Please enter product slug',
-                  })}
-                />
-                {errors.slug && (
-                  <div className="text-red-500">{errors.slug.message}</div>
-                )}
-              </div>
-              <div className="mb-4">
-                <label htmlFor="price">Product Price</label>
-                <input
-                  type="text"
-                  className="w-full"
-                  id="price"
-                  {...register('price', {
-                    required: 'Please enter product price',
-                  })}
-                />
-                {errors.price && (
-                  <div className="text-red-500">{errors.price.message}</div>
-                )}
-              </div>
-              <div className="mb-4">
-                <label htmlFor="image">Product Image</label>
-                <input
-                  type="text"
-                  className="w-full"
-                  id="image"
-                  {...register('image', {
-                    required: 'Upload image using the link below',
-                  })}
-                />
-                {errors.image && (
-                  <div className="text-red-500">{errors.image.message}</div>
-                )}
-              </div>
-              <div className="mb-4">
-                <label htmlFor="imageFile">Upload Product Image</label>
-                <input
-                  type="file"
-                  className="w-full"
-                  id="imageFile"
-                  onChange={uploadHandler}
-                />
-                {loadingUpload && <div>Uploading image...</div>}
-              </div>
-              <div className="mb-4">
-                <label htmlFor="category">Product Category</label>
-                <input
-                  type="text"
-                  className="w-full"
-                  id="category"
-                  {...register('category', {
-                    required: 'Please enter product category',
-                  })}
-                />
-                {errors.category && (
-                  <div className="text-red-500">{errors.category.message}</div>
-                )}
-              </div>
-              <div className="mb-4">
-                <label htmlFor="brand">Product Brand</label>
-                <input
-                  type="text"
-                  className="w-full"
-                  id="brand"
-                  {...register('brand', {
-                    required: 'Please enter product brand',
-                  })}
-                />
-                {errors.brand && (
-                  <div className="text-red-500">{errors.brand.message}</div>
-                )}
-              </div>
-              <div className="mb-4">
-                <label htmlFor="countInStock">Product Stock Count</label>
-                <input
-                  type="text"
-                  className="w-full"
-                  id="countInStock"
-                  {...register('countInStock', {
-                    required: 'Please enter product stock count',
-                  })}
-                />
-                {errors.countInStock && (
-                  <div className="text-red-500">
-                    {errors.countInStock.message}
-                  </div>
-                )}
-              </div>
-              <div className="mb-4">
-                <label htmlFor="description">Product Description</label>
-                <textarea
-                  cols={60}
-                  rows={5}
-                  type="text"
-                  className="w-full"
-                  id="description"
-                  {...register('description', {
-                    required: 'Please enter product description',
-                  })}
-                />
-                {errors.description && (
-                  <div className="text-red-500">
-                    {errors.description.message}
-                  </div>
-                )}
-              </div>
-              <div className="mb-4">
-                <button disabled={loadingUpdate} className="primary-button">
-                  {loadingUpdate ? 'Loading' : 'Update'}
-                </button>
-              </div>
-              <div className="mb-4">
-                <Link href={`/admin/products`}>
-                  <button className="secondary-button">Back</button>
-                </Link>
-              </div>
-            </form>
+            <>
+              <button
+                className="thirdary-button mb-4 text-sm relative top-[164px] left-[23.2rem]"
+                onClick={handleButtonClick}
+              >
+                Convert to Slug
+              </button>
+              <form
+                className="mx-auto max-w-screen-md"
+                onSubmit={handleSubmit(submitHandler)}
+              >
+                <h1 className="mb-4 text-xl">{`Edit Product ${productId}`}</h1>
+                <div className="mb-4">
+                  <label htmlFor="name">Product Name</label>
+
+                  <input
+                    type="text"
+                    className="w-full"
+                    id="name"
+                    autoFocus
+                    {...register('name', {
+                      required: 'Please enter product name',
+                    })}
+                    value={name}
+                    onChange={handleNameChange}
+                  />
+                  {errors.name && (
+                    <div className="text-red-500">{errors.name.message}</div>
+                  )}
+                </div>
+
+                <div className="mb-4">
+                  <label htmlFor="slug">Slug</label>
+
+                  <input
+                    type="text"
+                    className="w-full"
+                    id="slug"
+                    value={slug}
+                    readOnly
+                    {...register('slug', {
+                      required: 'Please enter product slug',
+                    })}
+                  />
+                  {errors.slug && (
+                    <div className="text-red-500">{errors.slug.message}</div>
+                  )}
+                </div>
+                <div className="mb-4">
+                  <label htmlFor="price">Product Price</label>
+                  <input
+                    type="text"
+                    className="w-full"
+                    id="price"
+                    {...register('price', {
+                      required: 'Please enter product price',
+                    })}
+                  />
+                  {errors.price && (
+                    <div className="text-red-500">{errors.price.message}</div>
+                  )}
+                </div>
+                <div className="mb-4">
+                  <label htmlFor="image">Product Image</label>
+                  <input
+                    type="text"
+                    className="w-full"
+                    id="image"
+                    {...register('image', {
+                      required: 'Upload image using the link below',
+                    })}
+                  />
+                  {errors.image && (
+                    <div className="text-red-500">{errors.image.message}</div>
+                  )}
+                </div>
+                <div className="mb-4">
+                  <label htmlFor="imageFile">Upload Product Image</label>
+                  <input
+                    type="file"
+                    className="w-full"
+                    id="imageFile"
+                    onChange={uploadHandler}
+                  />
+                  {loadingUpload && <div>Uploading image...</div>}
+                </div>
+                <div className="mb-4">
+                  <label htmlFor="category">Product Category</label>
+                  <input
+                    type="text"
+                    className="w-full"
+                    id="category"
+                    {...register('category', {
+                      required: 'Please enter product category',
+                    })}
+                  />
+                  {errors.category && (
+                    <div className="text-red-500">
+                      {errors.category.message}
+                    </div>
+                  )}
+                </div>
+                <div className="mb-4">
+                  <label htmlFor="brand">Product Brand</label>
+                  <input
+                    type="text"
+                    className="w-full"
+                    id="brand"
+                    {...register('brand', {
+                      required: 'Please enter product brand',
+                    })}
+                  />
+                  {errors.brand && (
+                    <div className="text-red-500">{errors.brand.message}</div>
+                  )}
+                </div>
+                <div className="mb-4">
+                  <label htmlFor="countInStock">Product Stock Count</label>
+                  <input
+                    type="text"
+                    className="w-full"
+                    id="countInStock"
+                    {...register('countInStock', {
+                      required: 'Please enter product stock count',
+                    })}
+                  />
+                  {errors.countInStock && (
+                    <div className="text-red-500">
+                      {errors.countInStock.message}
+                    </div>
+                  )}
+                </div>
+                <div className="mb-4">
+                  <label htmlFor="description">Product Description</label>
+                  <textarea
+                    cols={60}
+                    rows={5}
+                    type="text"
+                    className="w-full"
+                    id="description"
+                    {...register('description', {
+                      required: 'Please enter product description',
+                    })}
+                  />
+                  {errors.description && (
+                    <div className="text-red-500">
+                      {errors.description.message}
+                    </div>
+                  )}
+                </div>
+                <div className="mb-4">
+                  <button disabled={loadingUpdate} className="primary-button">
+                    {loadingUpdate ? 'Loading' : 'Update'}
+                  </button>
+                </div>
+                <div className="mb-4">
+                  <Link href={`/admin/products`}>
+                    <button className="secondary-button">Back</button>
+                  </Link>
+                </div>
+              </form>
+            </>
           )}
         </div>
       </div>

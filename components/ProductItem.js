@@ -4,6 +4,10 @@ import Link from 'next/link';
 import Image from 'next/image';
 
 export default function ProductItem({ product, addToCartHandler }) {
+  const customParams = {
+    width: '500px',
+    height: '750px',
+  };
   return (
     <div className="card mx-0 md:mx-2">
       <Link href={`/products/${product.slug}`}>
@@ -12,8 +16,7 @@ export default function ProductItem({ product, addToCartHandler }) {
             src={product.image}
             alt={product.name}
             fetchpriority={'high'}
-            width="5000px"
-            height="7500px"
+            {...customParams}
             className="rounded shadow object-cover"
           />
         </a>

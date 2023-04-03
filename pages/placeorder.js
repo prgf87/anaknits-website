@@ -63,6 +63,11 @@ export default function PlaceOrderScreen() {
     }
   };
 
+  const customParams = {
+    width: '50px',
+    height: '50px',
+  };
+
   return (
     <Layout title="Place Order">
       <CheckoutWizard activeStep={3} />
@@ -112,8 +117,7 @@ export default function PlaceOrderScreen() {
                             <Image
                               src={item.image}
                               alt={item.name}
-                              width={50}
-                              height={50}
+                              {...customParams}
                             />
                             &nbsp;
                             {item.name}

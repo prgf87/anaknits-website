@@ -31,6 +31,11 @@ export default function ProductScreen(props) {
     router.push('/cart');
   };
 
+  const customParams = {
+    width: '500px',
+    height: '750px',
+  };
+
   return (
     <Layout title={product.name}>
       <div className="py-2">
@@ -41,8 +46,7 @@ export default function ProductScreen(props) {
           <Image
             src={product.image}
             alt={product.name}
-            width={400}
-            height={800}
+            {...customParams}
             className="object-cover"
           />
         </div>

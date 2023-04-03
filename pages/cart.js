@@ -29,6 +29,12 @@ function CartScreen() {
     dispatch({ type: 'CART_ADD_ITEM', payload: { ...item, quantity } });
     return toast.success('Product has been updated to the cart');
   };
+
+  const customParams = {
+    width: '50px',
+    height: '50px',
+  };
+
   return (
     <Layout title={'Shopping Cart'}>
       <h1 className="mb-4 text-xl">Shopping Cart</h1>
@@ -57,8 +63,7 @@ function CartScreen() {
                           <Image
                             src={item.image}
                             alt={item.name}
-                            width={50}
-                            height={50}
+                            {...customParams}
                           />
                           &nbsp;
                           {item.name}

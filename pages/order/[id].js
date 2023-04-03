@@ -265,6 +265,11 @@ function OrderScreen() {
     }
   }
 
+  const customParams = {
+    width: '50px',
+    height: '50px',
+  };
+
   return (
     <Layout title={`Order ${orderId}`}>
       <h1 className="mb-4 text-xl">{`Order ${orderId}`}</h1>
@@ -319,8 +324,7 @@ function OrderScreen() {
                             <Image
                               src={item.image}
                               alt={item.name}
-                              width={50}
-                              height={50}
+                              {...customParams}
                             ></Image>
                             &nbsp;
                             {item.name}

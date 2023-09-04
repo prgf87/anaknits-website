@@ -3,35 +3,6 @@ import Link from 'next/link';
 import React, { useEffect, useReducer } from 'react';
 import Layout from '../../components/Layout';
 import { getError } from '../../utils/error';
-import { Chart } from 'react-chartjs-2';
-
-import {
-  Chart as ChartJS,
-  CategoryScale,
-  LinearScale,
-  BarElement,
-  Title,
-  Tooltip,
-  Legend,
-} from 'chart.js';
-
-ChartJS.register(
-  CategoryScale,
-  LinearScale,
-  BarElement,
-  Title,
-  Tooltip,
-  Legend
-);
-
-export const options = {
-  responsive: true,
-  plugins: {
-    legend: {
-      position: 'top',
-    },
-  },
-};
 
 function reducer(state, action) {
   switch (action.type) {
@@ -66,17 +37,6 @@ function AdminDashboardScreen() {
 
     fetchData();
   }, []);
-
-  const data = {
-    labels: summary.salesData.map((x) => x._id),
-    datasets: [
-      {
-        label: 'Sales',
-        backgroundColor: 'rgba(178, 64, 58, 5)',
-        data: summary.salesData.map((x) => x.totalSales),
-      },
-    ],
-  };
 
   return (
     <Layout title="Admin Dashboard">
@@ -129,14 +89,6 @@ function AdminDashboardScreen() {
                   <Link href="/admin/users">View Users</Link>
                 </div>
               </div>
-              <h2 className="text-xl">Sales Chart</h2>
-              <Chart
-                type="bar"
-                options={{
-                  legend: { display: true, position: 'right' },
-                }}
-                data={data}
-              ></Chart>
             </div>
           )}
         </div>

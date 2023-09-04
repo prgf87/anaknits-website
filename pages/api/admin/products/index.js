@@ -7,11 +7,11 @@ const handler = async (req, res) => {
   if (!session || (session && !session.user.isAdmin)) {
     return res.status(401).send('Error: Admin sign-in is Required');
   }
-  //const { user } = session;
+  const { user } = session;
   if (req.method === 'GET') {
-    return getHandler(req, res);
+    return getHandler(req, res, user);
   } else if (req.method === 'POST') {
-    return postHandler(req, res);
+    return postHandler(req, res, user);
   } else {
     return res.status(400).send({ message: 'Error: Method not allowed' });
   }
@@ -38,7 +38,7 @@ const postHandler = async (req, res) => {
   });
   const product = await newProduct.save();
   await db.disconnect();
-  res.send({ message: 'This product has been created successfully', product });
+  res.send({ message: 'The product was created successfully', product });
 };
 
 export default handler;

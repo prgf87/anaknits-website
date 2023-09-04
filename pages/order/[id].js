@@ -7,9 +7,9 @@ import { useRouter } from 'next/router';
 import { useEffect, useReducer } from 'react';
 import { toast } from 'react-toastify';
 import Layout from '../../components/Layout';
-import Product from '../../models/Product';
-import db from '../../utils/db';
 import { getError } from '../../utils/error';
+import db from '../../utils/db';
+import Product from '../../models/Product';
 
 function reducer(state, action) {
   switch (action.type) {
@@ -27,18 +27,6 @@ function reducer(state, action) {
       return { ...state, loadingPay: false, errorPay: action.payload };
     case 'PAY_RESET':
       return { ...state, loadingPay: false, successPay: false, errorPay: '' };
-
-    // case 'UPDATE_FETCH':
-    //   return { ...state, loading: true, err: '' };
-    // case 'UPDATE_SUCCESS':
-    //   return {
-    //     ...state,
-    //     loading: false,
-    //     product: action.payload,
-    //     error: '',
-    //   };
-    // case 'UPDATE_FAIL':
-    //   return { ...state, loading: false, error: action.payload };
 
     case 'DELIVER_REQUEST':
       return { ...state, loadingDeliver: true };
@@ -59,7 +47,6 @@ function reducer(state, action) {
 }
 function OrderScreen() {
   const { data: session } = useSession();
-  // order/:id
   const [{ isPending }, paypalDispatch] = usePayPalScriptReducer();
 
   const { query } = useRouter();
@@ -83,7 +70,6 @@ function OrderScreen() {
     loadingProduct: false,
     error: '',
   });
-
   useEffect(() => {
     const fetchOrder = async () => {
       try {
@@ -94,23 +80,6 @@ function OrderScreen() {
         dispatch({ type: 'FETCH_FAIL', payload: getError(err) });
       }
     };
-
-    //Getting the product id through - need to grab product by using the ID from the order items
-    // const fetchProduct = async (productId) => {
-    //   try {
-    //     dispatch({ type: 'UPDATE_FETCH' });
-    //     const { data } = await axios.get(`/api/products/${productId}`);
-    //     dispatch({ type: 'UPDATE_SUCCESS', payload: data });
-    //     console.log('this is the API running');
-    //     //62d35519bb6bd10faae2b03b
-    //     //62d35519bb6bd10faae2b03b Product ID is coming through but product object returning undefined
-
-    //     // console.log(product);
-    //   } catch (err) {
-    //     dispatch({ type: 'UPDATE_FAIL', payload: getError(err) });
-    //     console.log('this is the ERROR ERROR API running');
-    //   }
-    // };
     if (
       !order._id ||
       successPay ||
@@ -118,44 +87,6 @@ function OrderScreen() {
       (order._id && order._id !== orderId)
     ) {
       fetchOrder();
-      //this is grabbing the product ID from the order Items
-      if (order.orderItems) {
-        const orderProducts = JSON.stringify(order.orderItems);
-        let productString = JSON.parse(orderProducts);
-
-        productString.forEach((product) => {
-          fetchProduct(product);
-          console.log(product, 'this is the forEach Loop');
-          // console.log(item._id);
-          async function fetchProduct() {
-            try {
-              // dispatch({ type: 'UPDATE_FETCH' });
-              // const { data } = await axios.get(`/api/products/${productId}`);
-              // dispatch({ type: 'UPDATE_SUCCESS', payload: data });
-              console.log('this is the API running');
-              await db.connect();
-              console.log('database connected');
-              //62d35519bb6bd10faae2b03b
-              //62d35519bb6bd10faae2b03b Product ID is coming through but product object returning undefined
-
-              // console.log(product);
-            } catch (err) {
-              // dispatch({ type: 'UPDATE_FAIL', payload: getError(err) });
-              console.log('this is the ERROR ERROR API running');
-            }
-          }
-        });
-      }
-
-      //Basir said this is the solution - try to apply this
-
-      // for (const index in order.orderItems) {
-      //   const item = order.orderItems[index];
-      //   const product = await Product.findById(item.product);
-      //   product.countInStock -= item.qty;
-      //   await product.save();
-      //    }
-
       if (successPay) {
         dispatch({ type: 'PAY_RESET' });
       }
@@ -215,7 +146,6 @@ function OrderScreen() {
         );
         dispatch({ type: 'PAY_SUCCESS', payload: data });
         toast.success('Your order has been paid successfully!');
-        // processOrderItems();
       } catch (err) {
         dispatch({ type: 'PAY_FAIL', payload: getError(err) });
         toast.error(getError(err));
@@ -226,30 +156,6 @@ function OrderScreen() {
     toast.error(getError(err));
   }
 
-  // async function processOrderItems(orderItems) {
-  //   orderItems.forEach(function (orderItem) {
-  //     console.log(orderItem);
-  //     const orderItemQuantity = orderItem.quantity;
-  //     console.log(orderItemQuantity);
-  //     const productId = orderItem._id;
-  //     console.log(productId);
-
-  //     console.log(product);
-  //     orderItems.item.forEach((item) => {
-
-  //       let updateStock = stockInCount - item.quantity;
-  //       const {product} = await Product.findByIdAndUpdate(
-  //         { productId },
-  //         product.stockInCount,
-  //         function (err, res) {
-  //           console.log('***AXIOS FIND BY ID***');
-  //           return (product.stockInCount = updateStock);
-  //         }
-  //       );
-  //     }
-  //     );
-  //   });
-  // }
   async function deliverOrderHandler() {
     try {
       dispatch({ type: 'DELIVER_REQUEST' });
@@ -332,7 +238,6 @@ function OrderScreen() {
                         </Link>
                       </td>
                       <td className="p-5 text-right">{item.quantity}</td>
-
                       <td className="p-5 text-right">${item.price}</td>
                       <td className="p-5 text-right">
                         ${item.quantity * item.price}
@@ -356,14 +261,12 @@ function OrderScreen() {
                 <li>
                   <div className="mb-2 flex justify-between">
                     <div>Tax</div>
-
                     <div>${taxPrice}</div>
                   </div>
                 </li>
                 <li>
                   <div className="mb-2 flex justify-between">
                     <div>Shipping</div>
-
                     <div>${shippingPrice}</div>
                   </div>
                 </li>

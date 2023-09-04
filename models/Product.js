@@ -10,6 +10,7 @@ const productSchema = new mongoose.Schema(
     brand: { type: String, required: true },
     countInStock: { type: Number, required: true, default: 0 },
     description: { type: String, required: true },
+    keywords: { type: Array, required: false },
   },
   {
     timestamps: true,

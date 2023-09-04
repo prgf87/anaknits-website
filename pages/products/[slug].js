@@ -32,8 +32,8 @@ export default function ProductScreen(props) {
   };
 
   const customParams = {
-    width: '500px',
-    height: '750px',
+    width: '400px',
+    height: '400px',
   };
 
   return (

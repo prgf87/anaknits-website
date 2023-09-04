@@ -5,8 +5,8 @@ import Image from 'next/image';
 
 export default function ProductItem({ product, addToCartHandler }) {
   const customParams = {
-    width: '500px',
-    height: '750px',
+    width: '400px',
+    height: '520px',
   };
   return (
     <div className="card mx-0 md:mx-2">

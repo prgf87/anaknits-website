@@ -18,11 +18,13 @@ export default function LoginScreen() {
       router.push(redirect || '/');
     }
   }, [router, session, redirect]);
+
   const {
     handleSubmit,
     register,
     formState: { errors },
   } = useForm();
+
   const submitHandler = async ({ email, password }) => {
     try {
       const result = await signIn('credentials', {

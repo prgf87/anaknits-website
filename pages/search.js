@@ -9,7 +9,7 @@ import ProductItem from '../components/ProductItem';
 import { Store } from '../utils/Store';
 import ReactPaginate from 'react-paginate';
 
-const PAGE_SIZE = 4;
+const PAGE_SIZE = 8;
 
 const prices = [
   {
@@ -248,22 +248,7 @@ export default function Search(props) {
         </div>
       </div>
 
-      <div className="grid w-full h-auto grid-cols-1 md:grid-cols-4 mx-auto">
-        {products.map((product) => (
-          // eslint-disable-next-line react/jsx-key
-          <div className="grid grid-cols-1 w-auto justify-between">
-            <div key={product.name}>
-              <ProductItem
-                product={product}
-                key={product.slug}
-                addToCartHandler={addToCartHandler}
-              ></ProductItem>
-            </div>
-          </div>
-        ))}
-      </div>
-
-      <div className="flex justify-center border-y-2 border-gray-300 py-4">
+      <div className="flex justify-center mb-4 border-gray-300 py-4">
         <ReactPaginate
           pageCount={pages}
           pageRangeDisplayed={0}
@@ -288,6 +273,21 @@ export default function Search(props) {
           cursor-pointer
           renderOnZeroPageCount={null}
         ></ReactPaginate>
+      </div>
+
+      <div className="grid w-full h-auto grid-cols-1 md:grid-cols-4 mx-auto">
+        {products.map((product) => (
+          <div
+            key={product.name}
+            className="grid grid-cols-1 w-auto justify-between"
+          >
+            <ProductItem
+              product={product}
+              key={product.slug}
+              addToCartHandler={addToCartHandler}
+            ></ProductItem>
+          </div>
+        ))}
       </div>
     </Layout>
   );

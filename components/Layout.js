@@ -24,7 +24,7 @@ function Layout({ title, children }) {
   }, []);
 
   return (
-    <div>
+    <>
       <Head>
         <title>{title ? title + ' - Anaknits' : 'Anaknits'}</title>
         <meta name="home page" content="Anaknits Website" />
@@ -33,18 +33,18 @@ function Layout({ title, children }) {
 
       <ToastContainer position="bottom-center" limit={1} />
 
-      <div>
+      <>
         <header>
           <Navbar />
         </header>
-        <main className="container md:mt-5 mx-auto md:px-[5%] max-h-max pt-10">
+        <main className="container md:mt-10 mx-auto md:px-[5%] max-h-max pt-10">
           {children}
         </main>
         <footer className="h-40 md:px-[5%]">
           <Footer />
         </footer>
-      </div>
-    </div>
+      </>
+    </>
   );
 }
 

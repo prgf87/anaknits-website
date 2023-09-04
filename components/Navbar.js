@@ -21,6 +21,7 @@ import { Store } from '../utils/Store';
 import axios from 'axios';
 import { toast } from 'react-toastify';
 import { getError } from '../utils/error';
+import MainLogo from './MainLogo';
 
 export default function Navbar() {
   const { status, data: session } = useSession();
@@ -114,12 +115,27 @@ export default function Navbar() {
           </div>
         </div>
 
-        <div>
+        <div className="flex">
           <Link href="/cart">
             <a className="text-gray-500 p-2 hover:brightness-50">
-              Cart
+              <div className="h-8 w-8">
+                <svg
+                  fill="none"
+                  stroke="currentColor"
+                  strokeWidth={1.5}
+                  viewBox="0 0 32 32"
+                  xmlns="http://www.w3.org/2000/svg"
+                  aria-hidden="true"
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    d="M2.25 3h1.386c.51 0 .955.343 1.087.835l.383 1.437M7.5 14.25a3 3 0 00-3 3h15.75m-12.75-3h11.218c1.121-2.3 2.1-4.684 2.924-7.138a60.114 60.114 0 00-16.536-1.84M7.5 14.25L5.106 5.272M6 20.25a.75.75 0 11-1.5 0 .75.75 0 011.5 0zm12.75 0a.75.75 0 11-1.5 0 .75.75 0 011.5 0z"
+                  />
+                </svg>
+              </div>
               {cartItemsCount > 0 && (
-                <span className="ml-1 rounded-full bg-blue-500 px-2 py-1 text-xs font-bold text-white">
+                <span className="absolute top-3 ml-7 rounded-full bg-blue-500/90 px-2 py-1 text-[0.65rem] font-bold text-white">
                   {cartItemsCount}
                 </span>
               )}
@@ -129,7 +145,7 @@ export default function Navbar() {
           {status === 'loading' ? (
             'Loading'
           ) : session?.user ? (
-            <Menu as="div" className="relative z-10 hidden md:inline-block">
+            <Menu as="div" className="relative pl-3 z-1 hidden md:inline-block">
               <Menu.Button className="text-gray-500 p-2 hover:brightness-50">
                 {session.user.name}
               </Menu.Button>
@@ -177,219 +193,202 @@ export default function Navbar() {
         <div
           id="bgBlur"
           onClick={() => setOpen(!open)}
-          className={`absolute top-0 left-0 bg-black z-10 h-full w-full ${
+          className={`absolute top-0 left-0 bg-black/60 z-[1] ${
             open
-              ? 'transition-opacity ease-in-out opacity-70 overscroll-hidden fixed'
-              : 'transition-opacity ease-in-out opacity-0 scale-0'
-          } ease-in-out duration-300`}
-        ></div>
-        <div
-          id="sidebarBg"
-          className={`absolute z-10 top-0 left-0 bg-white h-full ${
-            open ? 'w-full md:w-4/12 lg:w-3/12 overscroll-hidden fixed' : 'w-0'
-          } ease-in-out duration-300`}
+              ? 'transition-all ease-in-out overscroll-hidden fixed left-0 opacity-100 h-screen w-screen'
+              : 'transition-all ease-in-out left-[-105%] h-10 w-10 '
+          } ease-in-out duration-500 opacity-0`}
         >
-          <div
-            className={`flex flex-col justify-center items-center pl-3 pt-0.5 ${
-              open ? 'shadow-md' : 'shadow-none'
-            } ease-in-out duration-300`}
-          >
-            <div
-              className={`z-10 ${
-                open ? 'duration-300' : 'transition-opacity opacity-0'
-              } ease-in-out duration-300`}
-            >
-              <Image src={logo} alt={'/'} height={35} width={185} />
-            </div>
-          </div>
+          <div className="z-[2] w-screen md:w-1/2 lg:w-1/3 xl:w-1/4 bg-white h-screen">
+            <div className="grid mx-20 pt-10">
+              <MainLogo />
+              <table className="w-full">
+                <tbody className="grid grid-cols-1 gap-3 p-3 pt-8 place-items-center shadow-sm">
+                  <tr>
+                    <td>
+                      <button className="sidebarLinkButton">
+                        <Link href={'/'} onClick={() => setOpen(!open)}>
+                          Home
+                        </Link>
+                      </button>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td>
+                      <button className="sidebarLinkButton">
+                        <Link href={`/search`}>
+                          <a onClick={() => setOpen(!open)}>Product Search</a>
+                        </Link>
+                      </button>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td>
+                      <button className="sidebarLinkButton">
+                        <Link href={'/contact'}>
+                          <a onClick={() => setOpen(!open)}>Contact Us</a>
+                        </Link>
+                      </button>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td>
+                      <button className="sidebarLinkButton">
+                        <Link href={'/login'}>
+                          <a onClick={() => setOpen(!open)}>Login</a>
+                        </Link>
+                      </button>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+              <table className="w-full">
+                <thead
+                  className={`grid grid-cols-1 gap-3 px-5 pt-3 place-items-center`}
+                >
+                  <tr>
+                    <td>
+                      <h1 className="font-bold text-lg lg:text-lg p-0 flex justify-center">
+                        Product Categories
+                      </h1>
+                    </td>
+                  </tr>
+                </thead>
+                <tbody
+                  className={`grid grid-cols-1 gap-3 p-3 w-full place-items-center shadow-sm `}
+                >
+                  <tr>
+                    <td>
+                      <button className="sidebarLinkButton">
+                        <Link
+                          href={`/search?category%3Fbabyknits=&category=Baby+Knits`}
+                        >
+                          <a onClick={() => setOpen(!open)}>Baby Knits</a>
+                        </Link>
+                      </button>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td>
+                      <button className="sidebarLinkButton">
+                        <Link
+                          href={`/search?category%3Fbabyknits=&category=Kid+Knits`}
+                        >
+                          <a onClick={() => setOpen(!open)}>Kid Knits</a>
+                        </Link>
+                      </button>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td>
+                      <button className="sidebarLinkButton">
+                        <Link
+                          href={`/search?category%3Fkidknits=&category=Blankets+%26+Socks`}
+                        >
+                          <a onClick={() => setOpen(!open)}>
+                            Blankets &amp; Socks
+                          </a>
+                        </Link>
+                      </button>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td>
+                      <button className="sidebarLinkButton">
+                        <Link
+                          href={`/search?category%3Fknitkits=&category=Knit+Kits`}
+                        >
+                          <a onClick={() => setOpen(!open)}>Knit Kits</a>
+                        </Link>
+                      </button>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td>
+                      <button className="sidebarLinkButton">
+                        <Link
+                          href={`/search?category%3Fpatterns=&category=Patterns`}
+                        >
+                          <a onClick={() => setOpen(!open)}>Patterns</a>
+                        </Link>
+                      </button>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
 
-          <table className="w-full">
-            <tbody
-              className={`grid grid-cols-1 gap-3 p-3 place-items-center shadow-sm ${
-                open ? 'opacity-100 w-full' : 'opacity-0 w-0 scale-0 hidden'
-              } transition-opacity ease-in-out duration-1000`}
-            >
-              <tr>
-                <td>
-                  <button className="sidebarLinkButton">
-                    <Link href={'/'}>
-                      <a onClick={() => setOpen(!open)}>Home</a>
-                    </Link>
-                  </button>
-                </td>
-              </tr>
-              <tr>
-                <td>
-                  <button className="sidebarLinkButton">
-                    <Link href={`/search`}>
-                      <a onClick={() => setOpen(!open)}>Product Search</a>
-                    </Link>
-                  </button>
-                </td>
-              </tr>
-              <tr>
-                <td>
-                  <button className="sidebarLinkButton">
-                    <Link href={'/contact'}>
-                      <a onClick={() => setOpen(!open)}>Contact Us</a>
-                    </Link>
-                  </button>
-                </td>
-              </tr>
-              <tr>
-                <td>
-                  <button className="sidebarLinkButton">
-                    <Link href={'/login'}>
-                      <a onClick={() => setOpen(!open)}>Login</a>
-                    </Link>
-                  </button>
-                </td>
-              </tr>
-            </tbody>
-          </table>
-          <table className="w-full">
-            <thead
-              className={`grid grid-cols-1 gap-3 px-5 pt-3 place-items-center ${
-                open ? 'opacity-100' : 'opacity-0 scale-0 hidden'
-              } transition-opacity ease-in-out duration-300`}
-            >
-              <tr>
-                <td>
-                  <h1 className="p-0">Product Categories</h1>
-                </td>
-              </tr>
-            </thead>
-            <tbody
-              className={`grid grid-cols-1 gap-3 p-3 w-full place-items-center shadow-sm ${
-                open ? 'opacity-100' : 'opacity-0 scale-0 hidden'
-              } transition-opacity ease-in-out duration-300`}
-            >
-              <tr>
-                <td>
-                  <button className="sidebarLinkButton">
-                    <Link
-                      href={`/search?category%3Fbabyknits=&category=Baby+Knits`}
-                    >
-                      <a onClick={() => setOpen(!open)}>Baby Knits</a>
-                    </Link>
-                  </button>
-                </td>
-              </tr>
-              <tr>
-                <td>
-                  <button className="sidebarLinkButton">
-                    <Link
-                      href={`/search?category%3Fbabyknits=&category=Kid+Knits`}
-                    >
-                      <a onClick={() => setOpen(!open)}>Kid Knits</a>
-                    </Link>
-                  </button>
-                </td>
-              </tr>
-              <tr>
-                <td>
-                  <button className="sidebarLinkButton">
-                    <Link
-                      href={`/search?category%3Fkidknits=&category=Blankets+%26+Socks`}
-                    >
-                      <a onClick={() => setOpen(!open)}>Blankets &amp; Socks</a>
-                    </Link>
-                  </button>
-                </td>
-              </tr>
-              <tr>
-                <td>
-                  <button className="sidebarLinkButton">
-                    <Link
-                      href={`/search?category%3Fknitkits=&category=Knit+Kits`}
-                    >
-                      <a onClick={() => setOpen(!open)}>Knit Kits</a>
-                    </Link>
-                  </button>
-                </td>
-              </tr>
-              <tr>
-                <td>
-                  <button className="sidebarLinkButton">
-                    <Link
-                      href={`/search?category%3Fpatterns=&category=Patterns`}
-                    >
-                      <a onClick={() => setOpen(!open)}>Patterns</a>
-                    </Link>
-                  </button>
-                </td>
-              </tr>
-            </tbody>
-          </table>
-          <div
-            className={`bottom-20 h-40 z-10 ${
-              open ? 'opactity-100' : 'opacity-0'
-            } transition-opacity ease-in-out duration-300`}
-          >
-            <div className="p-7 md:p-0 md:px-7 md:pt-3">
-              <div className="max-w-7xl mx-auto">
-                <div className="grid grid-cols-1 gap-2">
-                  <div className="mb-5 md:mb-0">
-                    <h4 className="font-bold text-xs lg:text-lg pb-2 flex justify-center">
-                      Check Out Our Socials
-                    </h4>
-                    <p className="text-xs lg:text-sm italic flex justify-center">
-                      Come and say hello over on our social media pages:
-                      Facebook, Instagram, send us a message on WhatsApp or even
-                      send us an email!
-                    </p>
-                    <div className="w-full">
-                      <div className="flex gap-3 p-2 pr-1 justify-evenly place-items-center">
-                        <Link
-                          href={'https://facebook.com/anaknits'}
-                          target="_blank"
-                        >
-                          <a onClick={() => setOpen(!open)}>
-                            <Image
-                              Link
-                              src={facebook}
-                              alt="/"
-                              width={25}
-                              height={25}
-                            />
-                          </a>
-                        </Link>
-                        <Link
-                          href={'https://instagram.com/anaknits'}
-                          target="_blank"
-                        >
-                          <a onClick={() => setOpen(!open)}>
-                            <Image
-                              src={instagram}
-                              alt="/"
-                              width={25}
-                              height={25}
-                            />
-                          </a>
-                        </Link>
-                        <Link
-                          href={'https://whatsapp.com/anaknits'}
-                          target="_blank"
-                        >
-                          <a onClick={() => setOpen(!open)}>
-                            <Image
-                              src={whatsapp}
-                              alt="/"
-                              width={25}
-                              height={25}
-                            />
-                          </a>
-                        </Link>
-                        <Link
-                          href={
-                            'mailto:info@anaknits.com?body=Hi Ana, this is my question...'
-                          }
-                          target="_blank"
-                        >
-                          <a onClick={() => setOpen(!open)}>
-                            <Image src={email} alt="/" width={35} height={35} />
-                          </a>
-                        </Link>
+              <div className={`bottom-20 h-40 z-10`}>
+                <div className="p-7 md:p-0 md:px-7 md:pt-3">
+                  <div className="max-w-7xl mx-auto">
+                    <div className="grid grid-cols-1 gap-2">
+                      <div className="mb-5 md:mb-0">
+                        <h4 className="font-bold text-lg lg:text-lg pb-2 flex justify-center">
+                          Check Out Our Socials
+                        </h4>
+                        <p className="text-sm lg:text-sm italic flex text-center">
+                          Come and say hello over on our social media pages on
+                          Facebook or Instagram. You can also send us a message
+                          on WhatsApp or even an email!
+                        </p>
+                        <div className="w-full">
+                          <div className="flex gap-3 p-2 pr-1 justify-evenly place-items-center">
+                            <Link
+                              href={'https://facebook.com/anaknits'}
+                              target="_blank"
+                            >
+                              <a onClick={() => setOpen(!open)}>
+                                <Image
+                                  Link
+                                  src={facebook}
+                                  alt="/"
+                                  width={25}
+                                  height={25}
+                                />
+                              </a>
+                            </Link>
+                            <Link
+                              href={'https://instagram.com/anaknits'}
+                              target="_blank"
+                            >
+                              <a onClick={() => setOpen(!open)}>
+                                <Image
+                                  src={instagram}
+                                  alt="/"
+                                  width={25}
+                                  height={25}
+                                />
+                              </a>
+                            </Link>
+                            <Link
+                              href={'https://whatsapp.com/anaknits'}
+                              target="_blank"
+                            >
+                              <a onClick={() => setOpen(!open)}>
+                                <Image
+                                  src={whatsapp}
+                                  alt="/"
+                                  width={25}
+                                  height={25}
+                                />
+                              </a>
+                            </Link>
+                            <Link
+                              href={
+                                'mailto:info@anaknits.com?body=Hi Ana, this is my question...'
+                              }
+                              target="_blank"
+                            >
+                              <a onClick={() => setOpen(!open)}>
+                                <Image
+                                  src={email}
+                                  alt="/"
+                                  width={35}
+                                  height={35}
+                                />
+                              </a>
+                            </Link>
+                          </div>
+                        </div>
                       </div>
                     </div>
                   </div>
@@ -403,7 +402,7 @@ export default function Navbar() {
       <div className="flex flex-col justify-center items-center">
         <div className="px-10 lg:px-5 md:px-20">
           <Link href="/">
-            <a className="mainlogo flex w-full px-[17.5%] mb-2 md:px-0 md:mb-0">
+            <a className="mainlogo flex w-full px-[17.5%] mb-2 md:mb-0">
               <Image src={logo} alt={'/'} width={580} height={100} />
             </a>
           </Link>

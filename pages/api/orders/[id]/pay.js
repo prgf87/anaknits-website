@@ -12,7 +12,7 @@ const handler = async (req, res) => {
   const order = await Order.findById(req.query.id);
   if (order) {
     if (order.isPaid) {
-      return res.status(400).send({ message: 'Error: order is already paid' });
+      return res.status(400).send({ message: 'Error: order has already paid' });
     }
     order.isPaid = true;
     order.paidAt = Date.now();

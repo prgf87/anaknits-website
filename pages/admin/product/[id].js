@@ -6,7 +6,6 @@ import { useForm } from 'react-hook-form';
 import { toast } from 'react-toastify';
 import Layout from '../../../components/Layout';
 import { getError } from '../../../utils/error';
-import { useState } from 'react';
 
 function reducer(state, action) {
   switch (action.type) {
@@ -34,6 +33,7 @@ function reducer(state, action) {
       return state;
   }
 }
+
 export default function AdminProductEditScreen() {
   const { query } = useRouter();
   const productId = query.id;
@@ -101,6 +101,23 @@ export default function AdminProductEditScreen() {
     }
   };
 
+  function generateSlug() {
+    const nameInput = document.getElementById('name');
+    const slugInput = document.getElementById('slug');
+    const slug = slugify(nameInput.value);
+    slugInput.value = slug;
+    setValue('slug', slug);
+  }
+
+  function slugify(string) {
+    const slug = string
+      .toLowerCase()
+      .replace(/[^a-zA-Z0-9]+/g, '-')
+      .replace(/^-/, '')
+      .replace(/-$/, '');
+    return slug;
+  }
+
   const submitHandler = async ({
     name,
     slug,
@@ -134,24 +151,6 @@ export default function AdminProductEditScreen() {
     }
   };
 
-  var slugify = require('slugify');
-
-  const [name, setName] = useState('');
-  const [slug, setSlug] = useState('');
-
-  const handleNameChange = (e) => {
-    setName(e.target.value);
-  };
-
-  const handleButtonClick = () => {
-    const createSlug = (inputString) => {
-      const slug = slugify(inputString);
-      return slug;
-    };
-    const newSlug = createSlug(name.toLowerCase());
-    setSlug(newSlug);
-  };
-
   return (
     <Layout title={`Edit Product ${productId}`}>
       <div className="grid md:grid-cols-4 md:gap-5">
@@ -179,13 +178,14 @@ export default function AdminProductEditScreen() {
           ) : error ? (
             <div className="alert-error">{error}</div>
           ) : (
-            <>
+            <section>
               <button
-                className="thirdary-button mb-4 text-sm relative top-[164px] left-[23.2rem]"
-                onClick={handleButtonClick}
+                className="thirdary-button mb-4 text-sm relative top-[164px] left-20"
+                onClick={generateSlug}
               >
                 Convert to Slug
               </button>
+
               <form
                 className="mx-auto max-w-screen-md"
                 onSubmit={handleSubmit(submitHandler)}
@@ -193,7 +193,6 @@ export default function AdminProductEditScreen() {
                 <h1 className="mb-4 text-xl">{`Edit Product ${productId}`}</h1>
                 <div className="mb-4">
                   <label htmlFor="name">Product Name</label>
-
                   <input
                     type="text"
                     className="w-full"
@@ -202,22 +201,17 @@ export default function AdminProductEditScreen() {
                     {...register('name', {
                       required: 'Please enter product name',
                     })}
-                    value={name}
-                    onChange={handleNameChange}
                   />
                   {errors.name && (
                     <div className="text-red-500">{errors.name.message}</div>
                   )}
                 </div>
-
                 <div className="mb-4">
                   <label htmlFor="slug">Slug</label>
-
                   <input
                     type="text"
                     className="w-full"
                     id="slug"
-                    value={slug}
                     readOnly
                     {...register('slug', {
                       required: 'Please enter product slug',
@@ -340,7 +334,7 @@ export default function AdminProductEditScreen() {
                   </Link>
                 </div>
               </form>
-            </>
+            </section>
           )}
         </div>
       </div>

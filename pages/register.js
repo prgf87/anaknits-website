@@ -19,12 +19,14 @@ export default function LoginScreen() {
       router.push(redirect || '/');
     }
   }, [router, session, redirect]);
+
   const {
     handleSubmit,
     register,
     getValues,
     formState: { errors },
   } = useForm();
+
   const submitHandler = async ({ name, email, password }) => {
     try {
       await axios.post(`/api/auth/signup`, {
@@ -87,6 +89,7 @@ export default function LoginScreen() {
             <div className="text-red-500">{errors.email.message}</div>
           )}
         </div>
+
         <div className="mb-4">
           <label htmlFor="password">Password</label>
           <input

@@ -239,7 +239,7 @@ export default function ContactUs() {
                     </p>
                   )}
                   {showFailureMessage && (
-                    <p className="text-red-500">
+                    <p className="text-black font-semibold text-sm my-2">
                       Oops! Something went wrong, please try again later or get
                       in contact directly by sending an email to
                       info@anaknits.com or by visiting our social media.

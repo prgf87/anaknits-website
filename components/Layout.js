@@ -4,8 +4,8 @@ import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { getError } from '../utils/error';
 import axios from 'axios';
-import Footer from './Footer';
-import Navbar from './Navbar';
+import Footer from './footer';
+import Header from './header';
 
 function Layout({ title, children }) {
   // eslint-disable-next-line no-unused-vars
@@ -35,14 +35,12 @@ function Layout({ title, children }) {
 
       <>
         <header>
-          <Navbar />
+          <Header />
         </header>
         <main className="container md:mt-10 mx-auto md:px-[5%] max-h-max pt-10">
           {children}
         </main>
-        <footer className="h-40 md:px-[5%]">
-          <Footer />
-        </footer>
+        <Footer />
       </>
     </>
   );

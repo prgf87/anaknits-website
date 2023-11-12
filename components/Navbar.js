@@ -24,16 +24,21 @@ import { getError } from '../utils/error';
 import MainLogo from './MainLogo';
 
 export default function Navbar() {
+  const [open, setOpen] = useState(false);
   const { status, data: session } = useSession();
 
   const { state, dispatch } = useContext(Store);
   const { cart } = state;
   const [cartItemsCount, setCartItemsCount] = useState(0);
-  useEffect(() => {
-    setCartItemsCount(cart.cartItems.reduce((a, c) => a + c.quantity, 0));
-  }, [cart.cartItems]);
+
+  const [query, setQuery] = useState('');
 
   const router = useRouter();
+
+  useEffect(() => {
+    fetchCategories();
+    setCartItemsCount(cart.cartItems.reduce((a, c) => a + c.quantity, 0));
+  }, [cart.cartItems]);
 
   const logoutClickHandler = () => {
     Cookies.remove('cart');
@@ -41,8 +46,6 @@ export default function Navbar() {
     dispatch({ type: 'CART_RESET' });
     signOut({ callbackUrl: '/login' });
   };
-
-  const [open, setOpen] = useState(false);
 
   if (typeof document !== 'undefined') {
     const body = document.querySelector('body');
@@ -53,27 +56,25 @@ export default function Navbar() {
 
   // eslint-disable-next-line no-unused-vars
   const [categories, setCategories] = useState([]);
+
   const fetchCategories = async () => {
     try {
       const { data } = await axios.get(`/api/products/categories`);
-
       setCategories(data);
     } catch (err) {
       toast.error(getError(err));
     }
   };
-  useEffect(() => {
-    fetchCategories();
-  }, []);
 
-  const [query, setQuery] = useState('');
   const queryChangeHandler = (e) => {
     setQuery(e.target.value);
   };
+
   const submitHandler = (e) => {
     e.preventDefault();
     router.push(`/search?query=${query}`);
   };
+
   return (
     <nav>
       <div className="topHeader flex px-1 py-1 justify-between">
@@ -82,42 +83,10 @@ export default function Navbar() {
             <Image src={hamicon} alt={Menu} height={34} width={34} />
           </button>
         </div>
-        <div>
-          <div className="searchSection hidden md:block md:pl-[200px]">
-            <form onSubmit={submitHandler} className="searchForm px-5">
-              <input
-                name="query"
-                className="searchInput pl-5"
-                placeholder="Search Products"
-                onChange={queryChangeHandler}
-              />
-              <button
-                type="submit"
-                className="submitButton searchIcon"
-                aria-label="search"
-              >
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  className="h-10 w-10 mt-3 ml-3 inline-block text-blue-500"
-                  fill="none"
-                  viewBox="0 0 42 42"
-                  stroke="currentColor"
-                  strokeWidth={2}
-                >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"
-                  />
-                </svg>
-              </button>
-            </form>
-          </div>
-        </div>
 
         <div className="flex">
           <Link href="/cart">
-            <a className="text-gray-500 p-2 hover:brightness-50">
+            <a className="text-gray-500 p-2 mr-2">
               <div className="h-8 w-8">
                 <svg
                   fill="none"
@@ -406,6 +375,38 @@ export default function Navbar() {
               <Image src={logo} alt={'/'} width={580} height={100} />
             </a>
           </Link>
+        </div>
+      </div>
+      <div>
+        <div className="searchSection w-full hidden md:flex justify-center py-3">
+          <form onSubmit={submitHandler} className="searchForm px-5">
+            <input
+              name="query"
+              className="searchInput pl-5"
+              placeholder="Search Products"
+              onChange={queryChangeHandler}
+            />
+            <button
+              type="submit"
+              className="submitButton searchIcon"
+              aria-label="search"
+            >
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                className="h-10 w-10 mt-3 ml-3 inline-block text-blue-500"
+                fill="none"
+                viewBox="0 0 42 42"
+                stroke="currentColor"
+                strokeWidth={2}
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"
+                />
+              </svg>
+            </button>
+          </form>
         </div>
       </div>
 

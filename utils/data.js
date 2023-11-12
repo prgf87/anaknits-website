@@ -1,32 +1,32 @@
-import bcrypt from 'bcryptjs';
+// import bcrypt from 'bcryptjs';
 
 const data = {
-  users: [
-    {
-      name: 'Admin',
-      email: 'admin@test.com',
-      password: bcrypt.hashSync('Adm1nPa$sW0rd£2024!'),
-      isAdmin: true,
-    },
-    {
-      name: 'Pedro Ferreira',
-      email: 'prgf2011@gmail.com',
-      password: bcrypt.hashSync('SuperStrongPa55Word'),
-      isAdmin: true,
-    },
-    // {
-    //   name: 'Mum - The Boss',
-    //   email: 'ana_guimaraes@msn.com',
-    //   password: bcrypt.hashSync('change me'),
-    //   isAdmin: true,
-    // },
-    // {
-    //   name: 'Mafalda',
-    //   email: 'ana.m.guimaraes.ferreira@gmail.com',
-    //   password: bcrypt.hashSync('change me'),
-    //   isAdmin: false,
-    // },
-  ],
+  // users: [
+  //   {
+  //     name: 'Admin',
+  //     email: 'admin@test.com',
+  //     password: bcrypt.hashSync('Adm1nPa$sW0rd£2024!'),
+  //     isAdmin: true,
+  //   },
+  //   {
+  //     name: 'Pedro Ferreira',
+  //     email: 'prgf2011@gmail.com',
+  //     password: bcrypt.hashSync('SuperStrongPa55Word'),
+  //     isAdmin: true,
+  //   },
+  // {
+  //   name: 'Mum - The Boss',
+  //   email: 'ana_guimaraes@msn.com',
+  //   password: bcrypt.hashSync('change me'),
+  //   isAdmin: true,
+  // },
+  // {
+  //   name: 'Mafalda',
+  //   email: 'ana.m.guimaraes.ferreira@gmail.com',
+  //   password: bcrypt.hashSync('change me'),
+  //   isAdmin: false,
+  // },
+  // ],
   // products: [
   //   {
   //     name: 'Free Shirt',

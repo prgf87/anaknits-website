@@ -24,16 +24,21 @@ import { getError } from '../utils/error';
 import MainLogo from './MainLogo';
 
 export default function Navbar() {
+  const [open, setOpen] = useState(false);
   const { status, data: session } = useSession();
 
   const { state, dispatch } = useContext(Store);
   const { cart } = state;
   const [cartItemsCount, setCartItemsCount] = useState(0);
-  useEffect(() => {
-    setCartItemsCount(cart.cartItems.reduce((a, c) => a + c.quantity, 0));
-  }, [cart.cartItems]);
+
+  const [query, setQuery] = useState('');
 
   const router = useRouter();
+
+  useEffect(() => {
+    fetchCategories();
+    setCartItemsCount(cart.cartItems.reduce((a, c) => a + c.quantity, 0));
+  }, [cart.cartItems]);
 
   const logoutClickHandler = () => {
     Cookies.remove('cart');
@@ -41,8 +46,6 @@ export default function Navbar() {
     dispatch({ type: 'CART_RESET' });
     signOut({ callbackUrl: '/login' });
   };
-
-  const [open, setOpen] = useState(false);
 
   if (typeof document !== 'undefined') {
     const body = document.querySelector('body');
@@ -53,27 +56,25 @@ export default function Navbar() {
 
   // eslint-disable-next-line no-unused-vars
   const [categories, setCategories] = useState([]);
+
   const fetchCategories = async () => {
     try {
       const { data } = await axios.get(`/api/products/categories`);
-
       setCategories(data);
     } catch (err) {
       toast.error(getError(err));
     }
   };
-  useEffect(() => {
-    fetchCategories();
-  }, []);
 
-  const [query, setQuery] = useState('');
   const queryChangeHandler = (e) => {
     setQuery(e.target.value);
   };
+
   const submitHandler = (e) => {
     e.preventDefault();
     router.push(`/search?query=${query}`);
   };
+
   return (
     <nav>
       <div className="topHeader flex px-1 py-1 justify-between">
@@ -85,7 +86,7 @@ export default function Navbar() {
 
         <div className="flex">
           <Link href="/cart">
-            <a className="text-gray-500 p-2 hover:brightness-50">
+            <a className="text-gray-500 p-2 mr-2">
               <div className="h-8 w-8">
                 <svg
                   fill="none"

@@ -5,7 +5,7 @@ const yarnSchema = new mongoose.Schema(
     name: { type: String, required: true },
     slug: { type: String, required: true, unique: true },
     category: { type: String, required: true },
-    manufacturer: { type: String, required: true },
+    brand: { type: String, required: true },
     content: { type: String, required: true },
     colors: { type: Array, required: true },
     image: { type: String, required: true },

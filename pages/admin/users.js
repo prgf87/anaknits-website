@@ -82,8 +82,8 @@ function AdminUsersScreen() {
               <Link href="/admin/products">Products</Link>
             </li>
             <li>
-              <Link href="/admin/users">
-                <a className="font-bold">Users</a>
+              <Link href="/admin/users" className="font-bold">
+                Users
               </Link>
             </li>
           </ul>

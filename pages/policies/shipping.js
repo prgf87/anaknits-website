@@ -1,4 +1,5 @@
 import React from 'react';
+import Link from 'next/link';
 import Layout from '../../components/Layout';
 
 export default function ShippingPolicyPage() {
@@ -83,7 +84,7 @@ export default function ShippingPolicyPage() {
           We ensure our delivery alerts help you stay on top of orders. If the
           tracking number does not work, we recommend you try tracking with
           order number. Alternatively, you may contact our customer service team
-          on <a href="mailto:info@anaknits.com">info@anaknits.com</a>
+          on <Link href="mailto:info@anaknits.com">info@anaknits.com</Link>
         </p>
         <h1 className="font-bold text-xl py-2">
           What can I do if I don&apos;t receive my order?
@@ -140,13 +141,13 @@ export default function ShippingPolicyPage() {
           <li>
             <p>
               By visiting this page on our website:{' '}
-              <a
+              <Link
                 href="https://www.anaknits.com/contact"
                 rel="external nofollow noopener noreferrer"
                 target="_blank"
               >
                 https://www.anaknits.com/contact
-              </a>
+              </Link>
             </p>
           </li>
         </ul>

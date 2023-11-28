@@ -27,6 +27,10 @@ link {
   @apply mb-5 block rounded-lg border border-gray-200 shadow-md;
 }
 
+.btn1 {
+  @apply px-6 py-[6px] bg-gray-800 text-white;
+}
+
 .primary-button {
   @apply rounded bg-amber-300 py-2 px-4 shadow outline-none hover:bg-amber-400  active:bg-amber-500;
 }

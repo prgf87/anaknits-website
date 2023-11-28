@@ -29,6 +29,10 @@ yarn-error.log*
 .env*.local
 .env
 
+# local files
+utils/dataNew.js
+public/api/seed.js
+
 # vercel
 .vercel
 sendgrid.env

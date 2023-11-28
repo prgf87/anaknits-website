@@ -1,4 +1,5 @@
 import React from 'react';
+import Link from 'next/link';
 import Layout from '../../components/Layout';
 
 export default function PrivacyPolicyPage() {
@@ -108,13 +109,13 @@ export default function PrivacyPolicyPage() {
         <li>
           <p>
             <strong>Website</strong> refers to AnaKnits, accessible from{' '}
-            <a
+            <Link
               href="https://www.anaknits.com"
               rel="external nofollow noopener noreferrer"
               target="_blank"
             >
               https://www.anaknits.com
-            </a>
+            </Link>
           </p>
         </li>
         <li>
@@ -204,13 +205,13 @@ export default function PrivacyPolicyPage() {
           used for Browser Cookies. For more information on how You can delete
           Flash Cookies, please read &quot;Where can I change the settings for
           disabling, or deleting local shared objects?&quot; available by{' '}
-          <a
+          <Link
             href="https://helpx.adobe.com/flash-player/kb/disable-local-shared-objects-flash.html#main_Where_can_I_change_the_settings_for_disabling__or_deleting_local_shared_objects_"
             rel="external nofollow noopener noreferrer"
             target="_blank"
           >
             following this link
-          </a>
+          </Link>
         </li>
         <li className="pb-2">
           <strong>Web Beacons.</strong> Certain sections of our Service and our
@@ -227,13 +228,13 @@ export default function PrivacyPolicyPage() {
         Persistent Cookies remain on Your personal computer or mobile device
         when You go offline, while Session Cookies are deleted as soon as You
         close Your web browser. You can learn more about cookies on{' '}
-        <a
+        <Link
           href="https://www.termsfeed.com/blog/cookies/#What_Are_Cookies"
           target="_blank"
           rel="noreferrer"
         >
           TermsFeed website
-        </a>{' '}
+        </Link>{' '}
         article.
       </p>
       <p>
@@ -524,13 +525,13 @@ export default function PrivacyPolicyPage() {
         <li>
           <p>
             By visiting this page on our website:{' '}
-            <a
+            <Link
               href="https://www.anaknits.com/contact"
               rel="external nofollow noopener noreferrer"
               target="_blank"
             >
               https://www.anaknits.com/contact
-            </a>
+            </Link>
           </p>
         </li>
       </ul>

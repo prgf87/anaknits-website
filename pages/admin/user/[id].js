@@ -91,8 +91,8 @@ export default function AdminUserEditScreen() {
               <Link href="/admin/products">Products</Link>
             </li>
             <li>
-              <Link href="/admin/users">
-                <a className="font-bold">Users</a>
+              <Link href="/admin/users" className="font-bold">
+                Users
               </Link>
             </li>
           </ul>
@@ -140,7 +140,7 @@ export default function AdminUserEditScreen() {
                 {errors.email && (
                   <div className="text-red-500">{errors.email.message}</div>
                 )}
-              </div>              
+              </div>
               <div className="mb-4">
                 <label htmlFor="isAdmin">Administrator</label>
                 <br></br>

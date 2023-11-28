@@ -85,30 +85,28 @@ export default function Navbar() {
         </div>
 
         <div className="flex">
-          <Link href="/cart">
-            <a className="text-gray-500 p-2 mr-2">
-              <div className="h-8 w-8">
-                <svg
-                  fill="none"
-                  stroke="currentColor"
-                  strokeWidth={1.5}
-                  viewBox="0 0 32 32"
-                  xmlns="http://www.w3.org/2000/svg"
-                  aria-hidden="true"
-                >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    d="M2.25 3h1.386c.51 0 .955.343 1.087.835l.383 1.437M7.5 14.25a3 3 0 00-3 3h15.75m-12.75-3h11.218c1.121-2.3 2.1-4.684 2.924-7.138a60.114 60.114 0 00-16.536-1.84M7.5 14.25L5.106 5.272M6 20.25a.75.75 0 11-1.5 0 .75.75 0 011.5 0zm12.75 0a.75.75 0 11-1.5 0 .75.75 0 011.5 0z"
-                  />
-                </svg>
-              </div>
-              {cartItemsCount > 0 && (
-                <span className="absolute top-3 ml-7 rounded-full bg-blue-500/90 px-2 py-1 text-[0.65rem] font-bold text-white">
-                  {cartItemsCount}
-                </span>
-              )}
-            </a>
+          <Link href="/cart" className="text-gray-500 p-2 mr-2">
+            <div className="h-8 w-8">
+              <svg
+                fill="none"
+                stroke="currentColor"
+                strokeWidth={1.5}
+                viewBox="0 0 32 32"
+                xmlns="http://www.w3.org/2000/svg"
+                aria-hidden="true"
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  d="M2.25 3h1.386c.51 0 .955.343 1.087.835l.383 1.437M7.5 14.25a3 3 0 00-3 3h15.75m-12.75-3h11.218c1.121-2.3 2.1-4.684 2.924-7.138a60.114 60.114 0 00-16.536-1.84M7.5 14.25L5.106 5.272M6 20.25a.75.75 0 11-1.5 0 .75.75 0 011.5 0zm12.75 0a.75.75 0 11-1.5 0 .75.75 0 011.5 0z"
+                />
+              </svg>
+            </div>
+            {cartItemsCount > 0 && (
+              <span className="absolute top-3 ml-7 rounded-full bg-blue-500/90 px-2 py-1 text-[0.65rem] font-bold text-white">
+                {cartItemsCount}
+              </span>
+            )}
           </Link>
 
           {status === 'loading' ? (
@@ -140,19 +138,19 @@ export default function Navbar() {
                   </Menu.Item>
                 )}
                 <Menu.Item>
-                  <a
+                  <Link
                     className="dropdown-link"
                     href="#"
                     onClick={logoutClickHandler}
                   >
                     Logout
-                  </a>
+                  </Link>
                 </Menu.Item>
               </Menu.Items>
             </Menu>
           ) : (
-            <Link href="/login">
-              <a className="p-2 hidden md:inline-block">Login</a>
+            <Link href="/login" className="p-2 hidden md:inline-block">
+              Login
             </Link>
           )}
         </div>
@@ -185,8 +183,8 @@ export default function Navbar() {
                   <tr>
                     <td>
                       <button className="sidebarLinkButton">
-                        <Link href={`/search`}>
-                          <a onClick={() => setOpen(!open)}>Product Search</a>
+                        <Link href={`/search`} onClick={() => setOpen(!open)}>
+                          Product Search
                         </Link>
                       </button>
                     </td>
@@ -194,8 +192,8 @@ export default function Navbar() {
                   <tr>
                     <td>
                       <button className="sidebarLinkButton">
-                        <Link href={'/contact'}>
-                          <a onClick={() => setOpen(!open)}>Contact Us</a>
+                        <Link href={'/contact'} onClick={() => setOpen(!open)}>
+                          Contact Us
                         </Link>
                       </button>
                     </td>
@@ -203,8 +201,8 @@ export default function Navbar() {
                   <tr>
                     <td>
                       <button className="sidebarLinkButton">
-                        <Link href={'/login'}>
-                          <a onClick={() => setOpen(!open)}>Login</a>
+                        <Link href={'/login'} onClick={() => setOpen(!open)}>
+                          Login
                         </Link>
                       </button>
                     </td>
@@ -231,8 +229,9 @@ export default function Navbar() {
                       <button className="sidebarLinkButton">
                         <Link
                           href={`/search?category%3Fbabyknits=&category=Baby+Knits`}
+                          onClick={() => setOpen(!open)}
                         >
-                          <a onClick={() => setOpen(!open)}>Baby Knits</a>
+                          Baby Knits
                         </Link>
                       </button>
                     </td>
@@ -242,8 +241,9 @@ export default function Navbar() {
                       <button className="sidebarLinkButton">
                         <Link
                           href={`/search?category%3Fbabyknits=&category=Kid+Knits`}
+                          onClick={() => setOpen(!open)}
                         >
-                          <a onClick={() => setOpen(!open)}>Kid Knits</a>
+                          Kid Knits
                         </Link>
                       </button>
                     </td>
@@ -253,10 +253,9 @@ export default function Navbar() {
                       <button className="sidebarLinkButton">
                         <Link
                           href={`/search?category%3Fkidknits=&category=Blankets+%26+Socks`}
+                          onClick={() => setOpen(!open)}
                         >
-                          <a onClick={() => setOpen(!open)}>
-                            Blankets &amp; Socks
-                          </a>
+                          Blankets &amp; Socks
                         </Link>
                       </button>
                     </td>
@@ -266,8 +265,9 @@ export default function Navbar() {
                       <button className="sidebarLinkButton">
                         <Link
                           href={`/search?category%3Fknitkits=&category=Knit+Kits`}
+                          onClick={() => setOpen(!open)}
                         >
-                          <a onClick={() => setOpen(!open)}>Knit Kits</a>
+                          Knit Kits
                         </Link>
                       </button>
                     </td>
@@ -277,8 +277,9 @@ export default function Navbar() {
                       <button className="sidebarLinkButton">
                         <Link
                           href={`/search?category%3Fpatterns=&category=Patterns`}
+                          onClick={() => setOpen(!open)}
                         >
-                          <a onClick={() => setOpen(!open)}>Patterns</a>
+                          Patterns
                         </Link>
                       </button>
                     </td>
@@ -304,42 +305,37 @@ export default function Navbar() {
                             <Link
                               href={'https://facebook.com/anaknits'}
                               target="_blank"
+                              onClick={() => setOpen(!open)}
                             >
-                              <a onClick={() => setOpen(!open)}>
-                                <Image
-                                  Link
-                                  src={facebook}
-                                  alt="/"
-                                  width={25}
-                                  height={25}
-                                />
-                              </a>
+                              <Image
+                                Link
+                                src={facebook}
+                                alt="/"
+                                width={25}
+                                height={25}
+                              />
                             </Link>
                             <Link
                               href={'https://instagram.com/anaknits'}
                               target="_blank"
                             >
-                              <a onClick={() => setOpen(!open)}>
-                                <Image
-                                  src={instagram}
-                                  alt="/"
-                                  width={25}
-                                  height={25}
-                                />
-                              </a>
+                              <Image
+                                src={instagram}
+                                alt="/"
+                                width={25}
+                                height={25}
+                              />
                             </Link>
                             <Link
                               href={'https://whatsapp.com/anaknits'}
                               target="_blank"
                             >
-                              <a onClick={() => setOpen(!open)}>
-                                <Image
-                                  src={whatsapp}
-                                  alt="/"
-                                  width={25}
-                                  height={25}
-                                />
-                              </a>
+                              <Image
+                                src={whatsapp}
+                                alt="/"
+                                width={25}
+                                height={25}
+                              />
                             </Link>
                             <Link
                               href={
@@ -347,14 +343,12 @@ export default function Navbar() {
                               }
                               target="_blank"
                             >
-                              <a onClick={() => setOpen(!open)}>
-                                <Image
-                                  src={email}
-                                  alt="/"
-                                  width={35}
-                                  height={35}
-                                />
-                              </a>
+                              <Image
+                                src={email}
+                                alt="/"
+                                width={35}
+                                height={35}
+                              />
                             </Link>
                           </div>
                         </div>
@@ -370,10 +364,11 @@ export default function Navbar() {
 
       <div className="flex flex-col justify-center items-center">
         <div className="px-10 lg:px-5 md:px-20">
-          <Link href="/">
-            <a className="mainlogo flex w-full px-[17.5%] mb-2 md:mb-0">
-              <Image src={logo} alt={'/'} width={580} height={100} />
-            </a>
+          <Link
+            href="/"
+            className="mainlogo flex w-full px-[17.5%] mb-2 md:mb-0"
+          >
+            <Image src={logo} alt={'/'} width={580} height={100} />
           </Link>
         </div>
       </div>

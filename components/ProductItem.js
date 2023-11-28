@@ -1,31 +1,30 @@
 /* eslint-disable @next/next/no-img-element */
 import React from 'react';
 import Link from 'next/link';
-import Image from 'next/image';
+import { CldImage } from 'next-cloudinary';
 
 export default function ProductItem({ product, addToCartHandler }) {
   const customParams = {
-    width: '400px',
-    height: '520px',
+    width: '400',
+    height: '520',
   };
   return (
     <div className="card mx-0 md:mx-2">
       <Link href={`/products/${product.slug}`}>
-        <a>
-          <Image
-            src={product.image}
-            alt={product.name}
-            fetchpriority={'high'}
-            {...customParams}
-            className="rounded shadow object-cover"
-          />
-        </a>
+        <CldImage
+          src={product.image}
+          width={customParams.width}
+          height={customParams.height}
+          sizes="100w"
+          alt={product.name}
+          fetchpriority={'high'}
+          {...customParams}
+          className="rounded shadow object-cover h-[520px] w-[400px]"
+        />
       </Link>
       <div className="flex flex-col items-center justify-center p-1 md:p-3 lg:p-5">
         <Link href={`/products/${product.slug}`}>
-          <a>
-            <h2 className="text-sm">{product.name}</h2>
-          </a>
+          <h2 className="text-sm">{product.name}</h2>
         </Link>
         <p className="text-sm">${product.price}</p>
         <button

@@ -1,4 +1,5 @@
 import React from 'react';
+import Link from 'next/link';
 import Layout from '../../components/Layout';
 
 export default function DisclaimerPage() {
@@ -32,13 +33,13 @@ export default function DisclaimerPage() {
         </li>
         <li>
           <strong>Website</strong> refers to AnaKnits, accessible from{' '}
-          <a
+          <Link
             href="https://www.anaknits.com/"
             rel="external nofollow noopener noreferrer"
             target="_blank"
           >
             https://www.anaknits.com/
-          </a>
+          </Link>
         </li>
       </ul>
       <h1>Disclaimer</h1>
@@ -59,13 +60,13 @@ export default function DisclaimerPage() {
         additions, deletions, or modifications to the contents on the Service at
         any time without prior notice. This Disclaimer has been created with the
         help of the{' '}
-        <a
+        <Link
           href="https://www.termsfeed.com/disclaimer-generator/"
           target="_blank"
           rel="noreferrer"
         >
           TermsFeed Disclaimer Generator
-        </a>
+        </Link>
         .
       </p>
       <p>
@@ -166,13 +167,13 @@ export default function DisclaimerPage() {
         <li>
           <p>
             By visiting this page on our website:{' '}
-            <a
+            <Link
               href="https://www.anaknits.com/policies/disclaimer"
               rel="external nofollow noopener noreferrer"
               target="_blank"
             >
               https://www.anaknits.com/policies/disclaimer
-            </a>
+            </Link>
           </p>
         </li>
       </ul>

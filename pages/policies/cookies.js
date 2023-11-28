@@ -1,4 +1,5 @@
 import React from 'react';
+import Link from 'next/link';
 import Layout from '../../components/Layout';
 
 export default function PoliciesPage() {
@@ -47,13 +48,13 @@ export default function PoliciesPage() {
         </li>
         <li>
           <strong>Website</strong> refers to AnaKnits, accessible from{' '}
-          <a
+          <Link
             href="https://www.anaknits.com"
             rel="external nofollow noopener noreferrer"
             target="_blank"
           >
             https://www.anaknits.com
-          </a>
+          </Link>
         </li>
         <li className="pb-4">
           <strong>You</strong> means the individual accessing or using the
@@ -126,50 +127,50 @@ export default function PoliciesPage() {
         <li>
           <p>
             For the Chrome web browser, please visit this page from Google:{' '}
-            <a
+            <Link
               href="https://support.google.com/accounts/answer/32050"
               rel="external nofollow noopener noreferrer"
               target="_blank"
             >
               https://support.google.com/accounts/answer/32050
-            </a>
+            </Link>
           </p>
         </li>
         <li>
           <p>
             For the Internet Explorer web browser, please visit this page from
             Microsoft:{' '}
-            <a
+            <Link
               href="http://support.microsoft.com/kb/278835"
               rel="external nofollow noopener noreferrer"
               target="_blank"
             >
               http://support.microsoft.com/kb/278835
-            </a>
+            </Link>
           </p>
         </li>
         <li>
           <p>
             For the Firefox web browser, please visit this page from Mozilla:{' '}
-            <a
+            <Link
               href="https://support.mozilla.org/en-US/kb/delete-cookies-remove-info-websites-stored"
               rel="external nofollow noopener noreferrer"
               target="_blank"
             >
               https://support.mozilla.org/en-US/kb/delete-cookies-remove-info-websites-stored
-            </a>
+            </Link>
           </p>
         </li>
         <li>
           <p>
             For the Safari web browser, please visit this page from Apple:{' '}
-            <a
+            <Link
               href="https://support.apple.com/guide/safari/manage-cookies-and-website-data-sfri11471/mac"
               rel="external nofollow noopener noreferrer"
               target="_blank"
             >
               https://support.apple.com/guide/safari/manage-cookies-and-website-data-sfri11471/mac
-            </a>
+            </Link>
           </p>
         </li>
       </ul>
@@ -188,13 +189,13 @@ export default function PoliciesPage() {
         <li>
           <p>
             Or by visiting this page on our website:{' '}
-            <a
+            <Link
               href="https://www.anaknits.com/contact"
               rel="external nofollow noreferrer"
               target="_blank"
             >
               https://www.anaknits.com/contact
-            </a>
+            </Link>
           </p>
         </li>
       </ul>

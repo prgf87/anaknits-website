@@ -11,9 +11,7 @@ export default function Custom404() {
       <div className="flex text-2xl justify-center items-center h-10">
         {' '}
         Back to &nbsp;
-        <Link href={'/'}>
-          <a>Home Page</a>
-        </Link>
+        <Link href={'/'}>Home Page</Link>
       </div>
     </Layout>
   );

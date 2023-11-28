@@ -1,4 +1,5 @@
 import React from 'react';
+import Link from 'next/link';
 import Layout from '../components/Layout';
 
 export default function AboutUsPage() {
@@ -23,13 +24,13 @@ export default function AboutUsPage() {
         <li>
           <p>
             By visiting this page on our website:{' '}
-            <a
+            <Link
               href="https://www.anaknits.com/contact"
               rel="external nofollow noopener noreferrer"
               target="_blank"
             >
               https://www.anaknits.com/contact
-            </a>
+            </Link>
           </p>
         </li>
       </ul>

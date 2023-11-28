@@ -9,43 +9,33 @@ export default function DisclaimerPage() {
       <ol className="text-lg">
         <h1 className="text-xl font-bold pb-2">Links to all our Policies</h1>
         <li>
-          <Link href={'/policies/terms'}>
-            <a className="flex">
-              <ChevronRightIcon className="h-6 w-6 pt-1 text-gray-500 " />
-              <div className="hover:brightness-50">Terms of Service</div>
-            </a>
+          <Link href={'/policies/terms'} className="flex">
+            <ChevronRightIcon className="h-6 w-6 pt-1 text-gray-500 " />
+            <p className="hover:brightness-50">Terms of Service</p>
           </Link>
         </li>
         <li>
-          <Link href={'/policies/privacy'}>
-            <a className="flex">
-              <ChevronRightIcon className="h-6 w-6 pt-1 text-gray-500 " />
-              <div className="hover:brightness-50">Privacy Policy</div>
-            </a>
+          <Link href={'/policies/privacy'} className="flex">
+            <ChevronRightIcon className="h-6 w-6 pt-1 text-gray-500 " />
+            <div className="hover:brightness-50">Privacy Policy</div>
           </Link>
         </li>
         <li>
-          <Link href={'/policies/shipping'}>
-            <a className="flex">
-              <ChevronRightIcon className="h-6 w-6 pt-1 text-gray-500 " />
-              <div className="hover:brightness-50">Shipping Policy</div>
-            </a>
+          <Link href={'/policies/shipping'} className="flex">
+            <ChevronRightIcon className="h-6 w-6 pt-1 text-gray-500 " />
+            <div className="hover:brightness-50">Shipping Policy</div>
           </Link>
         </li>
         <li>
-          <Link href={'/policies/returns'}>
-            <a className="flex">
-              <ChevronRightIcon className="h-6 w-6 pt-1 text-gray-500 " />
-              <div className="hover:brightness-50">Returns Policy</div>
-            </a>
+          <Link href={'/policies/returns'} className="flex">
+            <ChevronRightIcon className="h-6 w-6 pt-1 text-gray-500 " />
+            <div className="hover:brightness-50">Returns Policy</div>
           </Link>
         </li>
         <li>
-          <Link href={'/policies/cookies'}>
-            <a className="flex">
-              <ChevronRightIcon className="h-6 w-6 pt-1 text-gray-500 " />
-              <div className="hover:brightness-50">Cookie Policy</div>
-            </a>
+          <Link href={'/policies/cookies'} className="flex">
+            <ChevronRightIcon className="h-6 w-6 pt-1 text-gray-500 " />
+            <div className="hover:brightness-50">Cookie Policy</div>
           </Link>
         </li>
       </ol>
@@ -77,13 +67,13 @@ export default function DisclaimerPage() {
         </li>
         <li>
           <strong>Website</strong> refers to AnaKnits, accessible from{' '}
-          <a
+          <Link
             href="https://www.anaknits.com/"
             rel="external nofollow noopener noreferrer"
             target="_blank"
           >
             https://www.anaknits.com/
-          </a>
+          </Link>
         </li>
       </ul>
       <h1 className="font-bold text-xl py-2">Disclaimer</h1>
@@ -206,13 +196,13 @@ export default function DisclaimerPage() {
         <li>
           <p>
             By visiting this page on our website:{' '}
-            <a
+            <Link
               href="https://www.anaknits.com/contact"
               rel="external nofollow noopener noreferrer"
               target="_blank"
             >
               https://www.anaknits.com/contact
-            </a>
+            </Link>
           </p>
         </li>
       </ul>

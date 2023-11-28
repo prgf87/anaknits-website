@@ -9,8 +9,8 @@ export default function ContactUsPage() {
       <ContactUs />
       <div className="w-full flex justify-center m-auto pt-5">
         <button className="sidebarLinkButton border-2 border-black hover:focus-cyan-500">
-          <Link href={'/search'}>
-            <a className="text-black">Browse more Products</a>
+          <Link href={'/search'} className="text-black">
+            Browse more Products
           </Link>
         </button>
       </div>

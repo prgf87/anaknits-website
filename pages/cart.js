@@ -58,16 +58,17 @@ function CartScreen() {
                 {cartItems.map((item) => (
                   <tr key={item.slug} className="border-b">
                     <td>
-                      <Link href={`/products/${item.slug}`}>
-                        <a className="flex items-center">
-                          <Image
-                            src={item.image}
-                            alt={item.name}
-                            {...customParams}
-                          />
-                          &nbsp;
-                          {item.name}
-                        </a>
+                      <Link
+                        href={`/products/${item.slug}`}
+                        className="flex items-center"
+                      >
+                        <Image
+                          src={item.image}
+                          alt={item.name}
+                          {...customParams}
+                        />
+                        &nbsp;
+                        {item.name}
                       </Link>
                     </td>
                     <td className="p-5 text-right">
@@ -118,8 +119,8 @@ function CartScreen() {
       )}
       <div className="w-full flex justify-center m-auto pt-5">
         <button className="sidebarLinkButton border-2 border-black hover:focus-cyan-500">
-          <Link href={'/search'}>
-            <a className="text-black">Browse more Products</a>
+          <Link href={'/search'} className="text-black">
+            Browse more Products
           </Link>
         </button>
       </div>

@@ -1,6 +1,6 @@
 import React from 'react';
 
-function Copyright({ country }) {
+function Copyright() {
   return (
     <div className="text-center text-lg mt-10">
       <section></section>

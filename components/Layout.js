@@ -4,7 +4,7 @@ import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { getError } from '../utils/error';
 import axios from 'axios';
-import Footer from './Footer';
+import Footer from './footer';
 import Navbar from './Navbar';
 
 function Layout({ title, children }) {

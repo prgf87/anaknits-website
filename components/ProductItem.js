@@ -1,12 +1,12 @@
 /* eslint-disable @next/next/no-img-element */
-import React from 'react';
-import Link from 'next/link';
-import { CldImage } from 'next-cloudinary';
+import React from "react";
+import Link from "next/link";
+import { CldImage } from "next-cloudinary";
 
 export default function ProductItem({ product, addToCartHandler }) {
   const customParams = {
-    width: '400',
-    height: '520',
+    width: "400",
+    height: "520",
   };
   return (
     <div className="card mx-0 md:mx-2">
@@ -17,23 +17,25 @@ export default function ProductItem({ product, addToCartHandler }) {
           height={customParams.height}
           sizes="100w"
           alt={product.name}
-          fetchpriority={'high'}
+          fetchpriority={"high"}
           {...customParams}
-          className="rounded shadow object-cover h-[520px] w-[400px]"
+          className="rounded shadow-lg object-cover h-[260px] w-[200px]"
         />
       </Link>
-      <div className="flex flex-col items-center justify-center p-1 md:p-3 lg:p-5">
+      <div className="flex flex-col items-center justify-center py-1 md:py-3 lg:py-5">
         <Link href={`/products/${product.slug}`}>
-          <h2 className="text-sm">{product.name}</h2>
+          <h2 className="text-sm text-center px-1">{product.name}</h2>
         </Link>
         <p className="text-sm">${product.price}</p>
-        <button
-          className="primary-button text-sm"
-          type="button"
-          onClick={() => addToCartHandler(product)}
-        >
-          Buy
-        </button>
+        <div className="relative">
+          <button
+            className="primary-button text-sm"
+            type="button"
+            onClick={() => addToCartHandler(product)}
+          >
+            Buy
+          </button>
+        </div>
       </div>
     </div>
   );

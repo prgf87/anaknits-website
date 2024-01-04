@@ -24,7 +24,7 @@ link {
 }
 
 .card {
-  @apply mb-5 block rounded-lg border border-gray-200 shadow-md;
+  @apply mb-5 block rounded-xl border border-gray-600/20 shadow-md overflow-hidden;
 }
 
 .btn1 {

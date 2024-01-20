@@ -1,18 +1,18 @@
-import { getSession } from 'next-auth/react';
-import Order from '../../../../models/Order';
-import db from '../../../../utils/db';
+import { getToken } from "next-auth/jwt";
+import Order from "../../../../models/Order";
+import db from "../../../../utils/db";
 
 const handler = async (req, res) => {
-  const session = await getSession({ req });
-  if (!session) {
-    return res.status(401).send('Error: Sign-in required');
+  const user = await getToken({ req });
+  if (!user) {
+    return res.status(401).send("Error: Sign-in required");
   }
 
   await db.connect();
   const order = await Order.findById(req.query.id);
   if (order) {
     if (order.isPaid) {
-      return res.status(400).send({ message: 'Error: order has already paid' });
+      return res.status(400).send({ message: "Error: order has already paid" });
     }
     order.isPaid = true;
     order.paidAt = Date.now();
@@ -24,12 +24,12 @@ const handler = async (req, res) => {
     const paidOrder = await order.save();
     await db.disconnect();
     res.send({
-      message: 'Your order has been paid successfully',
+      message: "Your order has been paid successfully",
       order: paidOrder,
     });
   } else {
     await db.disconnect();
-    res.status(404).send({ message: 'Error: order is not found' });
+    res.status(404).send({ message: "Error: order is not found" });
   }
 };
 

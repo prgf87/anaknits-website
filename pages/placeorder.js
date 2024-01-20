@@ -1,14 +1,14 @@
-import Image from 'next/image';
-import Link from 'next/link';
-import { useRouter } from 'next/router';
-import React, { useContext, useEffect, useState } from 'react';
-import CheckoutWizard from '../components/CheckoutWizard';
-import Layout from '../components/Layout';
-import { Store } from '../utils/Store';
-import { getError } from '../utils/error';
-import { toast } from 'react-toastify';
-import axios from 'axios';
-import Cookies from 'js-cookie';
+import Image from "next/image";
+import Link from "next/link";
+import { useRouter } from "next/router";
+import React, { useContext, useEffect, useState } from "react";
+import CheckoutWizard from "../components/CheckoutWizard";
+import Layout from "../components/Layout";
+import { Store } from "../utils/Store";
+import { getError } from "../utils/error";
+import { toast } from "react-toastify";
+import axios from "axios";
+import Cookies from "js-cookie";
 
 export default function PlaceOrderScreen() {
   const { state, dispatch } = useContext(Store);
@@ -28,7 +28,7 @@ export default function PlaceOrderScreen() {
   const router = useRouter();
   useEffect(() => {
     if (!paymentMethod) {
-      router.push('/payment');
+      router.push("/payment");
     }
   }, [paymentMethod, router]);
 
@@ -37,7 +37,7 @@ export default function PlaceOrderScreen() {
   const placeOrderHandler = async () => {
     try {
       setLoading(true);
-      const { data } = await axios.post('/api/orders', {
+      const { data } = await axios.post("/api/orders", {
         orderItems: cartItems,
         shippingAddress,
         paymentMethod,
@@ -47,9 +47,9 @@ export default function PlaceOrderScreen() {
         totalPrice,
       });
       setLoading(false);
-      dispatch({ type: 'CART_CLEAR_ITEMS' });
+      dispatch({ type: "CART_CLEAR_ITEMS" });
       Cookies.set(
-        'cart',
+        "cart",
         JSON.stringify({
           ...cart,
           cartItems: [],
@@ -60,12 +60,13 @@ export default function PlaceOrderScreen() {
     } catch (err) {
       setLoading(false);
       toast.error(getError(err));
+      console.log("Error: ", err);
     }
   };
 
   const customParams = {
-    width: '50px',
-    height: '50px',
+    width: "50",
+    height: "50",
   };
 
   return (
@@ -82,8 +83,8 @@ export default function PlaceOrderScreen() {
             <div className="card p-5">
               <h2 className="mb-2 text-lg">Shipping Address</h2>
               <div>
-                {shippingAddress.fullName}, {shippingAddress.address},{' '}
-                {shippingAddress.city}, {shippingAddress.postalCode},{' '}
+                {shippingAddress.fullName}, {shippingAddress.address},{" "}
+                {shippingAddress.city}, {shippingAddress.postalCode},{" "}
                 {shippingAddress.country}
               </div>
               <div>
@@ -172,7 +173,7 @@ export default function PlaceOrderScreen() {
                   onClick={placeOrderHandler}
                   className="primary-button w-full"
                 >
-                  {loading ? 'Loading...' : 'Place Your Order'}
+                  {loading ? "Loading..." : "Place Your Order"}
                 </button>
               </li>
             </ul>

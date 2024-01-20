@@ -1,13 +1,13 @@
-import Image from 'next/image';
-import Link from 'next/link';
-import React, { useContext } from 'react';
-import Layout from '../components/Layout';
-import { Store } from '../utils/Store';
-import { XCircleIcon } from '@heroicons/react/outline';
-import { useRouter } from 'next/router';
-import dynamic from 'next/dynamic';
-import axios from 'axios';
-import { toast } from 'react-toastify';
+import Image from "next/image";
+import Link from "next/link";
+import React, { useContext } from "react";
+import Layout from "../components/Layout";
+import { Store } from "../utils/Store";
+import { XCircleIcon } from "@heroicons/react/outline";
+import { useRouter } from "next/router";
+import dynamic from "next/dynamic";
+import axios from "axios";
+import { toast } from "react-toastify";
 
 function CartScreen() {
   const router = useRouter();
@@ -17,26 +17,26 @@ function CartScreen() {
   } = state;
 
   const removeItemHandler = (item) => {
-    dispatch({ type: 'CART_REMOVE_ITEM', payload: item });
+    dispatch({ type: "CART_REMOVE_ITEM", payload: item });
   };
 
   const updateCartHandler = async (item, qty) => {
     const quantity = Number(qty);
     const { data } = await axios.get(`/api/products/${item._id}`);
     if (data.countInStock < quantity) {
-      return toast.error('Sorry, the product is not available');
+      return toast.error("Sorry, the product is not available");
     }
-    dispatch({ type: 'CART_ADD_ITEM', payload: { ...item, quantity } });
-    return toast.success('Product has been updated to the cart');
+    dispatch({ type: "CART_ADD_ITEM", payload: { ...item, quantity } });
+    return toast.success("Product has been updated to the cart");
   };
 
   const customParams = {
-    width: '50px',
-    height: '50px',
+    width: "50",
+    height: "50",
   };
 
   return (
-    <Layout title={'Shopping Cart'}>
+    <Layout title={"Shopping Cart"}>
       <h1 className="mb-4 text-xl">Shopping Cart</h1>
       {cartItems.length === 0 ? (
         <div>
@@ -107,7 +107,7 @@ function CartScreen() {
               </li>
               <li>
                 <button
-                  onClick={() => router.push('login?redirect=/shipping')}
+                  onClick={() => router.push("login?redirect=/shipping")}
                   className="primary-button w-full"
                 >
                   Check Out
@@ -119,7 +119,7 @@ function CartScreen() {
       )}
       <div className="w-full flex justify-center m-auto pt-5">
         <button className="sidebarLinkButton border-2 border-black hover:focus-cyan-500">
-          <Link href={'/search'} className="text-black">
+          <Link href={"/search"} className="text-black">
             Browse more Products
           </Link>
         </button>

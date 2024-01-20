@@ -1,42 +1,81 @@
-import axios from 'axios';
-import Link from 'next/link';
-import React, { useEffect, useReducer } from 'react';
-import Layout from '../../components/Layout';
-import { getError } from '../../utils/error';
+import axios from "axios";
+import Link from "next/link";
+import React, { useEffect, useReducer } from "react";
+import Layout from "../../components/Layout";
+import { getError } from "../../utils/error";
+import {
+  Chart as ChartJS,
+  CategoryScale,
+  LinearScale,
+  BarElement,
+  Title,
+  Tooltip,
+  Legend,
+} from "chart.js";
+import { Bar } from "react-chartjs-2";
 
 function reducer(state, action) {
   switch (action.type) {
-    case 'FETCH_REQUEST':
-      return { ...state, loading: true, error: '' };
-    case 'FETCH_SUCCESS':
-      return { ...state, loading: false, summary: action.payload, error: '' };
-    case 'FETCH_FAIL':
+    case "FETCH_REQUEST":
+      return { ...state, loading: true, error: "" };
+    case "FETCH_SUCCESS":
+      return { ...state, loading: false, summary: action.payload, error: "" };
+    case "FETCH_FAIL":
       return { ...state, loading: false, error: action.payload };
     default:
       state;
   }
 }
 
+ChartJS.register(
+  CategoryScale,
+  LinearScale,
+  BarElement,
+  Title,
+  Tooltip,
+  Legend
+);
+
+export const options = {
+  responsive: true,
+  plugins: {
+    legend: {
+      position: "top",
+    },
+  },
+};
+
 function AdminDashboardScreen() {
   const [{ loading, error, summary }, dispatch] = useReducer(reducer, {
     loading: true,
     summary: { salesData: [] },
-    error: '',
+    error: "",
   });
 
   useEffect(() => {
     const fetchData = async () => {
       try {
-        dispatch({ type: 'FETCH_REQUEST' });
+        dispatch({ type: "FETCH_REQUEST" });
         const { data } = await axios.get(`/api/admin/summary`);
-        dispatch({ type: 'FETCH_SUCCESS', payload: data });
+        dispatch({ type: "FETCH_SUCCESS", payload: data });
       } catch (err) {
-        dispatch({ type: 'FETCH_FAIL', payload: getError(err) });
+        dispatch({ type: "FETCH_FAIL", payload: getError(err) });
       }
     };
 
     fetchData();
   }, []);
+
+  const data = {
+    labels: summary.salesData.map((x) => x._id), // 2022/01 2022/03
+    datasets: [
+      {
+        label: "Sales",
+        backgroundColor: "rgba(162, 222, 208, 1)",
+        data: summary.salesData.map((x) => x.totalSales),
+      },
+    ],
+  };
 
   return (
     <Layout title="Admin Dashboard">
@@ -81,7 +120,7 @@ function AdminDashboardScreen() {
                 <div className="card m-5 p-5">
                   <p className="text-3xl">{summary.productsCount}</p>
                   <p>Products</p>
-                  <Link href="/admin/product">View Products</Link>
+                  <Link href="/admin/products">View Products</Link>
                 </div>
                 <div className="card m-5 p-5">
                   <p className="text-3xl">{summary.usersCount}</p>
@@ -89,6 +128,13 @@ function AdminDashboardScreen() {
                   <Link href="/admin/users">View Users</Link>
                 </div>
               </div>
+              <h2 className="text-xl">Sales Report</h2>
+              <Bar
+                options={{
+                  legend: { display: true, position: "right" },
+                }}
+                data={data}
+              />
             </div>
           )}
         </div>

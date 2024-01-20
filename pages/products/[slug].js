@@ -1,13 +1,13 @@
-import React, { useContext } from 'react';
-import Layout from '../../components/Layout';
-import { useRouter } from 'next/router';
-import Link from 'next/link';
-import Image from 'next/image';
-import { Store } from '../../utils/Store';
-import db from '../../utils/db';
-import Product from '../../models/Product';
-import axios from 'axios';
-import { toast } from 'react-toastify';
+import React, { useContext } from "react";
+import Layout from "../../components/Layout";
+import { useRouter } from "next/router";
+import Link from "next/link";
+import Image from "next/image";
+import { Store } from "../../utils/Store";
+import db from "../../utils/db";
+import Product from "../../models/Product";
+import axios from "axios";
+import { toast } from "react-toastify";
 
 export default function ProductScreen(props) {
   const { product } = props;
@@ -24,16 +24,16 @@ export default function ProductScreen(props) {
     const { data } = await axios.get(`/api/products/${product._id}`);
 
     if (data.countInStock < quantity) {
-      return toast.error('We apologize but this product is now Out of Stock');
+      return toast.error("We apologize but this product is now Out of Stock");
     }
 
-    dispatch({ type: 'CART_ADD_ITEM', payload: { ...product, quantity } });
-    router.push('/cart');
+    dispatch({ type: "CART_ADD_ITEM", payload: { ...product, quantity } });
+    router.push("/cart");
   };
 
   const customParams = {
-    width: '400px',
-    height: '400px',
+    width: "400",
+    height: "400",
   };
 
   return (
@@ -68,7 +68,7 @@ export default function ProductScreen(props) {
               <div>${product.price}</div>
             </div>
             <div>Status</div>
-            <div>{product.countInStock > 0 ? 'In Stock' : 'Unavaialble'}</div>
+            <div>{product.countInStock > 0 ? "In Stock" : "Unavaialble"}</div>
           </div>
           <button className="primary-button w-full" onClick={addToCartHandler}>
             Add to Cart

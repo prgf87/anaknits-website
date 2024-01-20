@@ -1,13 +1,13 @@
-import { getSession } from 'next-auth/react';
-import Order from '../../../models/Order';
-import Product from '../../../models/Product';
-import User from '../../../models/User';
-import db from '../../../utils/db';
+import { getToken } from "next-auth/jwt";
+import Order from "../../../models/Order";
+import Product from "../../../models/Product";
+import User from "../../../models/User";
+import db from "../../../utils/db";
 
 const handler = async (req, res) => {
-  const session = await getSession({ req });
-  if (!session || (session && !session.user.isAdmin)) {
-    return res.status(401).send('Error: Admin sign-in is Required');
+  const user = await getToken({ req });
+  if (!user || (user && !user.isAdmin)) {
+    return res.status(401).send("Error: Admin sign-in is Required");
   }
 
   await db.connect();
@@ -19,7 +19,7 @@ const handler = async (req, res) => {
     {
       $group: {
         _id: null,
-        sales: { $sum: '$totalPrice' },
+        sales: { $sum: "$totalPrice" },
       },
     },
   ]);
@@ -30,8 +30,8 @@ const handler = async (req, res) => {
   const salesData = await Order.aggregate([
     {
       $group: {
-        _id: { $dateToString: { format: '%Y-%m', date: '$createdAt' } },
-        totalSales: { $sum: '$totalPrice' },
+        _id: { $dateToString: { format: "%Y-%m", date: "$createdAt" } },
+        totalSales: { $sum: "$totalPrice" },
       },
     },
   ]);

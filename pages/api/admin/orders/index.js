@@ -1,19 +1,20 @@
-import { getSession } from 'next-auth/react';
-import Order from '../../../../models/Order';
-import db from '../../../../utils/db';
+import { getToken } from "next-auth/jwt";
+import Order from "../../../../models/Order";
+import db from "../../../../utils/db";
 
 const handler = async (req, res) => {
-  const session = await getSession({ req });
-  if (!session || (session && !session.user.isAdmin)) {
-    return res.status(401).send('Error: Admin sign-in is Required');
+  const user = await getToken({ req });
+  if (!user || (user && !user.isAdmin)) {
+    return res.status(401).send("Error: Admin sign-in is Required");
   }
-  if (req.method === 'GET') {
+
+  if (req.method === "GET") {
     await db.connect();
-    const orders = await Order.find({}).populate('user', 'name');
+    const orders = await Order.find({}).populate("user", "name");
     await db.disconnect();
     res.send(orders);
   } else {
-    return res.status(400).send({ message: 'Method not allowed' });
+    return res.status(400).send({ message: "Method not allowed" });
   }
 };
 export default handler;

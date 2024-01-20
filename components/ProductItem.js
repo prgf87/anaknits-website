@@ -26,7 +26,7 @@ export default function ProductItem({ product, addToCartHandler }) {
         <Link href={`/products/${product.slug}`}>
           <h2 className="text-sm text-center px-1">{product.name}</h2>
         </Link>
-        <p className="text-sm">${product.price}</p>
+        <p className="text-sm">${product.price.toFixed(2)}</p>
         <div className="relative">
           <button
             className="primary-button text-sm"

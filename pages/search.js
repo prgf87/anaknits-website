@@ -84,9 +84,8 @@ export default function Search(props) {
     filterSearch({ category: e.target.value });
   };
 
-  const pageHandler = (e) => {
-    const page = e.selected + 1;
-    filterSearch({ page });
+  const pageHandler = (page) => {
+    filterSearch({ page: page + 1 });
   };
 
   const sortHandler = (e) => {
@@ -211,7 +210,7 @@ export default function Search(props) {
                       className={`default-button m-2 ${
                         page == pageNumber + 1 ? "font-bold" : ""
                       }`}
-                      onClick={() => pageHandler(pageNumber + 1)}
+                      onClick={() => pageHandler(pageNumber)}
                     >
                       {pageNumber + 1}
                     </button>

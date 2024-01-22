@@ -116,7 +116,7 @@ export default function Search(props) {
     router.push("/cart");
   };
 
-  console.log("Inside Component: ", "\n", category, props.categories);
+  // console.log("Inside Component: ", "\n", category, props.categories);
 
   return (
     <Layout title="search">
@@ -231,7 +231,6 @@ export default function Search(props) {
 }
 
 export async function getServerSideProps({ query }) {
-  console.log(query, "QUERY");
   await db.connect();
   const pageSize = query.pageSize || PAGE_SIZE;
   const page = parseInt(query.page || 1);

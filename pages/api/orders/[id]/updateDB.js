@@ -29,8 +29,7 @@ const handler = async (req, res) => {
       productId,
       function (err, productsItem) {
         if (err) {
-          console.log("*** Error!!! ***");
-          console.log(err);
+          console.log("*** Update Error ***", "\n", err);
         } else {
           let newCountInStock =
             productsItem.countInStock - orderProductQuantity;

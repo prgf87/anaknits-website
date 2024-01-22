@@ -119,7 +119,7 @@ export default function Search(props) {
   // console.log("Inside Component: ", "\n", category, props.categories);
 
   return (
-    <Layout title="search">
+    <Layout title="Search">
       <div className="grid md:grid-cols-4 md:gap-5">
         <div>
           <div className="my-3">

@@ -77,9 +77,9 @@ export default function Navbar() {
   return (
     <nav>
       <div className="topHeader flex px-1 py-1 justify-between">
-        <div className={`sidebarIcon z-50 p-0`}>
+        <div className={`sidebarIcon z-50 p-0 ml-1`}>
           <button onClick={() => setOpen(!open)}>
-            <Image src={hamicon} alt={Menu} height={34} width={34} />
+            <Image src={hamicon} alt={Menu} height={32} width={32} />
           </button>
         </div>
 

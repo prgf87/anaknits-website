@@ -10,7 +10,7 @@ async function handler(req, res) {
 
   const user = await getToken({ req });
   if (!user) {
-    return res.status(401).send({ message: "signin required" });
+    return res.status(401).send({ message: "Sign-in required" });
   }
 
   const { name, email, password } = req.body;

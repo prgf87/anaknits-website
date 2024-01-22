@@ -116,6 +116,8 @@ export default function Search(props) {
     router.push("/cart");
   };
 
+  console.log("Inside Component: ", "\n", category, props.categories);
+
   return (
     <Layout title="search">
       <div className="grid md:grid-cols-4 md:gap-5">
@@ -129,9 +131,11 @@ export default function Search(props) {
             >
               <option value="all">All</option>
               {props.categories.map((cat) => {
-                <option key={cat} value={cat}>
-                  {cat}
-                </option>;
+                return (
+                  <option key={cat} value={cat}>
+                    {cat}
+                  </option>
+                );
               })}
             </select>
           </div>
@@ -141,9 +145,11 @@ export default function Search(props) {
               <option value="all">All</option>
               {prices &&
                 prices.map((price) => {
-                  <option key={price.value} value={price.value}>
-                    {price.name}
-                  </option>;
+                  return (
+                    <option key={price.value} value={price.value}>
+                      {price.name}
+                    </option>
+                  );
                 })}
             </select>
           </div>
@@ -151,12 +157,13 @@ export default function Search(props) {
             <h2>Ratings</h2>
             <select className="w-full" value={rating} onChange={ratingHandler}>
               <option value="all">All</option>
-              {ratings &&
-                ratings.map((rating) => {
+              {ratings.map((rating) => {
+                return (
                   <option key={rating} value={rating}>
                     {rating} star {rating > 1 && "s"} & up
-                  </option>;
-                })}
+                  </option>
+                );
+              })}
             </select>
           </div>
         </div>
@@ -171,7 +178,7 @@ export default function Search(props) {
               category !== "all" ||
               price !== "all" ? (
                 <button onClick={() => router.push("/search")}>
-                  <XCircleIcon className="h-5 w-5" />
+                  <XCircleIcon className="h-6 w-6 ml-2" />
                 </button>
               ) : null}
             </div>
@@ -224,6 +231,7 @@ export default function Search(props) {
 }
 
 export async function getServerSideProps({ query }) {
+  console.log(query, "QUERY");
   await db.connect();
   const pageSize = query.pageSize || PAGE_SIZE;
   const page = parseInt(query.page || 1);

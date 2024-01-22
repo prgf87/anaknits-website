@@ -31,6 +31,10 @@ link {
   @apply px-6 py-[6px] bg-gray-800 text-white;
 }
 
+.default-button {
+  @apply rounded bg-gray-300 py-2 px-4 shadow outline-none hover:bg-gray-200  active:bg-gray-400 text-gray-800;
+}
+
 .primary-button {
   @apply rounded bg-amber-300 py-2 px-4 shadow outline-none hover:bg-amber-400  active:bg-amber-500 text-gray-700;
 }

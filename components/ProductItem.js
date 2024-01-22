@@ -19,7 +19,7 @@ export default function ProductItem({ product, addToCartHandler }) {
           alt={product.name}
           fetchpriority={"high"}
           {...customParams}
-          className="rounded shadow-lg object-cover h-[260px] w-[200px]"
+          className="rounded shadow-lg object-cover h-[400px] w-[350px]"
         />
       </Link>
       <div className="flex flex-col items-center justify-center py-1 md:py-3 lg:py-5">

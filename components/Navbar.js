@@ -223,7 +223,7 @@ export default function Navbar() {
                 <tbody className="grid grid-cols-1 gap-3 p-3 w-full place-items-center shadow-sm">
                   {categories.map((cat) => {
                     return (
-                      <tr key={cat.id}>
+                      <tr key={cat}>
                         <td>
                           <button className="sidebarLinkButton">
                             <Link href={"search?category"}>{cat}</Link>

@@ -102,9 +102,34 @@ function CartScreen() {
               <li>
                 <div className="pb-3 text-xl">
                   Subtotal ({cartItems.reduce((a, c) => a + c.quantity, 0)}) : $
-                  {cartItems.reduce((a, c) => a + c.quantity * c.price, 0)}
+                  {cartItems
+                    .reduce((a, c) => a + c.quantity * c.price, 0)
+                    .toFixed(2)}
                 </div>
               </li>
+              <div className="flex flex-wrap justify-evenly mx-auto gap-4 py-4">
+                <Image
+                  src={"/images/visa.png"}
+                  alt="visa logo"
+                  width={109}
+                  height={70}
+                />
+
+                <Image
+                  src={"/images/mastercard.png"}
+                  alt="mastercard logo"
+                  width={90}
+                  height={70}
+                  className="h-[40px] w-[70px] object-contain"
+                />
+
+                <Image
+                  src={"/images/paypal.jpg"}
+                  alt="paypal logo"
+                  width={120}
+                  height={70}
+                />
+              </div>
               <li>
                 <button
                   onClick={() => router.push("login?redirect=/shipping")}

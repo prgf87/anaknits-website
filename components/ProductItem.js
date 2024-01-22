@@ -19,14 +19,14 @@ export default function ProductItem({ product, addToCartHandler }) {
           alt={product.name}
           fetchpriority={"high"}
           {...customParams}
-          className="rounded shadow-lg object-cover h-[520px] w-[400px]"
+          className="rounded shadow-lg object-cover h-[400px] w-[350px]"
         />
       </Link>
       <div className="flex flex-col items-center justify-center py-1 md:py-3 lg:py-5">
         <Link href={`/products/${product.slug}`}>
           <h2 className="text-sm text-center px-1">{product.name}</h2>
         </Link>
-        <p className="text-sm">${product.price.toFixed(2)}</p>
+        <p className="text-sm">${product.price}</p>
         <div className="relative">
           <button
             className="primary-button text-sm"

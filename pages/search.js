@@ -51,7 +51,8 @@ export default function Search(props) {
     page = 1,
   } = router.query;
 
-  const { products, countProducts, categories, pages } = props;
+  // console.log(props, "PROPS");
+  // const { products, countProducts, categories, pages } = props;
 
   const filterSearch = ({
     page,
@@ -112,7 +113,6 @@ export default function Search(props) {
       return toast.error("Sorry, the product is not available");
     }
     dispatch({ type: "CART_ADD_ITEM", payload: { ...product, quantity } });
-    // toast.success("Product has been added to your cart");
     router.push("/cart");
   };
 
@@ -128,12 +128,11 @@ export default function Search(props) {
               onChange={categoryHandler}
             >
               <option value="all">All</option>
-              {categories &&
-                categories.map((cat) => {
-                  <option key={cat} value={cat}>
-                    {cat}
-                  </option>;
-                })}
+              {props.categories.map((cat) => {
+                <option key={cat} value={cat}>
+                  {cat}
+                </option>;
+              })}
             </select>
           </div>
           <div className="my-3">
@@ -164,7 +163,7 @@ export default function Search(props) {
         <div className="md:col-span-3">
           <div className="mb-2 flex items-center justify-between border-b-2 pb-2">
             <div className="flex items-center">
-              {products.length === 0 ? "No" : countProducts} Results
+              {props.products.length === 0 ? "No" : props.countProducts} Results
               {query !== "all" && query !== "" && " : " + query}
               {category !== "all" && " : " + category}
               {price !== "all" && " : Price " + price}
@@ -189,7 +188,7 @@ export default function Search(props) {
           </div>
           <div>
             <div className="grid grid-cols-1 gap-4 md:grid-cols-3">
-              {products.map((product) => (
+              {props.products.map((product) => (
                 <div
                   key={product.name}
                   className="grid grid-cols-1 w-auto justify-between"
@@ -203,8 +202,8 @@ export default function Search(props) {
               ))}
             </div>
             <ul className="flex">
-              {products.length > 0 &&
-                [...Array(pages).keys()].map((pageNumber) => (
+              {props.products.length > 0 &&
+                [...Array(props.pages).keys()].map((pageNumber) => (
                   <li key={pageNumber}>
                     <button
                       className={`default-button m-2 ${
@@ -229,6 +228,7 @@ export async function getServerSideProps({ query }) {
   const pageSize = query.pageSize || PAGE_SIZE;
   const page = parseInt(query.page || 1);
   const category = query.category || "";
+  const rating = query.rating || "";
   const price = query.price || "";
   const sort = query.sort || "";
   const searchQuery = query.query || "";
@@ -243,6 +243,15 @@ export async function getServerSideProps({ query }) {
         }
       : {};
   const categoryFilter = category && category !== "all" ? { category } : {};
+
+  const ratingFilter =
+    rating && rating !== "all"
+      ? {
+          rating: {
+            $gte: Number(rating),
+          },
+        }
+      : {};
 
   const priceFilter =
     price && price !== "all"
@@ -261,14 +270,22 @@ export async function getServerSideProps({ query }) {
       ? { price: 1 }
       : sort === "highest"
       ? { price: -1 }
+      : sort === "toprated"
+      ? { rating: -1 }
+      : sort === "featured"
+      ? { isFeatured: -1 }
       : { _id: -1 };
 
   const categories = await Product.find().distinct("category");
-  const productDocs = await Product.find({
-    ...queryFilter,
-    ...categoryFilter,
-    ...priceFilter,
-  })
+  const productDocs = await Product.find(
+    {
+      ...queryFilter,
+      ...categoryFilter,
+      ...priceFilter,
+      ...ratingFilter,
+    },
+    "-reviews"
+  )
     .sort(order)
     .skip(pageSize * (page - 1))
     .limit(pageSize)
@@ -278,7 +295,9 @@ export async function getServerSideProps({ query }) {
     ...queryFilter,
     ...categoryFilter,
     ...priceFilter,
+    ...ratingFilter,
   });
+
   await db.disconnect();
 
   const products = productDocs.map(db.convertDocToObj);

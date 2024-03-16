@@ -48,6 +48,7 @@ export default function AdminProductEditScreen() {
     handleSubmit,
     formState: { errors },
     setValue,
+    getValues,
   } = useForm();
 
   useEffect(() => {
@@ -60,10 +61,16 @@ export default function AdminProductEditScreen() {
         setValue("slug", data.slug);
         setValue("price", data.price);
         setValue("image", data.image);
+        setValue("featuredImage", data.image);
+        setValue("images", data.images);
         setValue("category", data.category);
+        setValue("subcategories", data.subcategories);
         setValue("brand", data.brand);
+        setValue("designer", data.designer);
         setValue("countInStock", data.countInStock);
         setValue("description", data.description);
+        setValue("keywords", data.keywords);
+        setValue("isFeatured", data.isFeatured);
       } catch (err) {
         dispatch({ type: "FETCH_FAIL", payload: getError(err) });
       }
@@ -74,7 +81,16 @@ export default function AdminProductEditScreen() {
 
   const router = useRouter();
 
-  const uploadHandler = async (e, imageField = "image") => {
+  const test = ()=>{
+    console.log("Here!")
+    console.log(JSON.stringify(getValues("image")));
+    console.log(JSON.stringify(getValues("images")));
+    console.log(JSON.stringify(getValues("featuredImage")));
+    console.log(JSON.stringify(getValues("isFeatured")));
+    console.log(JSON.stringify(getValues("keywords")));
+  }
+
+  const uploadHandler = async (e) => {
     const url = `https://api.cloudinary.com/v1_1/${process.env.NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME}/upload`;
     try {
       dispatch({ type: "UPLOAD_REQUEST" });
@@ -91,7 +107,8 @@ export default function AdminProductEditScreen() {
 
       const { data } = await axios.post(url, formData);
       dispatch({ type: "UPLOAD_SUCCESS" });
-      setValue(imageField, data.secure_url);
+      setValue("image", data.secure_url);
+      setValue("images[]", data.secure_url)
       toast.success(
         "Your file has been uploaded successfully, remember to click Update to apply changes!"
       );
@@ -179,6 +196,7 @@ export default function AdminProductEditScreen() {
             <div className="alert-error">{error}</div>
           ) : (
             <section>
+              <button onClick={test}>Test</button>
               <form
                 className="mx-auto max-w-screen-md"
                 onSubmit={handleSubmit(submitHandler)}

@@ -48,6 +48,7 @@ export default function AdminProductsScreen() {
     if (!window.confirm("Are you sure?")) {
       return;
     }
+    console.log("##########---HERE-----#########")
     try {
       dispatch({ type: "CREATE_REQUEST" });
       const { data } = await axios.post(`/api/admin/products`);

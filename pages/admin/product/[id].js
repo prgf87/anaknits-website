@@ -47,15 +47,26 @@ export default function AdminProductEditScreen() {
 
   const [imagesArray, setImagesArray] = useState([]);
   const [subCategoriesArr, setSubCategoriesArr] = useState([]);
+  const [selectedImage, setSelectedImage] = useState("");
   const [keywordsArr, setKeywordsArr] = useState([]);
+  const [productFeatured, setProductFeatured] = useState(false);
 
   const test = () => {
     console.log("Here!");
-    console.log(JSON.stringify(getValues("image")));
-    console.log(JSON.stringify(getValues("images")));
-    console.log(JSON.stringify(getValues("featuredImage")));
-    console.log(JSON.stringify(getValues("isFeatured")));
-    console.log(JSON.stringify(getValues("keywords")));
+    console.log(JSON.stringify(getValues("name")), "name");
+    console.log(JSON.stringify(getValues("slug")), "slug");
+    console.log(JSON.stringify(getValues("price")), "price");
+    console.log(JSON.stringify(getValues("countInStock")), "countInStock");
+    console.log(JSON.stringify(getValues("image")), "image");
+    console.log(JSON.stringify(getValues("images")), "images");
+    console.log(JSON.stringify(getValues("featuredImage")), "featuredImage");
+    console.log(JSON.stringify(getValues("category")), "category");
+    console.log(JSON.stringify(getValues("subcategories")), "subcategories");
+    console.log(JSON.stringify(getValues("keywords")), "keywords");
+    console.log(JSON.stringify(getValues("brand")), "brand");
+    console.log(JSON.stringify(getValues("designer")), "designer");
+    console.log(JSON.stringify(getValues("description")), "description");
+    console.log(JSON.stringify(getValues("isFeatured")), "isFeatured");
   };
 
   const {
@@ -75,19 +86,16 @@ export default function AdminProductEditScreen() {
         setValue("name", data.name);
         setValue("slug", data.slug);
         setValue("price", data.price);
+        setValue("countInStock", data.countInStock);
         setValue("image", data.image);
         setValue("images", data.images);
         setValue("featuredImage", data.featuredImage);
         setValue("category", data.category);
-        setValue(
-          "subcategories",
-          subCategoriesArr.length > 0 ? subCategoriesArr : data.subcategories
-        );
+        setValue("subcategories", data.subcategories);
+        setValue("keywords", data.keywords);
         setValue("brand", data.brand);
         setValue("designer", data.designer);
-        setValue("countInStock", data.countInStock);
         setValue("description", data.description);
-        setValue("keywords", data.keywords);
         setValue("isFeatured", data.isFeatured);
       } catch (err) {
         dispatch({ type: "FETCH_FAIL", payload: getError(err) });
@@ -125,9 +133,8 @@ export default function AdminProductEditScreen() {
       setValue("images", [...imagesArray, data.secure_url]);
       setValue("featuredImage", data.secure_url);
       setImagesArray([...imagesArray, data.secure_url]);
-      toast.success(
-        "Your file has been uploaded successfully, remember to click Update to apply changes!"
-      );
+      if (!selectedImage) setSelectedImage(data.secure_url);
+      toast.success("Your file has been uploaded successfully");
     } catch (err) {
       dispatch({ type: "UPLOAD_FAIL", payload: getError(err) });
       toast.error(getError(err));
@@ -137,16 +144,35 @@ export default function AdminProductEditScreen() {
   const addSubCat = () => {
     const newValue = document.getElementById("addsubcategories").value;
     if (subCategoriesArr.includes(newValue)) {
-      console.log("Already used");
       document.getElementById("addsubcategories").value = "";
       let err = { message: "Category already used" };
       dispatch({ type: "UPLOAD_FAIL", payload: getError(err) });
       toast.error(getError(err));
       return;
+    } else if (newValue.length === 0) {
+      document.getElementById("addsubcategories").value = "";
+      let err = { message: "You need to input text" };
+      dispatch({ type: "UPLOAD_FAIL", payload: getError(err) });
+      toast.error(getError(err));
+      return;
     }
-    setValue("subcategories", [...subCategoriesArr, newValue]);
     setSubCategoriesArr([...subCategoriesArr, newValue]);
+    setValue("subcategories", [...subCategoriesArr, newValue]);
     document.getElementById("addsubcategories").value = "";
+  };
+
+  const addKeyword = () => {
+    const newValue = document.getElementById("addkeywords").value;
+    if (keywordsArr.includes(newValue)) {
+      document.getElementById("addkeywords").value = "";
+      let err = { message: "Keyword already used" };
+      dispatch({ type: "UPLOAD_FAIL", payload: getError(err) });
+      toast.error(getError(err));
+      return;
+    }
+    setKeywordsArr([...keywordsArr, newValue]);
+    setValue("keywords", [...keywordsArr, newValue]);
+    document.getElementById("addkeywords").value = "";
   };
 
   const removeSubCat = (remove) => {
@@ -155,6 +181,14 @@ export default function AdminProductEditScreen() {
     });
     setValue("subcategories", result);
     setSubCategoriesArr(result);
+  };
+
+  const removeKeyword = (remove) => {
+    const result = keywordsArr.filter((keys) => {
+      return keys !== remove;
+    });
+    setValue("keywords", result);
+    setKeywordsArr(result);
   };
 
   const generateSlug = () => {
@@ -210,7 +244,7 @@ export default function AdminProductEditScreen() {
       });
       dispatch({ type: "UPDATE_SUCCESS" });
       toast.success("Product updated successfully");
-      router.push(`/admin/products/${productId}`);
+      router.push(`/admin/products}`);
     } catch (err) {
       dispatch({ type: "UPDATE_FAIL", payload: getError(err) });
       toast.error(getError(err));
@@ -245,12 +279,6 @@ export default function AdminProductEditScreen() {
             <div className="alert-error">{error}</div>
           ) : (
             <section>
-              <button
-                className="primary-button text-white font-bold mb-10"
-                onClick={test}
-              >
-                Test
-              </button>
               <form
                 className="mx-auto max-w-screen-md"
                 onSubmit={handleSubmit(submitHandler)}
@@ -310,31 +338,80 @@ export default function AdminProductEditScreen() {
                   )}
                 </div>
                 <div className="mb-4">
+                  <label htmlFor="countInStock">Product Stock Count</label>
+                  <input
+                    type="text"
+                    className="w-full"
+                    id="countInStock"
+                    {...register("countInStock", {
+                      required: "Please enter product stock count",
+                    })}
+                  />
+                  {errors.countInStock && (
+                    <div className="text-red-500">
+                      {errors.countInStock.message}
+                    </div>
+                  )}
+                </div>
+                <div className="mb-4">
                   <label htmlFor="image">Product Images</label>
-                  <div className="flex flex-nowrap space-x-4 mt-4">
-                    {imagesArray.length > 0 ? (
-                      imagesArray.map((img, i) => {
-                        console.log(i, img);
-                        return (
-                          <CldImage
-                            key={i}
-                            src={img}
-                            width={customParams.width}
-                            height={customParams.height}
-                            sizes="100w"
-                            alt="/"
-                            fetchpriority={"high"}
-                            {...customParams}
-                            className="rounded shadow-lg object-cover h-32 w-32 border cursor-pointer"
-                            onClick={() => {
-                              setValue("featuredImage", img);
-                            }}
-                          />
-                        );
-                      })
+                  <div className="flex flex-row flex-wrap gap-4 mt-4">
+                    {selectedImage.length > 0 && (
+                      <div className="">
+                        <CldImage
+                          src={selectedImage}
+                          width={customParams.width}
+                          height={customParams.height}
+                          sizes="100w"
+                          alt="/"
+                          fetchpriority={"high"}
+                          {...customParams}
+                          className="rounded shadow-lg object-cover h-32 w-32  border-4 border-green-700/70 cursor-pointer drop-shadow-md"
+                        />
+                        <p className="mt-2 py-2 px-1 text-sm text-center font-semibold text-green-900 bg-green-200 rounded-lg">
+                          Featured Image
+                        </p>
+                      </div>
+                    )}
+                    {imagesArray.length > 1 ? (
+                      imagesArray
+                        .filter((img) => {
+                          return img !== selectedImage;
+                        })
+                        .map((img, i) => {
+                          console.log(i, img);
+                          return (
+                            <div>
+                              <CldImage
+                                key={i}
+                                src={img}
+                                width={customParams.width}
+                                height={customParams.height}
+                                sizes="100w"
+                                alt="/"
+                                fetchpriority={"high"}
+                                {...customParams}
+                                className="rounded shadow-lg object-cover h-32 w-32 border cursor-pointer drop-shadow-md"
+                              />
+                              <button
+                                onClick={(e) => {
+                                  e.preventDefault();
+                                  setValue("featuredImage", img);
+                                  setSelectedImage(img);
+                                  toast.success(
+                                    "You have changed the featured image"
+                                  );
+                                }}
+                                className="mt-2 py-2 w-full text-sm text-center font-semibold text-orange-800 bg-orange-200 rounded-lg hover:bg-orange-400 hover:text-orange-100"
+                              >
+                                Set Featured
+                              </button>
+                            </div>
+                          );
+                        })
                     ) : (
-                      <div>
-                        <div className="h-32 w-32 border flex justify-center items-center">
+                      <div className="">
+                        <div className="h-32 w-32 border flex justify-center items-center drop-shadow-lg">
                           <div className=" h-20 w-20 border-4 rounded-full border-orange-300">
                             <div className="w-2 h-[75px] bg-orange-300 rotate-45 relative top-0 left-8"></div>
                           </div>
@@ -358,7 +435,7 @@ export default function AdminProductEditScreen() {
                     <div className="text-red-500">{errors.images.message}</div>
                   )}
                   {loadingUpload && (
-                    <div className="mt-2 border-2 rounded border-green-500/50 pt-2 pb-1 px-2 bg-green-600 drop-shadow-md">
+                    <div className="mt-2 border-2 rounded border-green-500/50 pt-1 px-2 bg-green-600 drop-shadow-md">
                       <p className="text-white">
                         Uploading image... please wait...
                       </p>
@@ -404,7 +481,7 @@ export default function AdminProductEditScreen() {
                   <div className="grid grid-cols-3 mx-auto gap-2">
                     <div className="col-span-2">
                       <label htmlFor="addsubcategories">
-                        Add a new Sub-Category
+                        Add Product Sub-Category
                       </label>
                       <input
                         type="text"
@@ -420,7 +497,7 @@ export default function AdminProductEditScreen() {
                         }}
                         className="primary-button mt-6"
                       >
-                        Add Category
+                        Add Sub Category
                       </button>
                     </div>
                   </div>
@@ -430,16 +507,19 @@ export default function AdminProductEditScreen() {
                   <div className="mt-2">
                     {subCategoriesArr.length > 0 && (
                       <div className="pt-1 pb-2 px-2">
-                        <label htmlFor="sub-categories">
+                        <label htmlFor="addcategories">
                           Product Sub-Categories
                         </label>
-                        <div className="flex flex-row pt-1 px-2 space-x-2 ">
+                        <div className="flex flex-row pt-1 space-x-2 ">
                           {subCategoriesArr.map((sub, i) => {
                             return (
                               <div
                                 key={i}
                                 className="group cursor-pointer"
-                                onClick={() => removeSubCat(sub)}
+                                onClick={(e) => {
+                                  e.preventDefault();
+                                  removeSubCat(sub);
+                                }}
                               >
                                 <p className="relative left-0 top-0 right-0 bottom-0 border bg-gray-200 py-2 px-4 rounded-lg group-hover:bg-gray-400 group-hover:text-gray-100">
                                   {sub}{" "}
@@ -458,6 +538,62 @@ export default function AdminProductEditScreen() {
                   {errors.category && (
                     <div className="text-red-500">
                       {errors.category.message}
+                    </div>
+                  )}
+                </div>
+                <div className="mb-4 border p-2">
+                  <div className="grid grid-cols-3 mx-auto gap-2">
+                    <div className="col-span-2">
+                      <label htmlFor="addkeywords">Add Keywords</label>
+                      <input type="text" className="w-full" id="addkeywords" />
+                    </div>
+                    <div>
+                      <button
+                        onClick={(e) => {
+                          e.preventDefault();
+                          addKeyword();
+                        }}
+                        className="primary-button mt-6"
+                      >
+                        Add Keyword
+                      </button>
+                    </div>
+                  </div>
+
+                  <hr className="w-full mt-4 drop-shadow-md" />
+
+                  <div className="mt-2">
+                    {keywordsArr.length > 0 && (
+                      <div className="pt-1 pb-2 px-2">
+                        <label htmlFor="addcategories">Product Keywords</label>
+                        <div className="flex flex-row pt-1 space-x-2 ">
+                          {keywordsArr.map((key, i) => {
+                            return (
+                              <div
+                                key={i}
+                                className="group cursor-pointer"
+                                onClick={(e) => {
+                                  e.preventDefault();
+                                  removeKeyword(key);
+                                }}
+                              >
+                                <p className="relative left-0 top-0 right-0 bottom-0 border bg-gray-200 py-2 px-4 rounded-lg group-hover:bg-gray-400 group-hover:text-gray-100">
+                                  {key}{" "}
+                                  <span className="text-sm text-black/10 absolute top-[-3px] right-[5px] group-hover:text-gray-50">
+                                    x
+                                  </span>
+                                </p>
+                              </div>
+                            );
+                          })}
+                        </div>
+                      </div>
+                    )}
+                  </div>
+
+                  {errors.keywords && (
+                    <div className="text-red-500">
+                      {errors.keywords.message}
                     </div>
                   )}
                 </div>
@@ -486,12 +622,11 @@ export default function AdminProductEditScreen() {
                   )}
                 </div>
                 <div className="mb-4">
-                  <label htmlFor="name">Product Designer</label>
+                  <label htmlFor="designer">Product Designer</label>
                   <input
                     type="text"
                     className="w-full"
                     id="designer"
-                    autoFocus
                     {...register("designer", {
                       required: "Please enter the product designer",
                     })}
@@ -499,22 +634,6 @@ export default function AdminProductEditScreen() {
                   {errors.designer && (
                     <div className="text-red-500">
                       {errors.designer.message}
-                    </div>
-                  )}
-                </div>
-                <div className="mb-4">
-                  <label htmlFor="countInStock">Product Stock Count</label>
-                  <input
-                    type="text"
-                    className="w-full"
-                    id="countInStock"
-                    {...register("countInStock", {
-                      required: "Please enter product stock count",
-                    })}
-                  />
-                  {errors.countInStock && (
-                    <div className="text-red-500">
-                      {errors.countInStock.message}
                     </div>
                   )}
                 </div>
@@ -536,15 +655,53 @@ export default function AdminProductEditScreen() {
                     </div>
                   )}
                 </div>
-                <div className="mb-4">
-                  <button disabled={loadingUpdate} className="thirdary-button">
-                    {loadingUpdate ? "Loading" : "Update"}
-                  </button>
+
+                <div className="py-2 mb-6 flex justify-left items-center">
+                  <input
+                    type="checkbox"
+                    className="mr-4 mt-1"
+                    id="isfeatured"
+                    onClick={() => {
+                      console.log(productFeatured, "#######");
+                      setValue("isFeatured", !productFeatured);
+                      setProductFeatured(!productFeatured);
+                    }}
+                  />
+                  <label htmlFor="isfeatured">Featured Product</label>
+                  {errors.isfeatured && (
+                    <div className="text-red-500">
+                      {errors.isfeatured.message}
+                    </div>
+                  )}
                 </div>
-                <div className="mb-4">
-                  <Link href={`/admin/products`}>
-                    <button className="secondary-button">Back</button>
-                  </Link>
+
+                <div className="flex items-center justify-between">
+                  <div className="mb-4 w-full">
+                    <button
+                      disabled={loadingUpdate}
+                      className="thirdary-button"
+                    >
+                      {loadingUpdate ? "Loading" : "Update"}
+                    </button>
+                  </div>
+                  <div className="mb-4 w-full mx-4">
+                    <button
+                      className="primary-button text-white font-bold"
+                      onClick={(e) => {
+                        e.preventDefault();
+                        test();
+                      }}
+                    >
+                      Test
+                    </button>
+                  </div>
+                  <div className="mb-4 w-full">
+                    <Link href={`/admin/products`}>
+                      <button className="secondary-button">
+                        Back to Products
+                      </button>
+                    </Link>
+                  </div>
                 </div>
               </form>
             </section>

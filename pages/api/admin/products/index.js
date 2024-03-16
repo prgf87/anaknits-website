@@ -28,12 +28,12 @@ const postHandler = async (req, res) => {
   await db.connect();
   const newProduct = new Product({
     name: "Product name",
-    slug: "sample-name-" + Math.random(),
-    image: "Upload image using the link below",
+    slug: "product-name",
+    image: "",
     images: [],
     featuredImage: "",
     price: 0,
-    category: "Product item category",
+    category: "",
     subcategories: [],
     brand: "AnaKnits",
     designer: "AnaKnits",

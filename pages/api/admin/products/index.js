@@ -31,14 +31,16 @@ const postHandler = async (req, res) => {
     slug: "sample-name-" + Math.random(),
     image: "Upload image using the link below",
     images: [],
+    featuredImage: "",
     price: 0,
     category: "Product item category",
-    subcategories: "...",
-    brand: "Ana Knits",
-    designer: "A. M. M. Guimaraes",
+    subcategories: [],
+    brand: "AnaKnits",
+    designer: "AnaKnits",
     countInStock: 0,
     description: "Give this item a nice description",
     keywords: [],
+    isFeatured: false,
   });
   const product = await newProduct.save();
   await db.disconnect();

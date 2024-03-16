@@ -135,10 +135,26 @@ export default function AdminProductEditScreen() {
   };
 
   const addSubCat = () => {
-    const newValue = document.getElementById("subcategories").value;
+    const newValue = document.getElementById("addsubcategories").value;
+    if (subCategoriesArr.includes(newValue)) {
+      console.log("Already used");
+      document.getElementById("addsubcategories").value = "";
+      let err = { message: "Category already used" };
+      dispatch({ type: "UPLOAD_FAIL", payload: getError(err) });
+      toast.error(getError(err));
+      return;
+    }
     setValue("subcategories", [...subCategoriesArr, newValue]);
     setSubCategoriesArr([...subCategoriesArr, newValue]);
-    setValue();
+    document.getElementById("addsubcategories").value = "";
+  };
+
+  const removeSubCat = (remove) => {
+    const result = subCategoriesArr.filter((subCat) => {
+      return subCat !== remove;
+    });
+    setValue("subcategories", result);
+    setSubCategoriesArr(result);
   };
 
   const generateSlug = () => {
@@ -384,8 +400,8 @@ export default function AdminProductEditScreen() {
                     </div>
                   )}
                 </div>
-                <div className="mb-4">
-                  <div className="grid grid-cols-3 mx-auto gap-8">
+                <div className="mb-4 border p-2">
+                  <div className="grid grid-cols-3 mx-auto gap-2">
                     <div className="col-span-2">
                       <label htmlFor="addsubcategories">
                         Add a new Sub-Category
@@ -409,26 +425,34 @@ export default function AdminProductEditScreen() {
                     </div>
                   </div>
 
-                  <div className="my-4">
-                    <div className="mt-4">
-                      {subCategoriesArr.length > 0 && (
-                        <div className="border p-2">
-                          <label htmlFor="sub-categories">Sub-categories</label>
-                          <div className="flex flex-row pt-1 px-2 space-x-2">
-                            {subCategoriesArr.map((sub, i) => {
-                              return (
-                                <p
-                                  key={i}
-                                  className="border bg-gray-200 py-1 px-3 rounded-lg"
-                                >
-                                  {sub}
+                  <hr className="w-full mt-4 drop-shadow-md" />
+
+                  <div className="mt-2">
+                    {subCategoriesArr.length > 0 && (
+                      <div className="pt-1 pb-2 px-2">
+                        <label htmlFor="sub-categories">
+                          Product Sub-Categories
+                        </label>
+                        <div className="flex flex-row pt-1 px-2 space-x-2 ">
+                          {subCategoriesArr.map((sub, i) => {
+                            return (
+                              <div
+                                key={i}
+                                className="group cursor-pointer"
+                                onClick={() => removeSubCat(sub)}
+                              >
+                                <p className="relative left-0 top-0 right-0 bottom-0 border bg-gray-200 py-2 px-4 rounded-lg group-hover:bg-gray-400 group-hover:text-gray-100">
+                                  {sub}{" "}
+                                  <span className="text-sm text-black/10 absolute top-[-3px] right-[5px] group-hover:text-gray-50">
+                                    x
+                                  </span>
                                 </p>
-                              );
-                            })}
-                          </div>
+                              </div>
+                            );
+                          })}
                         </div>
-                      )}
-                    </div>
+                      </div>
+                    )}
                   </div>
 
                   {errors.category && (
@@ -457,16 +481,25 @@ export default function AdminProductEditScreen() {
                       Phildar
                     </option>
                   </select>
-                  {/* <input
-                    type="text"
-                    className="w-full"
-                    id="brand"
-                    {...register("brand", {
-                      required: "Please enter product brand",
-                    })}
-                  /> */}
                   {errors.brand && (
                     <div className="text-red-500">{errors.brand.message}</div>
+                  )}
+                </div>
+                <div className="mb-4">
+                  <label htmlFor="name">Product Designer</label>
+                  <input
+                    type="text"
+                    className="w-full"
+                    id="designer"
+                    autoFocus
+                    {...register("designer", {
+                      required: "Please enter the product designer",
+                    })}
+                  />
+                  {errors.designer && (
+                    <div className="text-red-500">
+                      {errors.designer.message}
+                    </div>
                   )}
                 </div>
                 <div className="mb-4">
@@ -504,7 +537,7 @@ export default function AdminProductEditScreen() {
                   )}
                 </div>
                 <div className="mb-4">
-                  <button disabled={loadingUpdate} className="primary-button">
+                  <button disabled={loadingUpdate} className="thirdary-button">
                     {loadingUpdate ? "Loading" : "Update"}
                   </button>
                 </div>

@@ -48,7 +48,7 @@ link {
 }
 
 .sidebarLinkButton {
-  @apply rounded w-60 bg-gray-100 py-1 md:py-2 px-[1.25rem] font-semibold text-black shadow outline-none hover:bg-gray-400 active:bg-gray-100 drop-shadow-md active:text-white w-full;
+  @apply w-80 rounded bg-gray-100 py-1 md:py-2 px-[1.25rem] font-semibold text-black shadow outline-none hover:bg-gray-400 active:bg-gray-100 drop-shadow-md active:text-white;
 }
 
 input,

@@ -3,11 +3,12 @@ import React from "react";
 import Link from "next/link";
 import { CldImage } from "next-cloudinary";
 
+export const customParams = {
+  width: "400",
+  height: "520",
+};
+
 export default function ProductItem({ product, addToCartHandler }) {
-  const customParams = {
-    width: "400",
-    height: "520",
-  };
   return (
     <div className="card mx-0 md:mx-2">
       <Link href={`/products/${product.slug}`}>

@@ -1,11 +1,13 @@
 import axios from "axios";
 import Link from "next/link";
 import { useRouter } from "next/router";
-import React, { useEffect, useReducer } from "react";
+import React, { useEffect, useReducer, useState } from "react";
 import { useForm } from "react-hook-form";
 import { toast } from "react-toastify";
 import Layout from "../../../components/Layout";
 import { getError } from "../../../utils/error";
+import { CldImage } from "next-cloudinary";
+import { customParams } from "../../../components/ProductItem";
 
 function reducer(state, action) {
   switch (action.type) {
@@ -42,6 +44,8 @@ export default function AdminProductEditScreen() {
       loading: true,
       error: "",
     });
+
+  const [imagesArray, setImagesArray] = useState([]);
 
   const {
     register,
@@ -81,14 +85,14 @@ export default function AdminProductEditScreen() {
 
   const router = useRouter();
 
-  const test = ()=>{
-    console.log("Here!")
+  const test = () => {
+    console.log("Here!");
     console.log(JSON.stringify(getValues("image")));
     console.log(JSON.stringify(getValues("images")));
     console.log(JSON.stringify(getValues("featuredImage")));
     console.log(JSON.stringify(getValues("isFeatured")));
     console.log(JSON.stringify(getValues("keywords")));
-  }
+  };
 
   const uploadHandler = async (e) => {
     const url = `https://api.cloudinary.com/v1_1/${process.env.NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME}/upload`;
@@ -108,7 +112,7 @@ export default function AdminProductEditScreen() {
       const { data } = await axios.post(url, formData);
       dispatch({ type: "UPLOAD_SUCCESS" });
       setValue("image", data.secure_url);
-      setValue("images[]", data.secure_url)
+      imagesArray.push(data.secure_url);
       toast.success(
         "Your file has been uploaded successfully, remember to click Update to apply changes!"
       );
@@ -161,7 +165,7 @@ export default function AdminProductEditScreen() {
       });
       dispatch({ type: "UPDATE_SUCCESS" });
       toast.success("Product updated successfully");
-      router.push("/admin/products");
+      router.push(`/admin/products/${productId}`);
     } catch (err) {
       dispatch({ type: "UPDATE_FAIL", payload: getError(err) });
       toast.error(getError(err));
@@ -196,7 +200,12 @@ export default function AdminProductEditScreen() {
             <div className="alert-error">{error}</div>
           ) : (
             <section>
-              <button onClick={test}>Test</button>
+              <button
+                className="primary-button text-white font-bold mb-10"
+                onClick={test}
+              >
+                Test
+              </button>
               <form
                 className="mx-auto max-w-screen-md"
                 onSubmit={handleSubmit(submitHandler)}
@@ -256,15 +265,43 @@ export default function AdminProductEditScreen() {
                   )}
                 </div>
                 <div className="mb-4">
-                  <label htmlFor="image">Product Image</label>
-                  <input
+                  <label htmlFor="image">Product Images</label>
+                  <div className="flex flex-nowrap space-x-4 mt-2">
+                    {imagesArray.length > 0 ? (
+                      imagesArray.map((img, i) => {
+                        console.log(i, img);
+                        return (
+                          <CldImage
+                            src={img}
+                            width={customParams.width}
+                            height={customParams.height}
+                            sizes="100w"
+                            alt="/"
+                            fetchpriority={"high"}
+                            {...customParams}
+                            className="rounded shadow-lg object-cover h-32 w-32 border"
+                          />
+                        );
+                      })
+                    ) : (
+                      <div>
+                        <div className="h-32 w-32 border flex justify-center items-center">
+                          <div className=" h-20 w-20 border-4 rounded-full border-orange-300">
+                            <div className="w-2 h-[75px] bg-orange-300 rotate-45 relative top-0 left-8"></div>
+                          </div>
+                        </div>
+                      </div>
+                    )}
+                  </div>
+
+                  {/* <input
                     type="text"
                     className="w-full"
                     id="image"
                     {...register("image", {
-                      required: "Upload image using the link below",
+                      required: "Upload image using the button below",
                     })}
-                  />
+                  /> */}
                   {errors.image && (
                     <div className="text-red-500">{errors.image.message}</div>
                   )}
@@ -277,6 +314,12 @@ export default function AdminProductEditScreen() {
                     id="imageFile"
                     onChange={uploadHandler}
                   />
+                  {errors.image && (
+                    <div className="text-red-500">{errors.image.message}</div>
+                  )}
+                  {errors.images && (
+                    <div className="text-red-500">{errors.images.message}</div>
+                  )}
                   {loadingUpload && <div>Uploading image...</div>}
                 </div>
                 <div className="mb-4">

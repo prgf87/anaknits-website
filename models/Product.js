@@ -1,15 +1,15 @@
-import mongoose from 'mongoose';
+import mongoose from "mongoose";
 
 const productSchema = new mongoose.Schema(
   {
     name: { type: String, required: true },
     slug: { type: String, required: true, unique: true },
+    price: { type: Number, required: true },
     category: { type: String, required: true },
     subcategories: { type: Array, required: false },
     image: { type: String, required: true },
-    images: {type: [String], required: false},
-    featuredImage: {type: String, required: false },
-    price: { type: Number, required: true },
+    images: { type: [String], required: false },
+    featuredImage: { type: String, required: false },
     brand: { type: String, required: true },
     designer: { type: String, required: false },
     countInStock: { type: Number, required: true, default: 0 },
@@ -23,5 +23,5 @@ const productSchema = new mongoose.Schema(
 );
 
 const Product =
-  mongoose.models.Product || mongoose.model('Product', productSchema);
+  mongoose.models.Product || mongoose.model("Product", productSchema);
 export default Product;

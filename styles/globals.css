@@ -28,27 +28,27 @@ link {
 }
 
 .btn1 {
-  @apply px-6 py-[6px] bg-gray-800 text-white;
+  @apply px-6 py-[6px] bg-gray-800 text-white w-full;
 }
 
 .default-button {
-  @apply rounded bg-gray-300 py-2 px-4 shadow outline-none hover:bg-gray-200  active:bg-gray-400 text-gray-800;
+  @apply rounded bg-gray-300 py-2 px-[1.25rem] font-semibold shadow outline-none hover:bg-gray-100 drop-shadow-md  active:bg-gray-400 text-gray-800 w-full;
 }
 
 .primary-button {
-  @apply rounded bg-amber-400 py-2 px-4 shadow outline-none hover:bg-amber-300  active:bg-amber-200 text-gray-100;
+  @apply rounded bg-amber-400 py-2 px-[1.25rem] font-semibold shadow outline-none hover:bg-amber-300  active:bg-amber-200 text-white drop-shadow-md w-full;
 }
 
 .secondary-button {
-  @apply rounded bg-red-500 py-2 px-4 shadow outline-none hover:bg-red-400  active:bg-red-300 text-gray-200;
+  @apply rounded bg-red-500 py-2 px-[1.25rem] font-semibold shadow outline-none hover:bg-red-400  active:bg-red-300 text-gray-100 drop-shadow-md w-full;
 }
 
 .thirdary-button {
-  @apply rounded bg-green-500 py-2 px-4 shadow outline-none hover:bg-green-400  active:bg-green-300 text-gray-200;
+  @apply rounded bg-green-500 py-2 px-[1.25rem] font-semibold shadow outline-none hover:bg-green-400  active:bg-green-300 text-gray-100 drop-shadow-md w-full;
 }
 
 .sidebarLinkButton {
-  @apply rounded w-60 bg-gray-100 py-1 md:py-2 px-4 text-black shadow outline-none hover:bg-gray-400 active:bg-gray-200 active:text-white;
+  @apply rounded w-60 bg-gray-100 py-1 md:py-2 px-[1.25rem] font-semibold text-black shadow outline-none hover:bg-gray-400 active:bg-gray-100 drop-shadow-md active:text-white w-full;
 }
 
 input,
@@ -58,7 +58,7 @@ textarea {
 }
 
 .dropdown-link {
-  @apply flex p-2 hover:bg-gray-200;
+  @apply flex p-2 hover:bg-gray-100 drop-shadow-md;
 }
 
 .alert-error {

@@ -46,6 +46,17 @@ export default function AdminProductEditScreen() {
     });
 
   const [imagesArray, setImagesArray] = useState([]);
+  const [subCategoriesArr, setSubCategoriesArr] = useState([]);
+  const [keywordsArr, setKeywordsArr] = useState([]);
+
+  const test = () => {
+    console.log("Here!");
+    console.log(JSON.stringify(getValues("image")));
+    console.log(JSON.stringify(getValues("images")));
+    console.log(JSON.stringify(getValues("featuredImage")));
+    console.log(JSON.stringify(getValues("isFeatured")));
+    console.log(JSON.stringify(getValues("keywords")));
+  };
 
   const {
     register,
@@ -65,10 +76,13 @@ export default function AdminProductEditScreen() {
         setValue("slug", data.slug);
         setValue("price", data.price);
         setValue("image", data.image);
-        setValue("featuredImage", data.image);
         setValue("images", data.images);
+        setValue("featuredImage", data.featuredImage);
         setValue("category", data.category);
-        setValue("subcategories", data.subcategories);
+        setValue(
+          "subcategories",
+          subCategoriesArr.length > 0 ? subCategoriesArr : data.subcategories
+        );
         setValue("brand", data.brand);
         setValue("designer", data.designer);
         setValue("countInStock", data.countInStock);
@@ -79,20 +93,12 @@ export default function AdminProductEditScreen() {
         dispatch({ type: "FETCH_FAIL", payload: getError(err) });
       }
     };
-
-    fetchData();
+    if (imagesArray.length === 0) {
+      fetchData();
+    }
   }, [productId, setValue]);
 
   const router = useRouter();
-
-  const test = () => {
-    console.log("Here!");
-    console.log(JSON.stringify(getValues("image")));
-    console.log(JSON.stringify(getValues("images")));
-    console.log(JSON.stringify(getValues("featuredImage")));
-    console.log(JSON.stringify(getValues("isFeatured")));
-    console.log(JSON.stringify(getValues("keywords")));
-  };
 
   const uploadHandler = async (e) => {
     const url = `https://api.cloudinary.com/v1_1/${process.env.NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME}/upload`;
@@ -103,16 +109,22 @@ export default function AdminProductEditScreen() {
       } = await axios(`/api/admin/cloudinary-sign`);
 
       const file = e.target.files[0];
+
       const formData = new FormData();
+
       formData.append("file", file);
       formData.append("signature", signature);
       formData.append("timestamp", timestamp);
       formData.append("api_key", process.env.NEXT_PUBLIC_CLOUDINARY_API_KEY);
 
       const { data } = await axios.post(url, formData);
+
       dispatch({ type: "UPLOAD_SUCCESS" });
+
       setValue("image", data.secure_url);
-      imagesArray.push(data.secure_url);
+      setValue("images", [...imagesArray, data.secure_url]);
+      setValue("featuredImage", data.secure_url);
+      setImagesArray([...imagesArray, data.secure_url]);
       toast.success(
         "Your file has been uploaded successfully, remember to click Update to apply changes!"
       );
@@ -122,33 +134,45 @@ export default function AdminProductEditScreen() {
     }
   };
 
-  function generateSlug() {
+  const addSubCat = () => {
+    const newValue = document.getElementById("subcategories").value;
+    setValue("subcategories", [...subCategoriesArr, newValue]);
+    setSubCategoriesArr([...subCategoriesArr, newValue]);
+    setValue();
+  };
+
+  const generateSlug = () => {
     const nameInput = document.getElementById("name");
     const slugInput = document.getElementById("slug");
     const slug = slugify(nameInput.value);
     slugInput.value = slug;
     setValue("slug", slug);
-  }
+  };
 
-  function slugify(string) {
+  const slugify = (string) => {
     const slug = string
       .toLowerCase()
       .replace(/[^a-zA-Z0-9]+/g, "-")
       .replace(/^-/, "")
       .replace(/-$/, "");
     return slug;
-  }
+  };
 
   const submitHandler = async ({
     name,
     slug,
     price,
     category,
+    subcategories,
     image,
     images,
+    featuredImage,
     brand,
+    designer,
     countInStock,
     description,
+    keywords,
+    isFeatured,
   }) => {
     try {
       dispatch({ type: "UPDATE_REQUEST" });
@@ -157,11 +181,16 @@ export default function AdminProductEditScreen() {
         slug,
         price,
         category,
+        subcategories,
         image,
         images,
+        featuredImage,
         brand,
+        designer,
         countInStock,
         description,
+        keywords,
+        isFeatured,
       });
       dispatch({ type: "UPDATE_SUCCESS" });
       toast.success("Product updated successfully");
@@ -223,7 +252,7 @@ export default function AdminProductEditScreen() {
                     })}
                   />
                   <button
-                    className="thirdary-button mb-4 text-sm"
+                    className="thirdary-button mt-4 text-sm"
                     onClick={(e) => {
                       e.preventDefault();
                       generateSlug();
@@ -266,12 +295,13 @@ export default function AdminProductEditScreen() {
                 </div>
                 <div className="mb-4">
                   <label htmlFor="image">Product Images</label>
-                  <div className="flex flex-nowrap space-x-4 mt-2">
+                  <div className="flex flex-nowrap space-x-4 mt-4">
                     {imagesArray.length > 0 ? (
                       imagesArray.map((img, i) => {
                         console.log(i, img);
                         return (
                           <CldImage
+                            key={i}
                             src={img}
                             width={customParams.width}
                             height={customParams.height}
@@ -279,7 +309,10 @@ export default function AdminProductEditScreen() {
                             alt="/"
                             fetchpriority={"high"}
                             {...customParams}
-                            className="rounded shadow-lg object-cover h-32 w-32 border"
+                            className="rounded shadow-lg object-cover h-32 w-32 border cursor-pointer"
+                            onClick={() => {
+                              setValue("featuredImage", img);
+                            }}
                           />
                         );
                       })
@@ -293,15 +326,6 @@ export default function AdminProductEditScreen() {
                       </div>
                     )}
                   </div>
-
-                  {/* <input
-                    type="text"
-                    className="w-full"
-                    id="image"
-                    {...register("image", {
-                      required: "Upload image using the button below",
-                    })}
-                  /> */}
                   {errors.image && (
                     <div className="text-red-500">{errors.image.message}</div>
                   )}
@@ -314,24 +338,99 @@ export default function AdminProductEditScreen() {
                     id="imageFile"
                     onChange={uploadHandler}
                   />
-                  {errors.image && (
-                    <div className="text-red-500">{errors.image.message}</div>
-                  )}
                   {errors.images && (
                     <div className="text-red-500">{errors.images.message}</div>
                   )}
-                  {loadingUpload && <div>Uploading image...</div>}
+                  {loadingUpload && (
+                    <div className="mt-2 border-2 rounded border-green-500/50 pt-2 pb-1 px-2 bg-green-600 drop-shadow-md">
+                      <p className="text-white">
+                        Uploading image... please wait...
+                      </p>
+                    </div>
+                  )}
                 </div>
                 <div className="mb-4">
                   <label htmlFor="category">Product Category</label>
-                  <input
-                    type="text"
-                    className="w-full"
+                  <select
+                    name="category"
                     id="category"
+                    className="w-full"
                     {...register("category", {
-                      required: "Please enter product category",
+                      required: "Please select product category",
                     })}
-                  />
+                  >
+                    <option id="category" value="babyKnits">
+                      Baby Knits
+                    </option>
+                    <option id="category" value="blanketsSocks">
+                      Blankets &amp; Socks
+                    </option>
+                    <option id="category" value="kidKnits">
+                      Kid Knits
+                    </option>
+                    <option id="category" value="knitkits">
+                      Knit Kits
+                    </option>
+                    <option id="category" value="Patterns">
+                      Patterns
+                    </option>
+                    <option id="category" value="Yarns">
+                      Yarns
+                    </option>
+                  </select>
+                  {errors.category && (
+                    <div className="text-red-500">
+                      {errors.category.message}
+                    </div>
+                  )}
+                </div>
+                <div className="mb-4">
+                  <div className="grid grid-cols-3 mx-auto gap-8">
+                    <div className="col-span-2">
+                      <label htmlFor="addsubcategories">
+                        Add a new Sub-Category
+                      </label>
+                      <input
+                        type="text"
+                        className="w-full"
+                        id="addsubcategories"
+                      />
+                    </div>
+                    <div>
+                      <button
+                        onClick={(e) => {
+                          e.preventDefault();
+                          addSubCat();
+                        }}
+                        className="primary-button mt-6"
+                      >
+                        Add Category
+                      </button>
+                    </div>
+                  </div>
+
+                  <div className="my-4">
+                    <div className="mt-4">
+                      {subCategoriesArr.length > 0 && (
+                        <div className="border p-2">
+                          <label htmlFor="sub-categories">Sub-categories</label>
+                          <div className="flex flex-row pt-1 px-2 space-x-2">
+                            {subCategoriesArr.map((sub, i) => {
+                              return (
+                                <p
+                                  key={i}
+                                  className="border bg-gray-200 py-1 px-3 rounded-lg"
+                                >
+                                  {sub}
+                                </p>
+                              );
+                            })}
+                          </div>
+                        </div>
+                      )}
+                    </div>
+                  </div>
+
                   {errors.category && (
                     <div className="text-red-500">
                       {errors.category.message}
@@ -340,14 +439,32 @@ export default function AdminProductEditScreen() {
                 </div>
                 <div className="mb-4">
                   <label htmlFor="brand">Product Brand</label>
-                  <input
+                  <select
+                    name="pets"
+                    id="pet-select"
+                    className="w-full"
+                    {...register("brand", {
+                      required: "Please enter product brand",
+                    })}
+                  >
+                    <option id="brand" value="anaknits">
+                      AnaKnits
+                    </option>
+                    <option id="brand" value="rosarios4">
+                      Rosarios4
+                    </option>
+                    <option id="brand" value="phildar">
+                      Phildar
+                    </option>
+                  </select>
+                  {/* <input
                     type="text"
                     className="w-full"
                     id="brand"
                     {...register("brand", {
                       required: "Please enter product brand",
                     })}
-                  />
+                  /> */}
                   {errors.brand && (
                     <div className="text-red-500">{errors.brand.message}</div>
                   )}

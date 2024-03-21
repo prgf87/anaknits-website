@@ -1,4 +1,4 @@
-import React, { useContext } from "react";
+import React, { useContext, useState } from "react";
 import Layout from "../../components/Layout";
 import { useRouter } from "next/router";
 import Link from "next/link";
@@ -8,11 +8,13 @@ import db from "../../utils/db";
 import Product from "../../models/Product";
 import axios from "axios";
 import { toast } from "react-toastify";
+import { CldImage } from "next-cloudinary";
 
 export default function ProductScreen(props) {
   const { product } = props;
   const { state, dispatch } = useContext(Store);
   const router = useRouter();
+  const [selectedImage, setSelectedImage] = useState(null);
 
   if (!product) {
     return <Layout title="Product Not Found">Product Not Found</Layout>;
@@ -41,14 +43,50 @@ export default function ProductScreen(props) {
       <div className="py-2">
         <Link href="/">Back to Product Page</Link>
       </div>
-      <div className="grid md:grid-cols-5 md:gap-3">
+      <div className="grid md:grid-cols-5 md:gap-4">
         <div className="md:col-span-2">
-          <Image
-            src={product.image}
-            alt={product.name}
+          <CldImage
+            src={selectedImage ? selectedImage : product.image}
+            width={customParams.width}
+            height={customParams.height}
+            sizes="100w"
+            alt="/"
+            fetchpriority={"high"}
             {...customParams}
-            className="object-cover"
+            className="object-cover h-80 max-w-72"
           />
+          <div className="flex flex-wrap gap-2 mt-2 justify-start">
+            {/* <CldImage
+              src={selectedImage ? selectedImage : product.image}
+              width={customParams.width}
+              height={customParams.height}
+              sizes="100w"
+              alt="/"
+              fetchpriority={"high"}
+              {...customParams}
+              className="shadow-lg object-cover h-20 w-20  border-2 border-green-700/70 cursor-pointer drop-shadow-md"
+            /> */}
+            {product.images.toSorted().map((img, i) => {
+              console.log(img);
+              return (
+                <div key={i}>
+                  <CldImage
+                    onClick={() => {
+                      setSelectedImage(img);
+                    }}
+                    src={img}
+                    width={customParams.width}
+                    height={customParams.height}
+                    sizes="100w"
+                    alt="/"
+                    fetchpriority={"high"}
+                    {...customParams}
+                    className="shadow-lg object-cover h-20 w-20  cursor-pointer drop-shadow-md"
+                  />
+                </div>
+              );
+            })}
+          </div>
         </div>
         <div className="md:col-span-2">
           <ul>

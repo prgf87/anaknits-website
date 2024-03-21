@@ -214,7 +214,7 @@ export default function Navbar() {
         >
           <div className="z-[2] w-screen md:w-1/2 lg:w-1/3 xl:w-1/4 bg-white h-screen">
             <div className="grid mx-20 pt-10">
-              {/* <MainLogo /> */}
+              <MainLogo />
               <table className="w-full">
                 <tbody className="grid grid-cols-1 gap-3 p-3 pt-8 place-items-center shadow-sm">
                   <tr>

@@ -1,5 +1,5 @@
 /* eslint-disable @next/next/no-img-element */
-import React, { useState } from "react";
+import React from "react";
 import Link from "next/link";
 import { CldImage } from "next-cloudinary";
 

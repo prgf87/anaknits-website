@@ -206,15 +206,15 @@ export default function Navbar() {
           onClick={() => {
             if (open) setOpen(!open);
           }}
-          className={`absolute top-0 left-0 bg-black/60 z-[1] overscroll-hidden ${
+          className={`absolute h-screen top-0 left-0 bg-black/60 z-[1] overscroll-hidden ${
             open
-              ? "transition-all ease-in-out left-0 opacity-100 h-screen w-screen"
-              : "transition-all ease-in-out left-[-100%] w-0"
-          } ease-in-out duration-1000 opacity-0`}
+              ? "transition-all ease-in-out top-0 left-0 opacity-100 h-screen w-screen"
+              : "transition-all ease-in-out top-0 left-[-100%] w-0"
+          } ease-in-out duration-700 opacity-0`}
         >
           <div className="z-[2] w-screen md:w-1/2 lg:w-1/3 xl:w-1/4 bg-white h-screen">
             <div className="grid mx-20 pt-10">
-              <MainLogo />
+              {/* <MainLogo /> */}
               <table className="w-full">
                 <tbody className="grid grid-cols-1 gap-3 p-3 pt-8 place-items-center shadow-sm">
                   <tr>
@@ -256,9 +256,7 @@ export default function Navbar() {
                 </tbody>
               </table>
               <table className="w-full">
-                <thead
-                  className={`grid grid-cols-1 gap-3 px-5 pt-3 place-items-center`}
-                >
+                <thead className="grid grid-cols-1 gap-3 px-5 pt-3 place-items-center">
                   <tr>
                     <td>
                       <h1 className="font-bold text-lg lg:text-lg p-0 flex justify-center">
@@ -282,8 +280,8 @@ export default function Navbar() {
                 </tbody>
               </table>
 
-              <div className={`bottom-20 h-40 z-10`}>
-                <div className="p-7 md:p-0 md:px-7 md:pt-3">
+              <div className="h-40 z-10">
+                <div className="p-8 md:p-0 md:px-7 md:pt-3">
                   <div className="max-w-7xl mx-auto">
                     <div className="grid grid-cols-1 gap-2">
                       <div className="mb-5 md:mb-0">

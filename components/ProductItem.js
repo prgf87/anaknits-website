@@ -23,14 +23,16 @@ export default function ProductItem({ product, addToCartHandler }) {
           className="rounded shadow-lg object-cover h-[400px] w-[350px]"
         />
       </Link>
-      <div className="flex flex-col items-center justify-center py-1 md:py-3 lg:py-5">
+      <div className="flex flex-col items-center justify-between py-1 md:py-3 lg:py-5 h-40">
         <Link href={`/products/${product.slug}`}>
-          <h2 className="text-sm text-center px-1">{product.name}</h2>
+          <h2 className="text-bold text-center pt-2 px-1 text-ellipsis">
+            {product.name}
+          </h2>
         </Link>
-        <p className="text-sm">${product.price}</p>
         <div className="relative">
+          <p className="text-bold text-center pb-2">${product.price}</p>
           <button
-            className="primary-button text-sm"
+            className="primary-button text-sm mb-2"
             type="button"
             onClick={() => addToCartHandler(product)}
           >

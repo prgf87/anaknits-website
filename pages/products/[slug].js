@@ -56,58 +56,66 @@ export default function ProductScreen(props) {
             className="object-cover h-80 max-w-72"
           />
           <div className="flex flex-wrap gap-2 mt-2 justify-start">
-            {/* <CldImage
-              src={selectedImage ? selectedImage : product.image}
-              width={customParams.width}
-              height={customParams.height}
-              sizes="100w"
-              alt="/"
-              fetchpriority={"high"}
-              {...customParams}
-              className="shadow-lg object-cover h-20 w-20  border-2 border-green-700/70 cursor-pointer drop-shadow-md"
-            /> */}
-            {product.images.toSorted().map((img, i) => {
-              console.log(img);
-              return (
-                <div key={i}>
-                  <CldImage
-                    onClick={() => {
-                      setSelectedImage(img);
-                    }}
-                    src={img}
-                    width={customParams.width}
-                    height={customParams.height}
-                    sizes="100w"
-                    alt="/"
-                    fetchpriority={"high"}
-                    {...customParams}
-                    className="shadow-lg object-cover h-20 w-20  cursor-pointer drop-shadow-md"
-                  />
-                </div>
-              );
-            })}
+            {product.images &&
+              product.images.toSorted().map((img, i) => {
+                console.log(img);
+                return (
+                  <div key={i}>
+                    <CldImage
+                      onClick={() => {
+                        setSelectedImage(img);
+                      }}
+                      src={img}
+                      width={customParams.width}
+                      height={customParams.height}
+                      sizes="100w"
+                      alt="/"
+                      fetchpriority={"high"}
+                      {...customParams}
+                      className="shadow-lg object-cover h-20 w-20  cursor-pointer drop-shadow-md"
+                    />
+                  </div>
+                );
+              })}
           </div>
         </div>
-        <div className="md:col-span-2">
+        <div className="md:col-span-2 text-base">
           <ul>
             <li>
-              <h1 className="text-lg">{product.name}</h1>
+              <h1 className="text-xl font-bold">{product.name}</h1>
             </li>
-            <li>Category: {product.category}</li>
-            <li>Brand: {product.brand}</li>
-            <li>Description: {product.description}</li>
+            <li>
+              <b>Category: </b>
+              {product.category}
+            </li>
+            <li>
+              <b>Brand: </b>
+              {product.brand}
+            </li>
+            <li className="whitespace-pre text-wrap">
+              <b>Description: </b> {product.description}
+            </li>
           </ul>
         </div>
         <div>
-          <div className="card p-5">
-            <div className="mb-2 flex justify-between">
+          <div className="flex gap-1 p-2">
+            <h6>Status</h6>
+            <div
+              className={`${
+                product.countInStock > 0 ? "text-green-500 font-bold" : ""
+              }`}
+            >
+              {product.countInStock > 0 ? "In Stock" : "Unavaialble"}
+            </div>
+          </div>
+          <div className="card p-4">
+            <div className="flex justify-between">
               <div>Price</div>
 
               <div>${product.price.toFixed(2)}</div>
             </div>
-            <div>Status</div>
-            <div>{product.countInStock > 0 ? "In Stock" : "Unavaialble"}</div>
           </div>
+
           <button className="primary-button w-full" onClick={addToCartHandler}>
             Add to Cart
           </button>

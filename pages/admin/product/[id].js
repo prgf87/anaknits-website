@@ -598,20 +598,20 @@ export default function AdminProductEditScreen() {
                 <div className="mb-4">
                   <label htmlFor="brand">Product Brand</label>
                   <select
-                    name="pets"
-                    id="pet-select"
+                    name="brand"
+                    id="brand-select"
                     className="w-full"
                     {...register("brand", {
                       required: "Please enter product brand",
                     })}
                   >
-                    <option id="brand" value="anaknits">
+                    <option id="brand" value="AnaKnits">
                       AnaKnits
                     </option>
-                    <option id="brand" value="rosarios4">
+                    <option id="brand" value="Rosarios4">
                       Rosarios4
                     </option>
-                    <option id="brand" value="phildar">
+                    <option id="brand" value="Phildar">
                       Phildar
                     </option>
                   </select>
@@ -621,14 +621,7 @@ export default function AdminProductEditScreen() {
                 </div>
                 <div className="mb-4">
                   <label htmlFor="designer">Product Designer</label>
-                  <input
-                    type="text"
-                    className="w-full"
-                    id="designer"
-                    {...register("designer", {
-                      required: "Please enter the product designer",
-                    })}
-                  />
+                  <input type="text" className="w-full" id="designer" />
                   {errors.designer && (
                     <div className="text-red-500">
                       {errors.designer.message}

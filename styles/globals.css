@@ -16,9 +16,7 @@ body {
 a {
   @apply text-gray-500;
 }
-p {
-  @apply pb-2;
-}
+
 link {
   @apply text-gray-500 hover:brightness-50;
 }

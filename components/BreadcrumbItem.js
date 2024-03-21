@@ -1,4 +1,4 @@
-import Link from 'next/link';
+import Link from "next/link";
 
 const BreadcrumbItem = ({ children, href, isCurrent, ...props }) => {
   return (
@@ -6,8 +6,8 @@ const BreadcrumbItem = ({ children, href, isCurrent, ...props }) => {
       <Link
         href={href}
         passHref
-        className="inline-flex items-center italic text-sm font-medium text-gray-900 hover:text-gray-400 dark:text-gray-400 dark:hover:text-white pl-2 "
-        aria-current={isCurrent ? 'page ' : 'false'}
+        className="inline-flex items-center italic text-sm font-medium text-gray-900 hover:text-gray-400 dark:text-gray-400 dark:hover:text-white px-1 mt-1"
+        aria-current={isCurrent ? "page " : "false"}
       >
         {children}
       </Link>

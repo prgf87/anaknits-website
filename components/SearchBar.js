@@ -1,12 +1,12 @@
-import Link from 'next/link';
-import React from 'react';
+import Link from "next/link";
+import React from "react";
 
 export default function SearchBar() {
   return (
-    <div className="pb-2 hidden md:block shadow-md">
+    <div className="pt-24 pb-2 hidden md:block shadow-md">
       <ul className="flex md:space-x-4 lg:space-x-20 justify-center items-center">
         <li className="text-lg text-gray-500 cursor-pointer hover:brightness-50">
-          <Link href={'/'}>Home</Link>
+          <Link href={"/"}>Home</Link>
         </li>
         <li className="text-lg text-gray-500 cursor-pointer hover:brightness-50">
           <Link href={`/search?category%3Fbabyknits=&category=Baby+Knits`}>
@@ -36,10 +36,10 @@ export default function SearchBar() {
           </Link>
         </li>
         <li className="text-lg text-gray-500 cursor-pointer hover:brightness-50">
-          <Link href={'/search?category%3Fyarns=&category=Yarns'}>Yarns</Link>
+          <Link href={"/search?category%3Fyarns=&category=Yarns"}>Yarns</Link>
         </li>
         <li className="text-lg text-gray-500 cursor-pointer hover:brightness-50">
-          <Link href={'/contact'}>Contact Us</Link>
+          <Link href={"/contact"}>Contact Us</Link>
         </li>
       </ul>
     </div>

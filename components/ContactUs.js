@@ -35,7 +35,7 @@ export default function ContactUs() {
     }
 
     setErrors({ ...tempErrors });
-    console.log("errors", errors);
+    console.log("Errors: ", errors);
     return isValid;
   };
 
@@ -61,7 +61,7 @@ export default function ContactUs() {
 
       const { error } = await res.json();
       if (error) {
-        console.log(error);
+        console.log("Error: ", error);
         setShowSuccessMessage(false);
         setShowFailureMessage(true);
         setButtonText("Send");
@@ -75,7 +75,6 @@ export default function ContactUs() {
       setMessage("");
       setSubject("");
     }
-    // console.log(fullname, email, subject, message);
   };
   return (
     <div>

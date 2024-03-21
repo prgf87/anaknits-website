@@ -27,9 +27,9 @@ const handler = async (req, res) => {
   function updateDB(productId, orderProductQuantity) {
     Product.findById(
       productId,
-      function (err, productsItem) {
-        if (err) {
-          console.log("*** Update Error ***", "\n", err);
+      function (error, productsItem) {
+        if (error) {
+          console.log("Update Error: ", error);
         } else {
           let newCountInStock =
             productsItem.countInStock - orderProductQuantity;

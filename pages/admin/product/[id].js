@@ -52,21 +52,21 @@ export default function AdminProductEditScreen() {
   const [productFeatured, setProductFeatured] = useState(false);
 
   const test = () => {
-    console.log("Here!");
-    console.log(JSON.stringify(getValues("name")), "name");
-    console.log(JSON.stringify(getValues("slug")), "slug");
-    console.log(JSON.stringify(getValues("price")), "price");
-    console.log(JSON.stringify(getValues("countInStock")), "countInStock");
-    console.log(JSON.stringify(getValues("image")), "image");
-    console.log(JSON.stringify(getValues("images")), "images");
-    console.log(JSON.stringify(getValues("featuredImage")), "featuredImage");
-    console.log(JSON.stringify(getValues("category")), "category");
-    console.log(JSON.stringify(getValues("subcategories")), "subcategories");
-    console.log(JSON.stringify(getValues("keywords")), "keywords");
-    console.log(JSON.stringify(getValues("brand")), "brand");
-    console.log(JSON.stringify(getValues("designer")), "designer");
-    console.log(JSON.stringify(getValues("description")), "description");
-    console.log(JSON.stringify(getValues("isFeatured")), "isFeatured");
+    console.log("###########Here##########");
+    console.log(getValues("name"), "name");
+    console.log(getValues("slug"), "slug");
+    console.log(getValues("price"), "price");
+    console.log(getValues("countInStock"), "countInStock");
+    console.log(getValues("image"), "image");
+    console.log(getValues("images"), "images");
+    console.log(getValues("featuredImage"), "featuredImage");
+    console.log(getValues("category"), "category");
+    console.log(getValues("subcategories"), "subcategories");
+    console.log(getValues("keywords"), "keywords");
+    console.log(getValues("brand"), "brand");
+    console.log(getValues("designer"), "designer");
+    console.log(getValues("description"), "description");
+    console.log(getValues("isFeatured"), "isFeatured");
   };
 
   const {
@@ -104,7 +104,7 @@ export default function AdminProductEditScreen() {
     if (imagesArray.length === 0) {
       fetchData();
     }
-  }, [productId, setValue]);
+  }, [productId, setValue, imagesArray.length]);
 
   const router = useRouter();
 
@@ -379,11 +379,9 @@ export default function AdminProductEditScreen() {
                           return img !== selectedImage;
                         })
                         .map((img, i) => {
-                          console.log(i, img);
                           return (
-                            <div>
+                            <div key={i}>
                               <CldImage
-                                key={i}
                                 src={img}
                                 width={customParams.width}
                                 height={customParams.height}

@@ -16,8 +16,8 @@ const Breadcrumb = ({ children }) => {
   });
 
   return (
-    <nav className="flex mt-2" aria-label="Breadcrumb">
-      <ol className="inline-flex items-center space-x-1 md:space-x-3">
+    <nav className="flex ml-2" aria-label="Breadcrumb">
+      <ol className="inline-flex items-center space-x-1">
         {childrenWithSeparator}
       </ol>
     </nav>

@@ -78,9 +78,54 @@ export default function Navbar() {
     <nav>
       <div className="topHeader flex px-1 py-1 justify-between">
         <div className={`sidebarIcon z-50 p-0 ml-1`}>
-          <button onClick={() => setOpen(!open)}>
+          <button onClick={() => setOpen(!open)} className="h-8 w-8">
             <Image src={hamicon} alt={Menu} height={32} width={32} />
           </button>
+        </div>
+
+        <div className="absolute left-0 top-4 right-0">
+          <div className="flex flex-col justify-center items-center">
+            <div className="px-10 lg:px-5 md:px-20">
+              <Link
+                href="/"
+                className="mainlogo flex w-full px-[17.5%] mb-2 md:mb-0"
+              >
+                <Image src={logo} alt={"/"} width={580} height={100} />
+              </Link>
+            </div>
+          </div>
+          <div>
+            <div className="searchSection w-full hidden md:flex justify-center mt-2 py-2">
+              <form onSubmit={submitHandler} className="searchForm px-5">
+                <input
+                  name="query"
+                  className="searchInput pl-5"
+                  placeholder="Search Products"
+                  onChange={queryChangeHandler}
+                />
+                <button
+                  type="submit"
+                  className="submitButton searchIcon"
+                  aria-label="search"
+                >
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    className="h-10 w-10 mt-3 ml-3 inline-block text-blue-500"
+                    fill="none"
+                    viewBox="0 0 42 42"
+                    stroke="currentColor"
+                    strokeWidth={2}
+                  >
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"
+                    />
+                  </svg>
+                </button>
+              </form>
+            </div>
+          </div>
         </div>
 
         <div className="flex">
@@ -158,12 +203,14 @@ export default function Navbar() {
       <div id="sidebar">
         <div
           id="bgBlur"
-          onClick={() => setOpen(!open)}
-          className={`absolute top-0 left-0 bg-black/60 z-[1] ${
+          onClick={() => {
+            if (open) setOpen(!open);
+          }}
+          className={`absolute h-screen top-0 left-0 bg-black/60 z-[1] overscroll-hidden ${
             open
-              ? "transition-all ease-in-out overscroll-hidden fixed left-0 opacity-100 h-screen w-screen"
-              : "transition-all ease-in-out left-[-105%]"
-          } ease-in-out duration-500 opacity-0`}
+              ? "transition-all ease-in-out top-0 left-0 opacity-100 h-screen w-screen"
+              : "transition-all ease-in-out top-0 left-[-100%] w-0"
+          } ease-in-out duration-700 opacity-0`}
         >
           <div className="z-[2] w-screen md:w-1/2 lg:w-1/3 xl:w-1/4 bg-white h-screen">
             <div className="grid mx-20 pt-10">
@@ -209,9 +256,7 @@ export default function Navbar() {
                 </tbody>
               </table>
               <table className="w-full">
-                <thead
-                  className={`grid grid-cols-1 gap-3 px-5 pt-3 place-items-center`}
-                >
+                <thead className="grid grid-cols-1 gap-3 px-5 pt-3 place-items-center">
                   <tr>
                     <td>
                       <h1 className="font-bold text-lg lg:text-lg p-0 flex justify-center">
@@ -221,12 +266,12 @@ export default function Navbar() {
                   </tr>
                 </thead>
                 <tbody className="grid grid-cols-1 gap-3 p-3 w-full place-items-center shadow-sm">
-                  {categories.map((cat) => {
+                  {categories.map((cat, i) => {
                     return (
-                      <tr key={cat}>
+                      <tr key={i}>
                         <td>
                           <button className="sidebarLinkButton">
-                            <Link href={"search?category"}>{cat}</Link>
+                            <Link href={`search?${cat}`}>{cat}</Link>
                           </button>
                         </td>
                       </tr>
@@ -235,8 +280,8 @@ export default function Navbar() {
                 </tbody>
               </table>
 
-              <div className={`bottom-20 h-40 z-10`}>
-                <div className="p-7 md:p-0 md:px-7 md:pt-3">
+              <div className="h-40 z-10">
+                <div className="p-8 md:p-0 md:px-7 md:pt-3">
                   <div className="max-w-7xl mx-auto">
                     <div className="grid grid-cols-1 gap-2">
                       <div className="mb-5 md:mb-0">
@@ -307,49 +352,6 @@ export default function Navbar() {
               </div>
             </div>
           </div>
-        </div>
-      </div>
-
-      <div className="flex flex-col justify-center items-center">
-        <div className="px-10 lg:px-5 md:px-20">
-          <Link
-            href="/"
-            className="mainlogo flex w-full px-[17.5%] mb-2 md:mb-0"
-          >
-            <Image src={logo} alt={"/"} width={580} height={100} />
-          </Link>
-        </div>
-      </div>
-      <div>
-        <div className="searchSection w-full hidden md:flex justify-center py-3">
-          <form onSubmit={submitHandler} className="searchForm px-5">
-            <input
-              name="query"
-              className="searchInput pl-5"
-              placeholder="Search Products"
-              onChange={queryChangeHandler}
-            />
-            <button
-              type="submit"
-              className="submitButton searchIcon"
-              aria-label="search"
-            >
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                className="h-10 w-10 mt-3 ml-3 inline-block text-blue-500"
-                fill="none"
-                viewBox="0 0 42 42"
-                stroke="currentColor"
-                strokeWidth={2}
-              >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"
-                />
-              </svg>
-            </button>
-          </form>
         </div>
       </div>
 

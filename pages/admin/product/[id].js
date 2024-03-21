@@ -1,11 +1,13 @@
 import axios from "axios";
 import Link from "next/link";
 import { useRouter } from "next/router";
-import React, { useEffect, useReducer } from "react";
+import React, { useEffect, useReducer, useState } from "react";
 import { useForm } from "react-hook-form";
 import { toast } from "react-toastify";
 import Layout from "../../../components/Layout";
 import { getError } from "../../../utils/error";
+import { CldImage } from "next-cloudinary";
+import { customParams } from "../../../components/ProductItem";
 
 function reducer(state, action) {
   switch (action.type) {
@@ -43,11 +45,38 @@ export default function AdminProductEditScreen() {
       error: "",
     });
 
+  const [imagesArray, setImagesArray] = useState([]);
+  const [subCategoriesArr, setSubCategoriesArr] = useState([]);
+  const [keywordsArr, setKeywordsArr] = useState([]);
+  const [coloursArr, setColoursArr] = useState([]);
+  const [selectedImage, setSelectedImage] = useState("");
+  const [productFeatured, setProductFeatured] = useState(false);
+
+  const test = () => {
+    console.log("###########Here##########");
+    console.log("name: ", getValues("name"));
+    console.log("slug: ", getValues("slug"));
+    console.log("price: ", getValues("price"));
+    console.log("countInStock: ", getValues("countInStock"));
+    console.log("image: ", getValues("image"));
+    console.log("images: ", getValues("images"));
+    console.log("featuredImage: ", getValues("featuredImage"));
+    console.log("colours: ", getValues("colours"));
+    console.log("category: ", getValues("category"));
+    console.log("subcategories: ", getValues("subcategories"));
+    console.log("keywords: ", getValues("keywords"));
+    console.log("brand: ", getValues("brand"));
+    console.log("designer: ", getValues("designer"));
+    console.log("description: ", getValues("description"));
+    console.log("isFeatured: ", getValues("isFeatured"));
+  };
+
   const {
     register,
     handleSubmit,
     formState: { errors },
     setValue,
+    getValues,
   } = useForm();
 
   useEffect(() => {
@@ -59,22 +88,30 @@ export default function AdminProductEditScreen() {
         setValue("name", data.name);
         setValue("slug", data.slug);
         setValue("price", data.price);
-        setValue("image", data.image);
-        setValue("category", data.category);
-        setValue("brand", data.brand);
         setValue("countInStock", data.countInStock);
+        setValue("image", data.image);
+        setValue("images", data.images);
+        setValue("featuredImage", data.featuredImage);
+        setValue("colours", data.colours);
+        setValue("category", data.category);
+        setValue("subcategories", data.subcategories);
+        setValue("keywords", data.keywords);
+        setValue("brand", data.brand);
+        setValue("designer", data.designer);
         setValue("description", data.description);
+        setValue("isFeatured", data.isFeatured);
       } catch (err) {
         dispatch({ type: "FETCH_FAIL", payload: getError(err) });
       }
     };
-
-    fetchData();
-  }, [productId, setValue]);
+    if (imagesArray.length === 0) {
+      fetchData();
+    }
+  }, [productId, setValue, imagesArray.length]);
 
   const router = useRouter();
 
-  const uploadHandler = async (e, imageField = "image") => {
+  const uploadHandler = async (e) => {
     const url = `https://api.cloudinary.com/v1_1/${process.env.NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME}/upload`;
     try {
       dispatch({ type: "UPLOAD_REQUEST" });
@@ -83,51 +120,140 @@ export default function AdminProductEditScreen() {
       } = await axios(`/api/admin/cloudinary-sign`);
 
       const file = e.target.files[0];
+
       const formData = new FormData();
+
       formData.append("file", file);
       formData.append("signature", signature);
       formData.append("timestamp", timestamp);
       formData.append("api_key", process.env.NEXT_PUBLIC_CLOUDINARY_API_KEY);
 
       const { data } = await axios.post(url, formData);
+
       dispatch({ type: "UPLOAD_SUCCESS" });
-      setValue(imageField, data.secure_url);
-      toast.success(
-        "Your file has been uploaded successfully, remember to click Update to apply changes!"
-      );
+
+      setValue("image", data.secure_url);
+      setValue("images", [...imagesArray, data.secure_url]);
+      setValue("featuredImage", data.secure_url);
+      setImagesArray([...imagesArray, data.secure_url]);
+      if (!selectedImage) setSelectedImage(data.secure_url);
+      toast.success("Your file has been uploaded successfully");
     } catch (err) {
       dispatch({ type: "UPLOAD_FAIL", payload: getError(err) });
       toast.error(getError(err));
     }
   };
 
-  function generateSlug() {
+  const addSubCat = () => {
+    const newValue = document.getElementById("addsubcategories").value;
+    if (subCategoriesArr.includes(newValue)) {
+      document.getElementById("addsubcategories").value = "";
+      let err = { message: "Category already used" };
+      dispatch({ type: "UPLOAD_FAIL", payload: getError(err) });
+      toast.error(getError(err));
+      return;
+    } else if (newValue.length === 0) {
+      document.getElementById("addsubcategories").value = "";
+      let err = { message: "You need to input text" };
+      dispatch({ type: "UPLOAD_FAIL", payload: getError(err) });
+      toast.error(getError(err));
+      return;
+    }
+    setSubCategoriesArr([...subCategoriesArr, newValue]);
+    setValue("subcategories", [...subCategoriesArr, newValue]);
+    document.getElementById("addsubcategories").value = "";
+  };
+  const addColour = () => {
+    const newValue = document.getElementById("addcolours").value;
+    if (coloursArr.includes(newValue)) {
+      document.getElementById("addcolours").value = "";
+      let err = { message: "Colour already added" };
+      dispatch({ type: "UPLOAD_FAIL", payload: getError(err) });
+      toast.error(getError(err));
+      return;
+    } else if (newValue.length === 0) {
+      document.getElementById("addcolours").value = "";
+      let err = { message: "You need to input text" };
+      dispatch({ type: "UPLOAD_FAIL", payload: getError(err) });
+      toast.error(getError(err));
+      return;
+    }
+    setColoursArr([...coloursArr, newValue]);
+    setValue("colours", [...coloursArr, newValue]);
+    document.getElementById("addcolours").value = "";
+  };
+
+  const addKeyword = () => {
+    const newValue = document.getElementById("addkeywords").value;
+    if (keywordsArr.includes(newValue)) {
+      document.getElementById("addkeywords").value = "";
+      let err = { message: "Keyword already used" };
+      dispatch({ type: "UPLOAD_FAIL", payload: getError(err) });
+      toast.error(getError(err));
+      return;
+    }
+    setKeywordsArr([...keywordsArr, newValue]);
+    setValue("keywords", [...keywordsArr, newValue]);
+    document.getElementById("addkeywords").value = "";
+  };
+
+  const removeSubCat = (remove) => {
+    const result = subCategoriesArr.filter((subCat) => {
+      return subCat !== remove;
+    });
+    setValue("subcategories", result);
+    setSubCategoriesArr(result);
+  };
+
+  const removeColour = (remove) => {
+    const result = coloursArr.filter((colour) => {
+      return colour !== remove;
+    });
+    setValue("colours", result);
+    setColoursArr(result);
+  };
+
+  const removeKeyword = (remove) => {
+    const result = keywordsArr.filter((keys) => {
+      return keys !== remove;
+    });
+    setValue("keywords", result);
+    setKeywordsArr(result);
+  };
+
+  const generateSlug = () => {
     const nameInput = document.getElementById("name");
     const slugInput = document.getElementById("slug");
     const slug = slugify(nameInput.value);
     slugInput.value = slug;
     setValue("slug", slug);
-  }
+  };
 
-  function slugify(string) {
+  const slugify = (string) => {
     const slug = string
       .toLowerCase()
       .replace(/[^a-zA-Z0-9]+/g, "-")
       .replace(/^-/, "")
       .replace(/-$/, "");
     return slug;
-  }
+  };
 
   const submitHandler = async ({
     name,
     slug,
     price,
     category,
+    subcategories,
     image,
     images,
+    featuredImage,
+    colours,
     brand,
+    designer,
     countInStock,
     description,
+    keywords,
+    isFeatured,
   }) => {
     try {
       dispatch({ type: "UPDATE_REQUEST" });
@@ -136,15 +262,21 @@ export default function AdminProductEditScreen() {
         slug,
         price,
         category,
+        subcategories,
         image,
         images,
+        featuredImage,
+        colours,
         brand,
+        designer,
         countInStock,
         description,
+        keywords,
+        isFeatured,
       });
       dispatch({ type: "UPDATE_SUCCESS" });
       toast.success("Product updated successfully");
-      router.push("/admin/products");
+      router.push(`/admin/products}`);
     } catch (err) {
       dispatch({ type: "UPDATE_FAIL", payload: getError(err) });
       toast.error(getError(err));
@@ -184,6 +316,7 @@ export default function AdminProductEditScreen() {
                 onSubmit={handleSubmit(submitHandler)}
               >
                 <h1 className="mb-4 text-xl">{`Edit Product ${productId}`}</h1>
+
                 <div className="mb-4">
                   <label htmlFor="name">Product Name</label>
                   <input
@@ -196,7 +329,7 @@ export default function AdminProductEditScreen() {
                     })}
                   />
                   <button
-                    className="thirdary-button mb-4 text-sm"
+                    className="thirdary-button mt-4 text-sm"
                     onClick={(e) => {
                       e.preventDefault();
                       generateSlug();
@@ -208,6 +341,7 @@ export default function AdminProductEditScreen() {
                     <div className="text-red-500">{errors.name.message}</div>
                   )}
                 </div>
+
                 <div className="mb-4">
                   <label htmlFor="slug">Slug</label>
                   <input
@@ -223,6 +357,7 @@ export default function AdminProductEditScreen() {
                     <div className="text-red-500">{errors.slug.message}</div>
                   )}
                 </div>
+
                 <div className="mb-4">
                   <label htmlFor="price">Product Price</label>
                   <input
@@ -237,60 +372,7 @@ export default function AdminProductEditScreen() {
                     <div className="text-red-500">{errors.price.message}</div>
                   )}
                 </div>
-                <div className="mb-4">
-                  <label htmlFor="image">Product Image</label>
-                  <input
-                    type="text"
-                    className="w-full"
-                    id="image"
-                    {...register("image", {
-                      required: "Upload image using the link below",
-                    })}
-                  />
-                  {errors.image && (
-                    <div className="text-red-500">{errors.image.message}</div>
-                  )}
-                </div>
-                <div className="mb-4">
-                  <label htmlFor="imageFile">Upload Product Image</label>
-                  <input
-                    type="file"
-                    className="w-full"
-                    id="imageFile"
-                    onChange={uploadHandler}
-                  />
-                  {loadingUpload && <div>Uploading image...</div>}
-                </div>
-                <div className="mb-4">
-                  <label htmlFor="category">Product Category</label>
-                  <input
-                    type="text"
-                    className="w-full"
-                    id="category"
-                    {...register("category", {
-                      required: "Please enter product category",
-                    })}
-                  />
-                  {errors.category && (
-                    <div className="text-red-500">
-                      {errors.category.message}
-                    </div>
-                  )}
-                </div>
-                <div className="mb-4">
-                  <label htmlFor="brand">Product Brand</label>
-                  <input
-                    type="text"
-                    className="w-full"
-                    id="brand"
-                    {...register("brand", {
-                      required: "Please enter product brand",
-                    })}
-                  />
-                  {errors.brand && (
-                    <div className="text-red-500">{errors.brand.message}</div>
-                  )}
-                </div>
+
                 <div className="mb-4">
                   <label htmlFor="countInStock">Product Stock Count</label>
                   <input
@@ -304,6 +386,338 @@ export default function AdminProductEditScreen() {
                   {errors.countInStock && (
                     <div className="text-red-500">
                       {errors.countInStock.message}
+                    </div>
+                  )}
+                </div>
+
+                <div className="mb-4">
+                  <label htmlFor="category">Product Category</label>
+                  <select
+                    name="category"
+                    id="category-selector"
+                    className="w-full"
+                    {...register("category", {
+                      required: "Please select product category",
+                    })}
+                  >
+                    <option id="category" value="Baby Knits">
+                      Baby Knits
+                    </option>
+                    <option id="category" value="Blankets & Socks">
+                      Blankets &amp; Socks
+                    </option>
+                    <option id="category" value="Kid Knits">
+                      Kid Knits
+                    </option>
+                    <option id="category" value="Knit Kits">
+                      Knit Kits
+                    </option>
+                    <option id="category" value="Patterns">
+                      Patterns
+                    </option>
+                    <option id="category" value="Yarns">
+                      Yarns
+                    </option>
+                  </select>
+                  {errors.category && (
+                    <div className="text-red-500">
+                      {errors.category.message}
+                    </div>
+                  )}
+                </div>
+
+                <div className="mb-4 border p-2">
+                  <div className="mt-2">
+                    <label htmlFor="addcategories">
+                      Product Sub-Categories
+                    </label>
+                    {subCategoriesArr.length > 0 && (
+                      <div className="pt-1 pb-2 px-2">
+                        <div className="flex flex-row pt-1 space-x-2 ">
+                          {subCategoriesArr.map((sub, i) => {
+                            return (
+                              <div
+                                key={i}
+                                className="group cursor-pointer"
+                                onClick={(e) => {
+                                  e.preventDefault();
+                                  removeSubCat(sub);
+                                }}
+                              >
+                                <p className="relative left-0 top-0 right-0 bottom-0 border bg-gray-200 py-2 px-4 rounded-lg group-hover:bg-gray-400 group-hover:text-gray-100">
+                                  {sub}{" "}
+                                  <span className="text-sm text-black/10 absolute top-[-3px] right-[5px] group-hover:text-gray-50">
+                                    x
+                                  </span>
+                                </p>
+                              </div>
+                            );
+                          })}
+                        </div>
+                      </div>
+                    )}
+                  </div>
+
+                  <hr className="w-full mt-2 pb-4 drop-shadow-md" />
+                  <div className="grid grid-cols-3 mx-auto gap-2">
+                    <div className="col-span-2">
+                      <input
+                        type="text"
+                        className="w-full"
+                        id="addsubcategories"
+                      />
+                    </div>
+                    <div>
+                      <button
+                        onClick={(e) => {
+                          e.preventDefault();
+                          addSubCat();
+                        }}
+                        className="primary-button"
+                      >
+                        Add Sub Category
+                      </button>
+                    </div>
+                  </div>
+
+                  {errors.category && (
+                    <div className="text-red-500">
+                      {errors.category.message}
+                    </div>
+                  )}
+                </div>
+
+                <div className="mb-4 border p-2">
+                  <div className="mt-2">
+                    <label htmlFor="addcategories">Product Colours</label>
+                    {coloursArr.length > 0 && (
+                      <div className="pt-1 pb-2">
+                        <div className="flex flex-row pt-1 space-x-2 ">
+                          {coloursArr.map((col, i) => {
+                            return (
+                              <div
+                                key={i}
+                                className="group cursor-pointer"
+                                onClick={(e) => {
+                                  e.preventDefault();
+                                  removeColour(col);
+                                }}
+                              >
+                                <p className="relative left-0 top-0 right-0 bottom-0 border bg-gray-200 py-2 px-4 rounded-lg group-hover:bg-gray-400 group-hover:text-gray-100">
+                                  {col}{" "}
+                                  <span className="text-sm text-black/10 absolute top-[-3px] right-[5px] group-hover:text-gray-50">
+                                    x
+                                  </span>
+                                </p>
+                              </div>
+                            );
+                          })}
+                        </div>
+                      </div>
+                    )}
+                  </div>
+
+                  <hr className="w-full mt-2 pb-4 drop-shadow-md" />
+
+                  <div className="grid grid-cols-3 mx-auto gap-2">
+                    <div className="col-span-2">
+                      <input type="text" className="w-full" id="addcolours" />
+                    </div>
+                    <div>
+                      <button
+                        onClick={(e) => {
+                          e.preventDefault();
+                          addColour();
+                        }}
+                        className="primary-button"
+                      >
+                        Add Colour
+                      </button>
+                    </div>
+                  </div>
+
+                  {errors.colours && (
+                    <div className="text-red-500">{errors.colours.message}</div>
+                  )}
+                </div>
+
+                <div className="mb-4 border p-2">
+                  <label htmlFor="addkeywords">Product Keywords</label>
+                  {keywordsArr.length > 0 && (
+                    <div className="pt-1 pb-2">
+                      <div className="flex flex-row pt-1 space-x-2 ">
+                        {keywordsArr.map((key, i) => {
+                          return (
+                            <div
+                              key={i}
+                              className="group cursor-pointer"
+                              onClick={(e) => {
+                                e.preventDefault();
+                                removeKeyword(key);
+                              }}
+                            >
+                              <p className="relative left-0 top-0 right-0 bottom-0 border bg-gray-200 py-2 px-4 rounded-lg group-hover:bg-gray-400 group-hover:text-gray-100">
+                                {key}{" "}
+                                <span className="text-sm text-black/10 absolute top-[-3px] right-[5px] group-hover:text-gray-50">
+                                  x
+                                </span>
+                              </p>
+                            </div>
+                          );
+                        })}
+                      </div>
+                    </div>
+                  )}
+
+                  <hr className="w-full mt-2 pb-4 drop-shadow-md" />
+
+                  <div className="grid grid-cols-3 mx-auto gap-2">
+                    <div className="col-span-2">
+                      <input type="text" className="w-full" id="addkeywords" />
+                    </div>
+                    <div>
+                      <button
+                        onClick={(e) => {
+                          e.preventDefault();
+                          addKeyword();
+                        }}
+                        className="primary-button"
+                      >
+                        Add Keyword
+                      </button>
+                    </div>
+                  </div>
+
+                  {errors.keywords && (
+                    <div className="text-red-500">
+                      {errors.keywords.message}
+                    </div>
+                  )}
+                </div>
+
+                <div className="mb-4">
+                  <label htmlFor="image">Product Images</label>
+                  <div className="flex flex-row flex-wrap gap-4 mt-4">
+                    {selectedImage.length > 0 && (
+                      <div className="">
+                        <CldImage
+                          src={selectedImage}
+                          width={customParams.width}
+                          height={customParams.height}
+                          sizes="100w"
+                          alt="/"
+                          fetchpriority={"high"}
+                          {...customParams}
+                          className="rounded shadow-lg object-cover h-32 w-32  border-4 border-green-700/70 cursor-pointer drop-shadow-md"
+                        />
+                        <p className="mt-2 py-2 px-1 text-sm text-center font-semibold text-green-900 bg-green-200 rounded-lg">
+                          Featured Image
+                        </p>
+                      </div>
+                    )}
+                    {imagesArray.length > 1 ? (
+                      imagesArray
+                        .filter((img) => {
+                          return img !== selectedImage;
+                        })
+                        .map((img, i) => {
+                          return (
+                            <div key={i}>
+                              <CldImage
+                                src={img}
+                                width={customParams.width}
+                                height={customParams.height}
+                                sizes="100w"
+                                alt="/"
+                                fetchpriority={"high"}
+                                {...customParams}
+                                className="rounded shadow-lg object-cover h-32 w-32 border cursor-pointer drop-shadow-md"
+                              />
+                              <button
+                                onClick={(e) => {
+                                  e.preventDefault();
+                                  setValue("featuredImage", img);
+                                  setSelectedImage(img);
+                                  toast.success(
+                                    "You have changed the featured image"
+                                  );
+                                }}
+                                className="mt-2 py-2 w-full text-sm text-center font-semibold text-amber-800 bg-amber-200 rounded-lg hover:bg-amber-400 hover:text-amber-100"
+                              >
+                                Set Featured
+                              </button>
+                            </div>
+                          );
+                        })
+                    ) : (
+                      <div>
+                        <div className="h-32 w-32 border flex justify-center items-center drop-shadow-lg">
+                          <div className=" h-20 w-20 border-4 rounded-full border-amber-300">
+                            <div className="w-2 h-[75px] bg-amber-400 rotate-45 relative top-0 left-8"></div>
+                          </div>
+                        </div>
+                      </div>
+                    )}
+                  </div>
+                  {errors.image && (
+                    <div className="text-red-500">{errors.image.message}</div>
+                  )}
+                </div>
+
+                <div className="mb-4">
+                  <label htmlFor="imageFile">Upload Product Images</label>
+                  <br />
+                  <label htmlFor="imageFile" className="text-sm">
+                    **Please upload one image at a time
+                  </label>
+                  <input
+                    type="file"
+                    className="w-full"
+                    id="imageFile"
+                    onChange={uploadHandler}
+                  />
+                  {errors.images && (
+                    <div className="text-red-500">{errors.images.message}</div>
+                  )}
+                  {loadingUpload && (
+                    <div className="mt-2 border-2 rounded border-green-500/50 pt-1 px-2 bg-green-600 drop-shadow-md">
+                      <p className="text-white">
+                        Uploading image - please wait...
+                      </p>
+                    </div>
+                  )}
+                </div>
+
+                <div className="mb-4">
+                  <label htmlFor="brand">Product Brand</label>
+                  <select
+                    name="brand"
+                    id="brand-select"
+                    className="w-full"
+                    {...register("brand", {
+                      required: "Please enter product brand",
+                    })}
+                  >
+                    <option id="brand" value="AnaKnits">
+                      AnaKnits
+                    </option>
+                    <option id="brand" value="Rosarios4">
+                      Rosarios4
+                    </option>
+                    <option id="brand" value="Phildar">
+                      Phildar
+                    </option>
+                  </select>
+                  {errors.brand && (
+                    <div className="text-red-500">{errors.brand.message}</div>
+                  )}
+                </div>
+                <div className="mb-4">
+                  <label htmlFor="designer">Product Designer</label>
+                  <input type="text" className="w-full" id="designer" />
+                  {errors.designer && (
+                    <div className="text-red-500">
+                      {errors.designer.message}
                     </div>
                   )}
                 </div>
@@ -325,15 +739,55 @@ export default function AdminProductEditScreen() {
                     </div>
                   )}
                 </div>
-                <div className="mb-4">
-                  <button disabled={loadingUpdate} className="primary-button">
-                    {loadingUpdate ? "Loading" : "Update"}
-                  </button>
+
+                <div className="py-2 mb-6 flex justify-left items-center">
+                  <input
+                    type="checkbox"
+                    className="mr-2 mt-1 accent-green-400 h-6 w-6"
+                    id="isfeatured"
+                    onClick={() => {
+                      console.log(productFeatured, "#######");
+                      setValue("isFeatured", !productFeatured);
+                      setProductFeatured(!productFeatured);
+                    }}
+                  />
+                  <label htmlFor="isfeatured" className="text-lg">
+                    Featured Product
+                  </label>
+                  {errors.isfeatured && (
+                    <div className="text-red-500">
+                      {errors.isfeatured.message}
+                    </div>
+                  )}
                 </div>
-                <div className="mb-4">
-                  <Link href={`/admin/products`}>
-                    <button className="secondary-button">Back</button>
-                  </Link>
+
+                <div className="flex items-center justify-between">
+                  <div className="mb-4 w-full">
+                    <button
+                      disabled={loadingUpdate}
+                      className="thirdary-button"
+                    >
+                      {loadingUpdate ? "Loading" : "Update"}
+                    </button>
+                  </div>
+                  <div className="mb-4 w-full mx-4">
+                    <button
+                      className="primary-button text-white font-bold"
+                      onClick={(e) => {
+                        e.preventDefault();
+                        test();
+                      }}
+                    >
+                      Test
+                    </button>
+                  </div>
+                  <div className="mb-4 w-full">
+                    <Link href={`/admin/products`}>
+                      <button className="secondary-button">
+                        Back to Products
+                      </button>
+                    </Link>
+                  </div>
                 </div>
               </form>
             </section>
@@ -343,5 +797,4 @@ export default function AdminProductEditScreen() {
     </Layout>
   );
 }
-
 AdminProductEditScreen.auth = { adminOnly: true };

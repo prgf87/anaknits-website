@@ -57,10 +57,10 @@ export default function PlaceOrderScreen() {
       );
 
       router.push(`/order/${data._id}`);
-    } catch (err) {
+    } catch (error) {
       setLoading(false);
-      toast.error(getError(err));
-      console.log("Error: ", err);
+      toast.error(getError(error));
+      console.log("Error: ", error);
     }
   };
 

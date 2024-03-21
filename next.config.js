@@ -5,11 +5,19 @@ const nextConfig = {
   images: {
     remotePatterns: [
       {
-        protocol: 'https',
-        hostname: 'res.cloudinary.com',
-        // if your website has no www, drop it
+        protocol: "https",
+        hostname: "res.cloudinary.com",
       },
     ],
+  },
+  async redirects() {
+    return [
+      {
+        source: "/products",
+        destination: "/search",
+        permanent: true,
+      },
+    ];
   },
 };
 

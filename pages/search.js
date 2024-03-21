@@ -51,9 +51,6 @@ export default function Search(props) {
     page = 1,
   } = router.query;
 
-  // console.log(props, "PROPS");
-  // const { products, countProducts, categories, pages } = props;
-
   const filterSearch = ({
     page,
     category,

@@ -1,25 +1,25 @@
-import '../styles/globals.css';
-import { SessionProvider, useSession } from 'next-auth/react';
-import { StoreProvider } from '../utils/Store';
-import { useRouter } from 'next/router';
-import { PayPalScriptProvider } from '@paypal/react-paypal-js';
-import Breadcrumb from '../components/Breadcrumb';
-import BreadcrumbItem from '../components/BreadcrumbItem';
-import { useEffect, useState } from 'react';
+import "../styles/globals.css";
+import { SessionProvider, useSession } from "next-auth/react";
+import { StoreProvider } from "../utils/Store";
+import { useRouter } from "next/router";
+import { PayPalScriptProvider } from "@paypal/react-paypal-js";
+import Breadcrumb from "../components/Breadcrumb";
+import BreadcrumbItem from "../components/BreadcrumbItem";
+import { useEffect, useState } from "react";
 
 function MyApp({ Component, pageProps: { session, ...pageProps } }) {
   const router = useRouter();
   const [breadcrumbs, setBreadcrumbs] = useState();
 
   useEffect(() => {
-    const pathWithoutQuery = router.asPath.split('?')[0];
-    let pathArray = pathWithoutQuery.split('/');
+    const pathWithoutQuery = router.asPath.split("?")[0];
+    let pathArray = pathWithoutQuery.split("/");
     pathArray.shift();
 
-    pathArray = pathArray.filter((path) => path !== '');
+    pathArray = pathArray.filter((path) => path !== "");
 
     const breadcrumbs = pathArray.map((path, index) => {
-      const href = '/' + pathArray.slice(0, index + 1).join('/');
+      const href = "/" + pathArray.slice(0, index + 1).join("/");
       return {
         href,
         label: path.charAt(0).toUpperCase() + path.slice(1),
@@ -39,7 +39,7 @@ function MyApp({ Component, pageProps: { session, ...pageProps } }) {
             </Auth>
           ) : (
             <>
-              <div className="absolute w-full ml-[2px] mt-[255px] hidden md:block">
+              <div className="absolute w-full ml-[2px] mt-[205px] hidden md:block">
                 <Breadcrumb>
                   <BreadcrumbItem href="/">Home</BreadcrumbItem>
                   {breadcrumbs &&
@@ -67,14 +67,14 @@ function Auth({ children, adminOnly }) {
   const { status, data: session } = useSession({
     required: true,
     onUnauthenticated() {
-      router.push('/unauthorized?message=Login Required');
+      router.push("/unauthorized?message=Login Required");
     },
   });
-  if (status === 'loading') {
+  if (status === "loading") {
     return <div>Loading...</div>;
   }
   if (adminOnly && !session.user.isAdmin) {
-    router.push('/unauthorized?message=Admin Login Required');
+    router.push("/unauthorized?message=Admin Login Required");
   }
   return children;
 }

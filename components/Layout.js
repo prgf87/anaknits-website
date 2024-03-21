@@ -21,7 +21,7 @@ function Layout({ title, children }) {
         <header>
           <Navbar />
         </header>
-        <main className="container md:mt-10 mx-auto md:px-[0.5%] max-h-max pt-10">
+        <main className="container mx-auto md:px-[0.5%] max-h-max pt-8">
           {children}
         </main>
         <footer className="h-40 md:px-[0.5%]">

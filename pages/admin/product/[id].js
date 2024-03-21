@@ -47,26 +47,28 @@ export default function AdminProductEditScreen() {
 
   const [imagesArray, setImagesArray] = useState([]);
   const [subCategoriesArr, setSubCategoriesArr] = useState([]);
-  const [selectedImage, setSelectedImage] = useState("");
   const [keywordsArr, setKeywordsArr] = useState([]);
+  const [coloursArr, setColoursArr] = useState([]);
+  const [selectedImage, setSelectedImage] = useState("");
   const [productFeatured, setProductFeatured] = useState(false);
 
   const test = () => {
     console.log("###########Here##########");
-    console.log(getValues("name"), "name");
-    console.log(getValues("slug"), "slug");
-    console.log(getValues("price"), "price");
-    console.log(getValues("countInStock"), "countInStock");
-    console.log(getValues("image"), "image");
-    console.log(getValues("images"), "images");
-    console.log(getValues("featuredImage"), "featuredImage");
-    console.log(getValues("category"), "category");
-    console.log(getValues("subcategories"), "subcategories");
-    console.log(getValues("keywords"), "keywords");
-    console.log(getValues("brand"), "brand");
-    console.log(getValues("designer"), "designer");
-    console.log(getValues("description"), "description");
-    console.log(getValues("isFeatured"), "isFeatured");
+    console.log("name: ", getValues("name"));
+    console.log("slug: ", getValues("slug"));
+    console.log("price: ", getValues("price"));
+    console.log("countInStock: ", getValues("countInStock"));
+    console.log("image: ", getValues("image"));
+    console.log("images: ", getValues("images"));
+    console.log("featuredImage: ", getValues("featuredImage"));
+    console.log("colours: ", getValues("colours"));
+    console.log("category: ", getValues("category"));
+    console.log("subcategories: ", getValues("subcategories"));
+    console.log("keywords: ", getValues("keywords"));
+    console.log("brand: ", getValues("brand"));
+    console.log("designer: ", getValues("designer"));
+    console.log("description: ", getValues("description"));
+    console.log("isFeatured: ", getValues("isFeatured"));
   };
 
   const {
@@ -90,6 +92,7 @@ export default function AdminProductEditScreen() {
         setValue("image", data.image);
         setValue("images", data.images);
         setValue("featuredImage", data.featuredImage);
+        setValue("colours", data.colours);
         setValue("category", data.category);
         setValue("subcategories", data.subcategories);
         setValue("keywords", data.keywords);
@@ -160,6 +163,25 @@ export default function AdminProductEditScreen() {
     setValue("subcategories", [...subCategoriesArr, newValue]);
     document.getElementById("addsubcategories").value = "";
   };
+  const addColour = () => {
+    const newValue = document.getElementById("addcolours").value;
+    if (coloursArr.includes(newValue)) {
+      document.getElementById("addcolours").value = "";
+      let err = { message: "Colour already added" };
+      dispatch({ type: "UPLOAD_FAIL", payload: getError(err) });
+      toast.error(getError(err));
+      return;
+    } else if (newValue.length === 0) {
+      document.getElementById("addcolours").value = "";
+      let err = { message: "You need to input text" };
+      dispatch({ type: "UPLOAD_FAIL", payload: getError(err) });
+      toast.error(getError(err));
+      return;
+    }
+    setColoursArr([...coloursArr, newValue]);
+    setValue("colours", [...coloursArr, newValue]);
+    document.getElementById("addcolours").value = "";
+  };
 
   const addKeyword = () => {
     const newValue = document.getElementById("addkeywords").value;
@@ -181,6 +203,14 @@ export default function AdminProductEditScreen() {
     });
     setValue("subcategories", result);
     setSubCategoriesArr(result);
+  };
+
+  const removeColour = (remove) => {
+    const result = coloursArr.filter((colour) => {
+      return colour !== remove;
+    });
+    setValue("colours", result);
+    setColoursArr(result);
   };
 
   const removeKeyword = (remove) => {
@@ -217,6 +247,7 @@ export default function AdminProductEditScreen() {
     image,
     images,
     featuredImage,
+    colours,
     brand,
     designer,
     countInStock,
@@ -235,6 +266,7 @@ export default function AdminProductEditScreen() {
         image,
         images,
         featuredImage,
+        colours,
         brand,
         designer,
         countInStock,
@@ -284,6 +316,7 @@ export default function AdminProductEditScreen() {
                 onSubmit={handleSubmit(submitHandler)}
               >
                 <h1 className="mb-4 text-xl">{`Edit Product ${productId}`}</h1>
+
                 <div className="mb-4">
                   <label htmlFor="name">Product Name</label>
                   <input
@@ -308,6 +341,7 @@ export default function AdminProductEditScreen() {
                     <div className="text-red-500">{errors.name.message}</div>
                   )}
                 </div>
+
                 <div className="mb-4">
                   <label htmlFor="slug">Slug</label>
                   <input
@@ -323,6 +357,7 @@ export default function AdminProductEditScreen() {
                     <div className="text-red-500">{errors.slug.message}</div>
                   )}
                 </div>
+
                 <div className="mb-4">
                   <label htmlFor="price">Product Price</label>
                   <input
@@ -337,6 +372,7 @@ export default function AdminProductEditScreen() {
                     <div className="text-red-500">{errors.price.message}</div>
                   )}
                 </div>
+
                 <div className="mb-4">
                   <label htmlFor="countInStock">Product Stock Count</label>
                   <input
@@ -353,6 +389,212 @@ export default function AdminProductEditScreen() {
                     </div>
                   )}
                 </div>
+
+                <div className="mb-4">
+                  <label htmlFor="category">Product Category</label>
+                  <select
+                    name="category"
+                    id="category-selector"
+                    className="w-full"
+                    {...register("category", {
+                      required: "Please select product category",
+                    })}
+                  >
+                    <option id="category" value="Baby Knits">
+                      Baby Knits
+                    </option>
+                    <option id="category" value="Blankets & Socks">
+                      Blankets &amp; Socks
+                    </option>
+                    <option id="category" value="Kid Knits">
+                      Kid Knits
+                    </option>
+                    <option id="category" value="Knit Kits">
+                      Knit Kits
+                    </option>
+                    <option id="category" value="Patterns">
+                      Patterns
+                    </option>
+                    <option id="category" value="Yarns">
+                      Yarns
+                    </option>
+                  </select>
+                  {errors.category && (
+                    <div className="text-red-500">
+                      {errors.category.message}
+                    </div>
+                  )}
+                </div>
+
+                <div className="mb-4 border p-2">
+                  <div className="mt-2">
+                    <label htmlFor="addcategories">
+                      Product Sub-Categories
+                    </label>
+                    {subCategoriesArr.length > 0 && (
+                      <div className="pt-1 pb-2 px-2">
+                        <div className="flex flex-row pt-1 space-x-2 ">
+                          {subCategoriesArr.map((sub, i) => {
+                            return (
+                              <div
+                                key={i}
+                                className="group cursor-pointer"
+                                onClick={(e) => {
+                                  e.preventDefault();
+                                  removeSubCat(sub);
+                                }}
+                              >
+                                <p className="relative left-0 top-0 right-0 bottom-0 border bg-gray-200 py-2 px-4 rounded-lg group-hover:bg-gray-400 group-hover:text-gray-100">
+                                  {sub}{" "}
+                                  <span className="text-sm text-black/10 absolute top-[-3px] right-[5px] group-hover:text-gray-50">
+                                    x
+                                  </span>
+                                </p>
+                              </div>
+                            );
+                          })}
+                        </div>
+                      </div>
+                    )}
+                  </div>
+
+                  <hr className="w-full mt-2 pb-4 drop-shadow-md" />
+                  <div className="grid grid-cols-3 mx-auto gap-2">
+                    <div className="col-span-2">
+                      <input
+                        type="text"
+                        className="w-full"
+                        id="addsubcategories"
+                      />
+                    </div>
+                    <div>
+                      <button
+                        onClick={(e) => {
+                          e.preventDefault();
+                          addSubCat();
+                        }}
+                        className="primary-button"
+                      >
+                        Add Sub Category
+                      </button>
+                    </div>
+                  </div>
+
+                  {errors.category && (
+                    <div className="text-red-500">
+                      {errors.category.message}
+                    </div>
+                  )}
+                </div>
+
+                <div className="mb-4 border p-2">
+                  <div className="mt-2">
+                    <label htmlFor="addcategories">Product Colours</label>
+                    {coloursArr.length > 0 && (
+                      <div className="pt-1 pb-2">
+                        <div className="flex flex-row pt-1 space-x-2 ">
+                          {coloursArr.map((col, i) => {
+                            return (
+                              <div
+                                key={i}
+                                className="group cursor-pointer"
+                                onClick={(e) => {
+                                  e.preventDefault();
+                                  removeColour(col);
+                                }}
+                              >
+                                <p className="relative left-0 top-0 right-0 bottom-0 border bg-gray-200 py-2 px-4 rounded-lg group-hover:bg-gray-400 group-hover:text-gray-100">
+                                  {col}{" "}
+                                  <span className="text-sm text-black/10 absolute top-[-3px] right-[5px] group-hover:text-gray-50">
+                                    x
+                                  </span>
+                                </p>
+                              </div>
+                            );
+                          })}
+                        </div>
+                      </div>
+                    )}
+                  </div>
+
+                  <hr className="w-full mt-2 pb-4 drop-shadow-md" />
+
+                  <div className="grid grid-cols-3 mx-auto gap-2">
+                    <div className="col-span-2">
+                      <input type="text" className="w-full" id="addcolours" />
+                    </div>
+                    <div>
+                      <button
+                        onClick={(e) => {
+                          e.preventDefault();
+                          addColour();
+                        }}
+                        className="primary-button"
+                      >
+                        Add Colour
+                      </button>
+                    </div>
+                  </div>
+
+                  {errors.colours && (
+                    <div className="text-red-500">{errors.colours.message}</div>
+                  )}
+                </div>
+
+                <div className="mb-4 border p-2">
+                  <label htmlFor="addkeywords">Product Keywords</label>
+                  {keywordsArr.length > 0 && (
+                    <div className="pt-1 pb-2">
+                      <div className="flex flex-row pt-1 space-x-2 ">
+                        {keywordsArr.map((key, i) => {
+                          return (
+                            <div
+                              key={i}
+                              className="group cursor-pointer"
+                              onClick={(e) => {
+                                e.preventDefault();
+                                removeKeyword(key);
+                              }}
+                            >
+                              <p className="relative left-0 top-0 right-0 bottom-0 border bg-gray-200 py-2 px-4 rounded-lg group-hover:bg-gray-400 group-hover:text-gray-100">
+                                {key}{" "}
+                                <span className="text-sm text-black/10 absolute top-[-3px] right-[5px] group-hover:text-gray-50">
+                                  x
+                                </span>
+                              </p>
+                            </div>
+                          );
+                        })}
+                      </div>
+                    </div>
+                  )}
+
+                  <hr className="w-full mt-2 pb-4 drop-shadow-md" />
+
+                  <div className="grid grid-cols-3 mx-auto gap-2">
+                    <div className="col-span-2">
+                      <input type="text" className="w-full" id="addkeywords" />
+                    </div>
+                    <div>
+                      <button
+                        onClick={(e) => {
+                          e.preventDefault();
+                          addKeyword();
+                        }}
+                        className="primary-button"
+                      >
+                        Add Keyword
+                      </button>
+                    </div>
+                  </div>
+
+                  {errors.keywords && (
+                    <div className="text-red-500">
+                      {errors.keywords.message}
+                    </div>
+                  )}
+                </div>
+
                 <div className="mb-4">
                   <label htmlFor="image">Product Images</label>
                   <div className="flex flex-row flex-wrap gap-4 mt-4">
@@ -400,7 +642,7 @@ export default function AdminProductEditScreen() {
                                     "You have changed the featured image"
                                   );
                                 }}
-                                className="mt-2 py-2 w-full text-sm text-center font-semibold text-orange-800 bg-orange-200 rounded-lg hover:bg-orange-400 hover:text-orange-100"
+                                className="mt-2 py-2 w-full text-sm text-center font-semibold text-amber-800 bg-amber-200 rounded-lg hover:bg-amber-400 hover:text-amber-100"
                               >
                                 Set Featured
                               </button>
@@ -408,10 +650,10 @@ export default function AdminProductEditScreen() {
                           );
                         })
                     ) : (
-                      <div className="">
+                      <div>
                         <div className="h-32 w-32 border flex justify-center items-center drop-shadow-lg">
-                          <div className=" h-20 w-20 border-4 rounded-full border-orange-300">
-                            <div className="w-2 h-[75px] bg-orange-300 rotate-45 relative top-0 left-8"></div>
+                          <div className=" h-20 w-20 border-4 rounded-full border-amber-300">
+                            <div className="w-2 h-[75px] bg-amber-400 rotate-45 relative top-0 left-8"></div>
                           </div>
                         </div>
                       </div>
@@ -421,8 +663,13 @@ export default function AdminProductEditScreen() {
                     <div className="text-red-500">{errors.image.message}</div>
                   )}
                 </div>
+
                 <div className="mb-4">
-                  <label htmlFor="imageFile">Upload Product Image</label>
+                  <label htmlFor="imageFile">Upload Product Images</label>
+                  <br />
+                  <label htmlFor="imageFile" className="text-sm">
+                    **Please upload one image at a time
+                  </label>
                   <input
                     type="file"
                     className="w-full"
@@ -435,166 +682,12 @@ export default function AdminProductEditScreen() {
                   {loadingUpload && (
                     <div className="mt-2 border-2 rounded border-green-500/50 pt-1 px-2 bg-green-600 drop-shadow-md">
                       <p className="text-white">
-                        Uploading image... please wait...
+                        Uploading image - please wait...
                       </p>
                     </div>
                   )}
                 </div>
-                <div className="mb-4">
-                  <label htmlFor="category">Product Category</label>
-                  <select
-                    name="category"
-                    id="category"
-                    className="w-full"
-                    {...register("category", {
-                      required: "Please select product category",
-                    })}
-                  >
-                    <option id="category" value="babyKnits">
-                      Baby Knits
-                    </option>
-                    <option id="category" value="blanketsSocks">
-                      Blankets &amp; Socks
-                    </option>
-                    <option id="category" value="kidKnits">
-                      Kid Knits
-                    </option>
-                    <option id="category" value="knitkits">
-                      Knit Kits
-                    </option>
-                    <option id="category" value="Patterns">
-                      Patterns
-                    </option>
-                    <option id="category" value="Yarns">
-                      Yarns
-                    </option>
-                  </select>
-                  {errors.category && (
-                    <div className="text-red-500">
-                      {errors.category.message}
-                    </div>
-                  )}
-                </div>
-                <div className="mb-4 border p-2">
-                  <div className="grid grid-cols-3 mx-auto gap-2">
-                    <div className="col-span-2">
-                      <label htmlFor="addsubcategories">
-                        Add Product Sub-Category
-                      </label>
-                      <input
-                        type="text"
-                        className="w-full"
-                        id="addsubcategories"
-                      />
-                    </div>
-                    <div>
-                      <button
-                        onClick={(e) => {
-                          e.preventDefault();
-                          addSubCat();
-                        }}
-                        className="primary-button mt-6"
-                      >
-                        Add Sub Category
-                      </button>
-                    </div>
-                  </div>
 
-                  <hr className="w-full mt-4 drop-shadow-md" />
-
-                  <div className="mt-2">
-                    {subCategoriesArr.length > 0 && (
-                      <div className="pt-1 pb-2 px-2">
-                        <label htmlFor="addcategories">
-                          Product Sub-Categories
-                        </label>
-                        <div className="flex flex-row pt-1 space-x-2 ">
-                          {subCategoriesArr.map((sub, i) => {
-                            return (
-                              <div
-                                key={i}
-                                className="group cursor-pointer"
-                                onClick={(e) => {
-                                  e.preventDefault();
-                                  removeSubCat(sub);
-                                }}
-                              >
-                                <p className="relative left-0 top-0 right-0 bottom-0 border bg-gray-200 py-2 px-4 rounded-lg group-hover:bg-gray-400 group-hover:text-gray-100">
-                                  {sub}{" "}
-                                  <span className="text-sm text-black/10 absolute top-[-3px] right-[5px] group-hover:text-gray-50">
-                                    x
-                                  </span>
-                                </p>
-                              </div>
-                            );
-                          })}
-                        </div>
-                      </div>
-                    )}
-                  </div>
-
-                  {errors.category && (
-                    <div className="text-red-500">
-                      {errors.category.message}
-                    </div>
-                  )}
-                </div>
-                <div className="mb-4 border p-2">
-                  <div className="grid grid-cols-3 mx-auto gap-2">
-                    <div className="col-span-2">
-                      <label htmlFor="addkeywords">Add Keywords</label>
-                      <input type="text" className="w-full" id="addkeywords" />
-                    </div>
-                    <div>
-                      <button
-                        onClick={(e) => {
-                          e.preventDefault();
-                          addKeyword();
-                        }}
-                        className="primary-button mt-6"
-                      >
-                        Add Keyword
-                      </button>
-                    </div>
-                  </div>
-
-                  <hr className="w-full mt-4 drop-shadow-md" />
-
-                  <div className="mt-2">
-                    {keywordsArr.length > 0 && (
-                      <div className="pt-1 pb-2 px-2">
-                        <label htmlFor="addcategories">Product Keywords</label>
-                        <div className="flex flex-row pt-1 space-x-2 ">
-                          {keywordsArr.map((key, i) => {
-                            return (
-                              <div
-                                key={i}
-                                className="group cursor-pointer"
-                                onClick={(e) => {
-                                  e.preventDefault();
-                                  removeKeyword(key);
-                                }}
-                              >
-                                <p className="relative left-0 top-0 right-0 bottom-0 border bg-gray-200 py-2 px-4 rounded-lg group-hover:bg-gray-400 group-hover:text-gray-100">
-                                  {key}{" "}
-                                  <span className="text-sm text-black/10 absolute top-[-3px] right-[5px] group-hover:text-gray-50">
-                                    x
-                                  </span>
-                                </p>
-                              </div>
-                            );
-                          })}
-                        </div>
-                      </div>
-                    )}
-                  </div>
-
-                  {errors.keywords && (
-                    <div className="text-red-500">
-                      {errors.keywords.message}
-                    </div>
-                  )}
-                </div>
                 <div className="mb-4">
                   <label htmlFor="brand">Product Brand</label>
                   <select
@@ -650,7 +743,7 @@ export default function AdminProductEditScreen() {
                 <div className="py-2 mb-6 flex justify-left items-center">
                   <input
                     type="checkbox"
-                    className="mr-4 mt-1"
+                    className="mr-2 mt-1 accent-green-400 h-6 w-6"
                     id="isfeatured"
                     onClick={() => {
                       console.log(productFeatured, "#######");
@@ -658,7 +751,9 @@ export default function AdminProductEditScreen() {
                       setProductFeatured(!productFeatured);
                     }}
                   />
-                  <label htmlFor="isfeatured">Featured Product</label>
+                  <label htmlFor="isfeatured" className="text-lg">
+                    Featured Product
+                  </label>
                   {errors.isfeatured && (
                     <div className="text-red-500">
                       {errors.isfeatured.message}
@@ -702,5 +797,4 @@ export default function AdminProductEditScreen() {
     </Layout>
   );
 }
-
 AdminProductEditScreen.auth = { adminOnly: true };

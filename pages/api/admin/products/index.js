@@ -29,11 +29,11 @@ const postHandler = async (req, res) => {
   const newProduct = new Product({
     name: "Product name",
     slug: "product-name",
-    image: "",
+    image: "No Image Selected",
     images: [],
     featuredImage: "",
     price: 0,
-    category: "",
+    category: "No Category Selected",
     subcategories: [],
     brand: "AnaKnits",
     designer: "AnaKnits",

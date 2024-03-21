@@ -37,6 +37,7 @@ const putHandler = async (req, res) => {
     product.image = req.body.image;
     product.images = req.body.images;
     product.featuredImage = req.body.featuredImage;
+    product.colours = req.body.colours;
     product.category = req.body.category;
     product.subcategories = req.body.subcategories;
     product.keywords = req.body.keywords;

@@ -10,6 +10,7 @@ const productSchema = new mongoose.Schema(
     image: { type: String, required: true },
     images: { type: [String], required: false },
     featuredImage: { type: String, required: false },
+    colours: { type: [String], required: false },
     brand: { type: String, required: true },
     designer: { type: String, required: false },
     countInStock: { type: Number, required: true, default: 0 },

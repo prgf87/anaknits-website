@@ -154,7 +154,7 @@ export default function Navbar() {
           </Link>
 
           {status === "loading" ? (
-            "Loading"
+            <p className="p-2 z-[1]">Loading...</p>
           ) : session?.user ? (
             <Menu as="div" className="relative pl-3 z-1 hidden md:inline-block">
               <Menu.Button className="text-gray-500 p-2 hover:brightness-50">

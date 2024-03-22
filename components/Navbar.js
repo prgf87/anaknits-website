@@ -129,7 +129,7 @@ export default function Navbar() {
         </div>
 
         <div className="flex">
-          <Link href="/cart" className="text-gray-500 p-2 mr-2">
+          <Link href="/cart" className="text-gray-500 p-2 mr-2 z-[1]">
             <div className="h-8 w-8">
               <svg
                 fill="none"
@@ -193,7 +193,7 @@ export default function Navbar() {
               </Menu.Items>
             </Menu>
           ) : (
-            <Link href="/login" className="p-2 hidden md:inline-block">
+            <Link href="/login" className="p-2 hidden md:inline-block z-[1]">
               Login
             </Link>
           )}

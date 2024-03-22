@@ -37,39 +37,20 @@ function reducer(state, action) {
 }
 
 export default function AdminProductEditScreen() {
-  const { query } = useRouter();
-  const productId = query.id;
-  const [{ loading, error, loadingUpdate, loadingUpload }, dispatch] =
-    useReducer(reducer, {
-      loading: true,
-      error: "",
-    });
-
   const [imagesArray, setImagesArray] = useState([]);
   const [subCategoriesArr, setSubCategoriesArr] = useState([]);
   const [keywordsArr, setKeywordsArr] = useState([]);
   const [coloursArr, setColoursArr] = useState([]);
   const [selectedImage, setSelectedImage] = useState("");
   const [productFeatured, setProductFeatured] = useState(false);
-
-  const test = () => {
-    console.log("###########Here##########");
-    console.log("name: ", getValues("name"));
-    console.log("slug: ", getValues("slug"));
-    console.log("price: ", getValues("price"));
-    console.log("countInStock: ", getValues("countInStock"));
-    console.log("image: ", getValues("image"));
-    console.log("images: ", getValues("images"));
-    console.log("featuredImage: ", getValues("featuredImage"));
-    console.log("colours: ", getValues("colours"));
-    console.log("category: ", getValues("category"));
-    console.log("subcategories: ", getValues("subcategories"));
-    console.log("keywords: ", getValues("keywords"));
-    console.log("brand: ", getValues("brand"));
-    console.log("designer: ", getValues("designer"));
-    console.log("description: ", getValues("description"));
-    console.log("isFeatured: ", getValues("isFeatured"));
-  };
+  const { query } = useRouter();
+  const router = useRouter();
+  const productId = query.id;
+  const [{ loading, error, loadingUpdate, loadingUpload }, dispatch] =
+    useReducer(reducer, {
+      loading: true,
+      error: "",
+    });
 
   const {
     register,
@@ -100,6 +81,12 @@ export default function AdminProductEditScreen() {
         setValue("designer", data.designer);
         setValue("description", data.description);
         setValue("isFeatured", data.isFeatured);
+        if (data.colours.length > 0) setColoursArr(data.colours);
+        if (data.images.length > 0) setImagesArray(data.images);
+        if (data.featuredImage.length > 0) setSelectedImage(data.featuredImage);
+        if (data.keywords.length > 0) setKeywordsArr(data.keywords);
+        if (data.subcategories.length > 0)
+          setSubCategoriesArr(data.subcategories);
       } catch (err) {
         dispatch({ type: "FETCH_FAIL", payload: getError(err) });
       }
@@ -109,7 +96,31 @@ export default function AdminProductEditScreen() {
     }
   }, [productId, setValue, imagesArray.length]);
 
-  const router = useRouter();
+  const test = () => {
+    if (
+      !window.confirm(
+        ` Product Information
+        name: ${getValues("name")} 
+        slug: ${getValues("slug")} 
+        isFeatured: ${getValues("isFeatured")} 
+        price: ${getValues("price")} 
+        countInStock: ${getValues("countInStock")} 
+        image: ${getValues("image")} 
+        images: ${getValues("images")} 
+        featuredImage: ${getValues("featuredImage")} 
+        colours: ${getValues("colours")} 
+        category: ${getValues("category")} 
+        subcategories: ${getValues("subcategories")} 
+        keywords: ${getValues("keywords")} 
+        brand: ${getValues("brand")} 
+        designer: ${getValues("designer")} 
+        description: ${getValues("description")}     
+    `
+      )
+    ) {
+      return;
+    }
+  };
 
   const uploadHandler = async (e) => {
     const url = `https://api.cloudinary.com/v1_1/${process.env.NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME}/upload`;
@@ -163,6 +174,7 @@ export default function AdminProductEditScreen() {
     setValue("subcategories", [...subCategoriesArr, newValue]);
     document.getElementById("addsubcategories").value = "";
   };
+
   const addColour = () => {
     const newValue = document.getElementById("addcolours").value;
     if (coloursArr.includes(newValue)) {
@@ -276,7 +288,7 @@ export default function AdminProductEditScreen() {
       });
       dispatch({ type: "UPDATE_SUCCESS" });
       toast.success("Product updated successfully");
-      router.push(`/admin/products}`);
+      router.push(`/admin/product/${productId}}`);
     } catch (err) {
       dispatch({ type: "UPDATE_FAIL", payload: getError(err) });
       toast.error(getError(err));
@@ -315,7 +327,7 @@ export default function AdminProductEditScreen() {
                 className="mx-auto max-w-screen-md"
                 onSubmit={handleSubmit(submitHandler)}
               >
-                <h1 className="mb-4 text-xl">{`Edit Product ${productId}`}</h1>
+                <h1 className="my-4 font-bold text-xl">{`Edit Product ${productId}`}</h1>
 
                 <div className="mb-4">
                   <label htmlFor="name">Product Name</label>
@@ -714,7 +726,12 @@ export default function AdminProductEditScreen() {
                 </div>
                 <div className="mb-4">
                   <label htmlFor="designer">Product Designer</label>
-                  <input type="text" className="w-full" id="designer" />
+                  <input
+                    type="text"
+                    className="w-full"
+                    id="designer"
+                    {...register("designer")}
+                  />
                   {errors.designer && (
                     <div className="text-red-500">
                       {errors.designer.message}
@@ -750,6 +767,7 @@ export default function AdminProductEditScreen() {
                       setValue("isFeatured", !productFeatured);
                       setProductFeatured(!productFeatured);
                     }}
+                    {...register("isFeatured")}
                   />
                   <label htmlFor="isfeatured" className="text-lg">
                     Featured Product
@@ -783,9 +801,7 @@ export default function AdminProductEditScreen() {
                   </div>
                   <div className="mb-4 w-full">
                     <Link href={`/admin/products`}>
-                      <button className="secondary-button">
-                        Back to Products
-                      </button>
+                      <button className="secondary-button">Back</button>
                     </Link>
                   </div>
                 </div>

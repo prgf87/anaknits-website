@@ -53,7 +53,7 @@ export default function AdminProductsScreen() {
       const { data } = await axios.post(`/api/admin/products`);
       dispatch({ type: "CREATE_SUCCESS" });
       toast.success("Your new product has been created successfully!");
-      router.push(`/admin/product/${data.product._id}`);
+      router.push(`/admin/products/${data.product._id}`);
     } catch (err) {
       dispatch({ type: "CREATE_FAIL" });
       toast.error(getError(err));
@@ -153,7 +153,7 @@ export default function AdminProductsScreen() {
                       <td className="p-5">{product.category}</td>
                       <td className="p-5">{product.countInStock}</td>
                       <td className="p-5 flex">
-                        <Link href={`/admin/product/${product._id}`}>
+                        <Link href={`/admin/products/${product._id}`}>
                           <button className="primary-button w-auto">
                             Edit
                           </button>

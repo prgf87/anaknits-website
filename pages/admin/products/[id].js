@@ -288,7 +288,7 @@ export default function AdminProductEditScreen() {
       });
       dispatch({ type: "UPDATE_SUCCESS" });
       toast.success("Product updated successfully");
-      router.push(`/admin/product/${productId}}`);
+      router.push(`/admin/products/${productId}}`);
     } catch (err) {
       dispatch({ type: "UPDATE_FAIL", payload: getError(err) });
       toast.error(getError(err));
@@ -492,9 +492,9 @@ export default function AdminProductEditScreen() {
                     </div>
                   </div>
 
-                  {errors.category && (
+                  {errors.subcategories && (
                     <div className="text-red-500">
-                      {errors.category.message}
+                      {errors.subcategories.message}
                     </div>
                   )}
                 </div>
@@ -673,6 +673,9 @@ export default function AdminProductEditScreen() {
                   </div>
                   {errors.image && (
                     <div className="text-red-500">{errors.image.message}</div>
+                  )}
+                  {errors.images && (
+                    <div className="text-red-500">{errors.images.message}</div>
                   )}
                 </div>
 

@@ -45,19 +45,18 @@ export default function ProductScreen(props) {
       <div className="grid md:grid-cols-5 md:gap-4">
         <div className="md:col-span-2">
           <CldImage
-            src={selectedImage ? selectedImage : product.image}
+            src={selectedImage ? selectedImage : product.featuredImage}
             width={customParams.width}
             height={customParams.height}
             sizes="100w"
             alt="/"
             fetchpriority={"high"}
             {...customParams}
-            className="object-cover h-80 max-w-72"
+            className="object-cover h-72 max-w-[300px]"
           />
-          <div className="flex flex-wrap gap-2 mt-2 justify-start">
+          <div className="flex flex-wrap gap-2 mt-2 justify-between w-[300px]">
             {product.images &&
               product.images.toSorted().map((img, i) => {
-                console.log(img);
                 return (
                   <div key={i}>
                     <CldImage
@@ -71,14 +70,14 @@ export default function ProductScreen(props) {
                       alt="/"
                       fetchpriority={"high"}
                       {...customParams}
-                      className="shadow-lg object-cover h-20 w-20  cursor-pointer drop-shadow-md"
+                      className="shadow-lg object-cover h-[68px] w-[68px]  cursor-pointer drop-shadow-md"
                     />
                   </div>
                 );
               })}
           </div>
         </div>
-        <div className="md:col-span-2 text-base">
+        <div className="md:col-span-2 text-base pt-4">
           <ul>
             <li>
               <h1 className="text-xl font-bold">{product.name}</h1>
@@ -97,7 +96,7 @@ export default function ProductScreen(props) {
           </ul>
         </div>
         <div>
-          <div className="flex gap-1 p-2">
+          <div className="flex gap-1 py-2">
             <h6>Status</h6>
             <div
               className={`${

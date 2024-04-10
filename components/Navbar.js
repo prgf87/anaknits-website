@@ -95,22 +95,21 @@ export default function Navbar() {
             </div>
           </div>
           <div>
-            <div className="searchSection w-full hidden md:flex justify-center mt-2 py-2">
-              <form onSubmit={submitHandler} className="searchForm px-5">
+            <div className="searchSection w-full flex justify-center pt-2">
+              <form
+                onSubmit={submitHandler}
+                className="searchForm mx-5 border rounded-xl"
+              >
                 <input
                   name="query"
-                  className="searchInput pl-5"
+                  className="searchInput pl-2"
                   placeholder="Search Products"
                   onChange={queryChangeHandler}
                 />
-                <button
-                  type="submit"
-                  className="submitButton searchIcon"
-                  aria-label="search"
-                >
+                <button type="submit" className="absolute" aria-label="search">
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
-                    className="h-10 w-10 mt-3 ml-3 inline-block text-blue-500"
+                    className="h-10 w-10 inline-block text-blue-500 relative top-3 left-2"
                     fill="none"
                     viewBox="0 0 42 42"
                     stroke="currentColor"

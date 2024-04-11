@@ -34,7 +34,7 @@ link {
 }
 
 .primary-button {
-  @apply rounded bg-amber-400 py-[10px] px-[1.25rem] font-semibold shadow outline-none hover:bg-amber-300  active:bg-amber-200 text-white drop-shadow-md w-full text-sm;
+  @apply rounded bg-[#1B5F74] py-[10px] px-[1.25rem] font-bold shadow outline-none hover:bg-[#144a5a]  active:bg-[#2686a2] text-white drop-shadow-md w-full text-sm;
 }
 
 .secondary-button {

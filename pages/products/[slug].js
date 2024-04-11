@@ -14,10 +14,25 @@ export default function ProductScreen(props) {
   const { state, dispatch } = useContext(Store);
   const router = useRouter();
   const [selectedImage, setSelectedImage] = useState(null);
+  const [selectedColour, setSelectedColour] = useState(null);
+
+  const imageSource = selectedImage ? selectedImage : product.featuredImage;
 
   if (!product) {
     return <Layout title="Product Not Found">Product Not Found</Layout>;
   }
+
+  const productImageIndex = () => {
+    let index = product.images.findIndex((i) => i === imageSource);
+    return index;
+  };
+
+  let imageColour = product.colours[productImageIndex()];
+
+  const customParams = {
+    width: "400",
+    height: "400",
+  };
 
   const addToCartHandler = async () => {
     const existItem = state.cart.cartItems.find((x) => x.slug === product.slug);
@@ -32,11 +47,6 @@ export default function ProductScreen(props) {
     router.push("/cart");
   };
 
-  const customParams = {
-    width: "400",
-    height: "400",
-  };
-
   return (
     <Layout title={product.name}>
       <div className="py-2">
@@ -45,7 +55,7 @@ export default function ProductScreen(props) {
       <div className="grid md:grid-cols-5 md:gap-4">
         <div className="md:col-span-2">
           <CldImage
-            src={selectedImage ? selectedImage : product.featuredImage}
+            src={imageSource}
             width={customParams.width}
             height={customParams.height}
             sizes="100w"
@@ -54,7 +64,13 @@ export default function ProductScreen(props) {
             {...customParams}
             className="object-cover h-72 max-w-[300px]"
           />
-          <div className="flex flex-wrap gap-2 mt-2 justify-between w-[300px]">
+          Colour: {selectedColour ? selectedColour : imageColour}
+          <div
+            className="flex flex-wrap gap-2 mt-2 justify-start w-[300px]"
+            onChange={(e) => {
+              console.log(e.target.value);
+            }}
+          >
             {product.images &&
               product.images.toSorted().map((img, i) => {
                 return (
@@ -62,6 +78,11 @@ export default function ProductScreen(props) {
                     <CldImage
                       onClick={() => {
                         setSelectedImage(img);
+                        setSelectedColour(
+                          product.colours[
+                            product.images.findIndex((i) => i === img)
+                          ]
+                        );
                       }}
                       src={img}
                       width={customParams.width}
@@ -70,7 +91,7 @@ export default function ProductScreen(props) {
                       alt="/"
                       fetchpriority={"high"}
                       {...customParams}
-                      className="shadow-lg object-cover h-[68px] w-[68px]  cursor-pointer drop-shadow-md"
+                      className="shadow-lg object-cover h-[68px] w-[68px]  cursor-pointer drop-shadow-md hover:scale-105 transition-transform duration-150 ease-in-out"
                     />
                   </div>
                 );
@@ -113,6 +134,31 @@ export default function ProductScreen(props) {
               <div>${product.price.toFixed(2)}</div>
             </div>
           </div>
+
+          <form className="pb-4">
+            <select
+              id="colours"
+              name="colours"
+              className="w-full text-sm"
+              value={selectedColour ? selectedColour : imageColour}
+              onChange={(e) => {
+                setSelectedImage(
+                  product.images[
+                    product.colours.findIndex((i) => i === e.target.value)
+                  ]
+                );
+                setSelectedColour(e.target.value);
+              }}
+            >
+              {product.colours.map((col) => {
+                return (
+                  <option key={col} value={col}>
+                    {col}
+                  </option>
+                );
+              })}
+            </select>
+          </form>
 
           <button className="primary-button w-full" onClick={addToCartHandler}>
             Add to Cart

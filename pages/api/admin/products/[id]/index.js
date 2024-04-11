@@ -44,6 +44,7 @@ const putHandler = async (req, res) => {
     product.brand = req.body.brand;
     product.designer = req.body.designer;
     product.description = req.body.description;
+    product.details = req.body.details;
     product.isFeatured = req.body.isFeatured;
     await product.save();
     await db.disconnect();

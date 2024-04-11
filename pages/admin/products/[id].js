@@ -80,6 +80,7 @@ export default function AdminProductEditScreen() {
         setValue("brand", data.brand);
         setValue("designer", data.designer);
         setValue("description", data.description);
+        setValue("details", data.details);
         setValue("isFeatured", data.isFeatured);
         if (data.colours.length > 0) setColoursArr(data.colours);
         if (data.images.length > 0) setImagesArray(data.images);
@@ -114,6 +115,7 @@ export default function AdminProductEditScreen() {
         keywords: ${getValues("keywords")} 
         brand: ${getValues("brand")} 
         designer: ${getValues("designer")} 
+        details: ${getValues("details")} 
         description: ${getValues("description")}     
     `
       )
@@ -264,6 +266,7 @@ export default function AdminProductEditScreen() {
     designer,
     countInStock,
     description,
+    details,
     keywords,
     isFeatured,
   }) => {
@@ -280,9 +283,10 @@ export default function AdminProductEditScreen() {
         featuredImage,
         colours,
         brand,
-        designer,
         countInStock,
+        designer,
         description,
+        details,
         keywords,
         isFeatured,
       });
@@ -412,20 +416,14 @@ export default function AdminProductEditScreen() {
                       required: "Please select product category",
                     })}
                   >
-                    <option id="category" value="Baby Knits">
-                      Baby Knits
-                    </option>
-                    <option id="category" value="Blankets & Socks">
-                      Blankets &amp; Socks
-                    </option>
-                    <option id="category" value="Kid Knits">
-                      Kid Knits
+                    <option id="category" value="Accessories">
+                      Accessories
                     </option>
                     <option id="category" value="Knit Kits">
                       Knit Kits
                     </option>
-                    <option id="category" value="Patterns">
-                      Patterns
+                    <option id="category" value="Magazines">
+                      Magazines
                     </option>
                     <option id="category" value="Yarns">
                       Yarns
@@ -456,9 +454,9 @@ export default function AdminProductEditScreen() {
                                   removeSubCat(sub);
                                 }}
                               >
-                                <p className="relative left-0 top-0 right-0 bottom-0 border bg-gray-200 py-2 px-4 rounded-lg group-hover:bg-gray-400 group-hover:text-gray-100">
+                                <p className="relative left-0 top-0 right-0 bottom-0 border bg-gray-200 py-2 px-4 rounded-lg group-hover:bg-gray-400 group-hover:text-white">
                                   {sub}{" "}
-                                  <span className="text-sm text-black/10 absolute top-[-3px] right-[5px] group-hover:text-gray-50">
+                                  <span className="text-sm text-black/10 absolute top-[-3px] right-[5px] group-hover:text-white">
                                     x
                                   </span>
                                 </p>
@@ -504,20 +502,20 @@ export default function AdminProductEditScreen() {
                     <label htmlFor="addcategories">Product Colours</label>
                     {coloursArr.length > 0 && (
                       <div className="pt-1 pb-2">
-                        <div className="flex flex-row pt-1 space-x-2 ">
+                        <div className="flex flex-row flex-wrap ">
                           {coloursArr.map((col, i) => {
                             return (
                               <div
                                 key={i}
-                                className="group cursor-pointer"
+                                className="group cursor-pointer m-1"
                                 onClick={(e) => {
                                   e.preventDefault();
                                   removeColour(col);
                                 }}
                               >
-                                <p className="relative left-0 top-0 right-0 bottom-0 border bg-gray-200 py-2 px-4 rounded-lg group-hover:bg-gray-400 group-hover:text-gray-100">
+                                <p className="relative left-0 top-0 right-0 bottom-0 border bg-gray-200 py-2 px-4 rounded-lg group-hover:bg-gray-400 group-hover:text-white">
                                   {col}{" "}
-                                  <span className="text-sm text-black/10 absolute top-[-3px] right-[5px] group-hover:text-gray-50">
+                                  <span className="text-sm text-black/10 absolute top-[-3px] right-[5px] group-hover:text-white">
                                     x
                                   </span>
                                 </p>
@@ -557,20 +555,20 @@ export default function AdminProductEditScreen() {
                   <label htmlFor="addkeywords">Product Keywords</label>
                   {keywordsArr.length > 0 && (
                     <div className="pt-1 pb-2">
-                      <div className="flex flex-row pt-1 space-x-2 ">
+                      <div className="flex flex-row flex-wrap">
                         {keywordsArr.map((key, i) => {
                           return (
                             <div
                               key={i}
-                              className="group cursor-pointer"
+                              className="group cursor-pointer m-1"
                               onClick={(e) => {
                                 e.preventDefault();
                                 removeKeyword(key);
                               }}
                             >
-                              <p className="relative left-0 top-0 right-0 bottom-0 border bg-gray-200 py-2 px-4 rounded-lg group-hover:bg-gray-400 group-hover:text-gray-100">
-                                {key}{" "}
-                                <span className="text-sm text-black/10 absolute top-[-3px] right-[5px] group-hover:text-gray-50">
+                              <p className="relative left-0 top-0 right-0 bottom-0 border bg-gray-200 py-2 px-4 rounded-lg group-hover:bg-gray-400 group-hover:text-white">
+                                {key}
+                                <span className="text-sm text-black/10 absolute top-[-3px] right-[5px] group-hover:text-white">
                                   x
                                 </span>
                               </p>
@@ -654,7 +652,7 @@ export default function AdminProductEditScreen() {
                                     "You have changed the featured image"
                                   );
                                 }}
-                                className="mt-2 py-2 w-full text-sm text-center font-semibold text-amber-800 bg-amber-200 rounded-lg hover:bg-amber-400 hover:text-amber-100"
+                                className="mt-2 py-2 w-full text-sm text-center font-semibold text-amber-800 bg-amber-200 rounded-lg hover:bg-amber-200/50 hover:text-amber-600"
                               >
                                 Set Featured
                               </button>
@@ -741,6 +739,7 @@ export default function AdminProductEditScreen() {
                     </div>
                   )}
                 </div>
+
                 <div className="mb-4">
                   <label htmlFor="description">Product Description</label>
                   <textarea
@@ -757,6 +756,21 @@ export default function AdminProductEditScreen() {
                     <div className="text-red-500">
                       {errors.description.message}
                     </div>
+                  )}
+                </div>
+
+                <div className="mb-4">
+                  <label htmlFor="details">Product Details</label>
+                  <textarea
+                    cols={60}
+                    rows={5}
+                    type="text"
+                    className="w-full"
+                    id="details"
+                    {...register("details")}
+                  />
+                  {errors.details && (
+                    <div className="text-red-500">{errors.details.message}</div>
                   )}
                 </div>
 

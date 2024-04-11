@@ -28,7 +28,7 @@ export default function Home({ products }) {
 
   return (
     <Layout title="Home Page">
-      <div className="grid grid-cols-1 gap-4 md:grid-cols-3 lg:grid-cols-6">
+      <div className="grid grid-cols-1 gap-4 md:grid-cols-3 lg:grid-cols-4 pt-16 md:pt-0">
         {products.map((product) => (
           <ProductItem
             product={product}
@@ -37,7 +37,7 @@ export default function Home({ products }) {
           />
         ))}
       </div>
-      <div className="w-full flex justify-center m-auto pt-5">
+      <div className="w-full flex justify-center m-auto pt-4">
         <button className="sidebarLinkButton border-2 border-black hover:focus-cyan-500">
           <Link href={"/search"} className="text-black">
             Browse more Products

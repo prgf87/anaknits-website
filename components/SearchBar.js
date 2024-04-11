@@ -9,34 +9,25 @@ export default function SearchBar() {
           <Link href={"/"}>Home</Link>
         </li>
         <li className="text-lg text-gray-500 cursor-pointer hover:brightness-50">
-          <Link href={`/search?category%3Fbabyknits=&category=Baby+Knits`}>
-            Baby Knits
+          <Link href={`/search?category%3Fhaberdashery=&category=Haberdashery`}>
+            Haberdashery
           </Link>
         </li>
         <li className="text-lg text-gray-500 cursor-pointer hover:brightness-50">
-          <Link href={`/search?category%3Fkidknits=&category=Kid+Knits`}>
-            Kid Knits
+          <Link href={`/search?category%3Fmagazines=&category=Magazines`}>
+            Magazines
           </Link>
         </li>
         <li className="text-lg text-gray-500 cursor-pointer hover:brightness-50">
-          <Link
-            href={`/search?category%3Fkidknits=&category=Blankets+%26+Socks`}
-          >
-            Blankets &amp; Socks
-          </Link>
-        </li>
-        <li className="text-lg text-gray-500 cursor-pointer hover:brightness-50">
-          <Link href={`/search?category%3Fkidknits=&category=Knit+Kits`}>
+          <Link href={`/search?category%3Fknitkits=&category=Knit+Kits`}>
             Knit Kits
           </Link>
         </li>
         <li className="text-lg text-gray-500 cursor-pointer hover:brightness-50">
-          <Link href={`/search?category%3Fkidknits=&category=Patterns`}>
-            Patterns
-          </Link>
+          <Link href={"/search?category%3Fyarns=&category=Yarns"}>Yarns</Link>
         </li>
         <li className="text-lg text-gray-500 cursor-pointer hover:brightness-50">
-          <Link href={"/search?category%3Fyarns=&category=Yarns"}>Yarns</Link>
+          <Link href="/gallery">Gallery</Link>
         </li>
         <li className="text-lg text-gray-500 cursor-pointer hover:brightness-50">
           <Link href={"/contact"}>Contact Us</Link>

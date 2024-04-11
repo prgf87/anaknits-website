@@ -1,33 +1,36 @@
-import Image from 'next/image';
-import React from 'react';
+import Image from "next/image";
+import React from "react";
 
 function Payment() {
   return (
     <div>
-      <h5 className="font-bold mt-10 mb-2">
-        We accept the following types of payment:
+      <h5 className="font-bold mt-4 mb-4 md:text-center">
+        We accept the following forms of payment:
       </h5>
-      <div className="flex justify-start items-center gap-8">
+      <div className="flex justify-center items-center gap-8">
         <Image
-          src={'/images/visa.png'}
+          src={"/images/visa.png"}
           alt="visa logo"
-          width={109}
-          height={70}
+          width="137"
+          height="88"
+          fixed="true"
+          className="h-[7vh] w-[7vw] object-contain"
         />
 
         <Image
-          src={'/images/mastercard.png'}
+          src={"/images/mastercard.png"}
           alt="mastercard logo"
-          width={90}
-          height={70}
-          className="h-[40px] w-[70px] object-contain"
+          width="151"
+          height="117"
+          className="h-[7vh] w-[7vw] object-contain"
         />
 
         <Image
-          src={'/images/paypal.jpg'}
+          src={"/images/paypal.jpg"}
           alt="paypal logo"
-          width={120}
-          height={70}
+          width="1457"
+          height="851"
+          className="h-[7vh] w-[7vw] object-contain"
         />
       </div>
     </div>

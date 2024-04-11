@@ -54,6 +54,11 @@ export default function ProductScreen(props) {
             {...customParams}
             className="object-cover h-72 max-w-[300px]"
           />
+          Colour:{" "}
+          {product.colours.filter((col) => {
+            console.log(col);
+            console.log(product.images);
+          })}
           <div className="flex flex-wrap gap-2 mt-2 justify-between w-[300px]">
             {product.images &&
               product.images.toSorted().map((img, i) => {

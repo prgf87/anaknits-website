@@ -67,6 +67,10 @@ function CartScreen() {
                         <CldImage
                           src={item.featuredImage}
                           alt={item.name}
+                          width={customParams.width}
+                          height={customParams.height}
+                          sizes="100w"
+                          fetchpriority={"high"}
                           {...customParams}
                           className="min-w-10"
                         />

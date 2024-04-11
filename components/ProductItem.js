@@ -11,7 +11,7 @@ export const customParams = {
 export default function ProductItem({ product, addToCartHandler }) {
   console.log(product);
   return (
-    <div className="card mx-0 md:mx-2">
+    <div className="card">
       <Link href={`/products/${product.slug}`} className="relative">
         <CldImage
           src={product.featuredImage}
@@ -23,9 +23,9 @@ export default function ProductItem({ product, addToCartHandler }) {
           {...customParams}
           className="rounded-t shadow-md object-cover w-full"
         />
-        <div className="absolute bg-white/60 text-gray-700 rounded-b-xl text-center bottom-0 flex-col w-full text-xs py-2">
+        <div className="absolute bg-[#1b5f74]/70 text-gray-100 rounded-b overflow-hidden text-center bottom-0 flex-col w-full text-xs py-2">
           <p className="font-semibold">
-            <span className="border border-[#1b5f74] rounded-full py-[2px] px-[6px]">
+            <span className="border border-gray-100 rounded-full py-[2px] px-[6px]">
               {product.colours.length}
             </span>
             &nbsp;Colours

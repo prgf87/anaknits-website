@@ -21,7 +21,7 @@ export default function ProductItem({ product, addToCartHandler }) {
           alt={product.name}
           fetchpriority={"high"}
           {...customParams}
-          className="rounded-t shadow-md object-cover w-full"
+          className="rounded-t shadow-md object-cover h-[300px]"
         />
         <div className="absolute bg-[#1b5f74]/70 text-gray-100 rounded-b overflow-hidden text-center bottom-0 flex-col w-full text-xs py-2">
           <p className="font-semibold">

@@ -14,6 +14,8 @@ export default function ProductScreen(props) {
   const { state, dispatch } = useContext(Store);
   const router = useRouter();
   const [selectedImage, setSelectedImage] = useState(null);
+  const [selectedColour, setSelectedColour] = useState(null);
+
   const imageSource = selectedImage ? selectedImage : product.featuredImage;
 
   if (!product) {
@@ -23,6 +25,13 @@ export default function ProductScreen(props) {
   const productImageIndex = () => {
     let index = product.images.findIndex((i) => i === imageSource);
     return index;
+  };
+
+  let imageColour = product.colours[productImageIndex()];
+
+  const customParams = {
+    width: "400",
+    height: "400",
   };
 
   const addToCartHandler = async () => {
@@ -36,13 +45,6 @@ export default function ProductScreen(props) {
 
     dispatch({ type: "CART_ADD_ITEM", payload: { ...product, quantity } });
     router.push("/cart");
-  };
-
-  const imageColour = product.colours[productImageIndex()];
-
-  const customParams = {
-    width: "400",
-    height: "400",
   };
 
   return (
@@ -63,7 +65,12 @@ export default function ProductScreen(props) {
             className="object-cover h-72 max-w-[300px]"
           />
           Colour: {imageColour}
-          <div className="flex flex-wrap gap-2 mt-2 justify-between w-[300px]">
+          <div
+            className="flex flex-wrap gap-2 mt-2 justify-start w-[300px]"
+            onChange={(e) => {
+              console.log(e.target.value);
+            }}
+          >
             {product.images &&
               product.images.toSorted().map((img, i) => {
                 return (
@@ -71,6 +78,11 @@ export default function ProductScreen(props) {
                     <CldImage
                       onClick={() => {
                         setSelectedImage(img);
+                        setSelectedColour(
+                          product.colours[
+                            product.images.findIndex((i) => i === img)
+                          ]
+                        );
                       }}
                       src={img}
                       width={customParams.width}
@@ -123,8 +135,21 @@ export default function ProductScreen(props) {
             </div>
           </div>
 
-          <div className="pb-4">
-            <select id="colours" name="colours" className="w-full text-sm">
+          <form className="pb-4">
+            <select
+              id="colours"
+              name="colours"
+              className="w-full text-sm"
+              value={selectedColour}
+              onChange={(e) => {
+                setSelectedImage(
+                  product.images[
+                    product.colours.findIndex((i) => i === e.target.value)
+                  ]
+                );
+                setSelectedColour(e.target.value);
+              }}
+            >
               {product.colours.map((col) => {
                 return (
                   <option key={col} value={col}>
@@ -133,7 +158,7 @@ export default function ProductScreen(props) {
                 );
               })}
             </select>
-          </div>
+          </form>
 
           <button className="primary-button w-full" onClick={addToCartHandler}>
             Add to Cart

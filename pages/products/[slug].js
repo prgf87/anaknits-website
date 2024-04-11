@@ -64,7 +64,7 @@ export default function ProductScreen(props) {
             {...customParams}
             className="object-cover h-72 max-w-[300px]"
           />
-          Colour: {imageColour}
+          Colour: {selectedColour ? selectedColour : imageColour}
           <div
             className="flex flex-wrap gap-2 mt-2 justify-start w-[300px]"
             onChange={(e) => {
@@ -140,7 +140,7 @@ export default function ProductScreen(props) {
               id="colours"
               name="colours"
               className="w-full text-sm"
-              value={selectedColour}
+              value={selectedColour ? selectedColour : imageColour}
               onChange={(e) => {
                 setSelectedImage(
                   product.images[

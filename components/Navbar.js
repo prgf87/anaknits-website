@@ -1,27 +1,27 @@
-import React from "react";
-import Link from "next/link";
-import "react-toastify/dist/ReactToastify.css";
-import { Menu } from "@headlessui/react";
-import DropdownLink from "./DropdownLink";
-import Image from "next/image";
-import logo from "../public/images/logov3.png";
-import hamicon from "../public/images/hamicon.png";
-import facebook from "../public/images/facebookicon2.png";
-import instagram from "../public/images/instaicon2.png";
-import whatsapp from "../public/images/whatsappicon2.png";
-import email from "../public/images/emailicon2.png";
-import SearchBar from "./SearchBar";
-import { signOut, useSession } from "next-auth/react";
-import { useContext } from "react";
-import { useState } from "react";
-import { useEffect } from "react";
-import { useRouter } from "next/router";
-import Cookies from "js-cookie";
-import { Store } from "../utils/Store";
-import axios from "axios";
-import { toast } from "react-toastify";
-import { getError } from "../utils/error";
-import MainLogo from "./MainLogo";
+import React from 'react';
+import Link from 'next/link';
+import 'react-toastify/dist/ReactToastify.css';
+import { Menu } from '@headlessui/react';
+import DropdownLink from './DropdownLink';
+import Image from 'next/image';
+import logo from '../public/images/logov3.png';
+import hamicon from '../public/images/hamicon.png';
+import facebook from '../public/images/facebookicon2.png';
+import instagram from '../public/images/instaicon2.png';
+import whatsapp from '../public/images/whatsappicon2.png';
+import email from '../public/images/emailicon2.png';
+import SearchBar from './SearchBar';
+import { signOut, useSession } from 'next-auth/react';
+import { useContext } from 'react';
+import { useState } from 'react';
+import { useEffect } from 'react';
+import { useRouter } from 'next/router';
+import Cookies from 'js-cookie';
+import { Store } from '../utils/Store';
+import axios from 'axios';
+import { toast } from 'react-toastify';
+import { getError } from '../utils/error';
+import MainLogo from './MainLogo';
 
 export default function Navbar() {
   const [open, setOpen] = useState(false);
@@ -31,7 +31,7 @@ export default function Navbar() {
   const { cart } = state;
   const [cartItemsCount, setCartItemsCount] = useState(0);
 
-  const [query, setQuery] = useState("");
+  const [query, setQuery] = useState('');
 
   const router = useRouter();
 
@@ -41,17 +41,17 @@ export default function Navbar() {
   }, [cart.cartItems]);
 
   const logoutClickHandler = () => {
-    Cookies.remove("cart");
+    Cookies.remove('cart');
 
-    dispatch({ type: "CART_RESET" });
-    signOut({ callbackUrl: "/login" });
+    dispatch({ type: 'CART_RESET' });
+    signOut({ callbackUrl: '/login' });
   };
 
-  if (typeof document !== "undefined") {
-    const body = document.querySelector("body");
+  if (typeof document !== 'undefined') {
+    const body = document.querySelector('body');
     if (open === true) {
-      body.style.overflow = "hidden";
-    } else body.style.overflow = "auto";
+      body.style.overflow = 'hidden';
+    } else body.style.overflow = 'auto';
   }
 
   const [categories, setCategories] = useState([]);
@@ -90,7 +90,7 @@ export default function Navbar() {
                 href="/"
                 className="mainlogo flex w-full px-[17.5%] mb-2 md:mb-0"
               >
-                <Image src={logo} alt={"/"} width={580} height={100} />
+                <Image src={logo} alt={'/'} width={580} height={100} />
               </Link>
             </div>
           </div>
@@ -152,7 +152,7 @@ export default function Navbar() {
             )}
           </Link>
 
-          {status === "loading" ? (
+          {status === 'loading' ? (
             <p className="p-2 z-[1]">Loading...</p>
           ) : session?.user ? (
             <Menu as="div" className="relative pl-3 z-1 hidden md:inline-block">
@@ -207,8 +207,8 @@ export default function Navbar() {
           }}
           className={`absolute h-screen top-0 left-0 bg-black/60 z-[1] overscroll-hidden ${
             open
-              ? "transition-all ease-in-out top-0 left-0 opacity-100 h-screen w-screen"
-              : "transition-all ease-in-out top-0 left-[-100%] w-0"
+              ? 'transition-all ease-in-out top-0 left-0 opacity-100 h-screen w-screen'
+              : 'transition-all ease-in-out top-0 left-[-100%] w-0'
           } ease-in-out duration-700 opacity-0`}
         >
           <div className="z-[2] w-screen md:w-1/2 lg:w-1/3 xl:w-1/4 bg-white h-screen">
@@ -218,38 +218,34 @@ export default function Navbar() {
                 <tbody className="grid grid-cols-1 gap-3 p-3 pt-8 place-items-center shadow-sm">
                   <tr>
                     <td>
-                      <button className="sidebarLinkButton">
-                        <Link href={"/"} onClick={() => setOpen(!open)}>
-                          Home
-                        </Link>
-                      </button>
+                      <Link href={'/'} onClick={() => setOpen(!open)}>
+                        <button className="sidebarLinkButton">Home</button>
+                      </Link>
                     </td>
                   </tr>
                   <tr>
                     <td>
-                      <button className="sidebarLinkButton">
-                        <Link href={`/search`} onClick={() => setOpen(!open)}>
+                      <Link href={`/search`} onClick={() => setOpen(!open)}>
+                        <button className="sidebarLinkButton">
                           Product Search
-                        </Link>
-                      </button>
+                        </button>
+                      </Link>
                     </td>
                   </tr>
                   <tr>
                     <td>
-                      <button className="sidebarLinkButton">
-                        <Link href={"/contact"} onClick={() => setOpen(!open)}>
+                      <Link href={'/contact'} onClick={() => setOpen(!open)}>
+                        <button className="sidebarLinkButton">
                           Contact Us
-                        </Link>
-                      </button>
+                        </button>
+                      </Link>
                     </td>
                   </tr>
                   <tr>
                     <td>
-                      <button className="sidebarLinkButton">
-                        <Link href={"/login"} onClick={() => setOpen(!open)}>
-                          Login
-                        </Link>
-                      </button>
+                      <Link href={'/login'} onClick={() => setOpen(!open)}>
+                        <button className="sidebarLinkButton">Login</button>
+                      </Link>
                     </td>
                   </tr>
                 </tbody>
@@ -269,9 +265,9 @@ export default function Navbar() {
                     return (
                       <tr key={i}>
                         <td>
-                          <button className="sidebarLinkButton">
-                            <Link href={`search?${cat}`}>{cat}</Link>
-                          </button>
+                          <Link href={`search?${cat}`}>
+                            <button className="sidebarLinkButton">{cat}</button>
+                          </Link>
                         </td>
                       </tr>
                     );
@@ -295,7 +291,7 @@ export default function Navbar() {
                         <div className="w-full">
                           <div className="flex gap-3 p-2 pr-1 justify-evenly place-items-center">
                             <Link
-                              href={"https://facebook.com/anaknits"}
+                              href={'https://facebook.com/anaknits'}
                               target="_blank"
                               onClick={() => setOpen(!open)}
                             >
@@ -308,7 +304,7 @@ export default function Navbar() {
                               />
                             </Link>
                             <Link
-                              href={"https://instagram.com/anaknits"}
+                              href={'https://instagram.com/anaknits'}
                               target="_blank"
                             >
                               <Image
@@ -319,7 +315,7 @@ export default function Navbar() {
                               />
                             </Link>
                             <Link
-                              href={"https://whatsapp.com/anaknits"}
+                              href={'https://whatsapp.com/anaknits'}
                               target="_blank"
                             >
                               <Image
@@ -331,7 +327,7 @@ export default function Navbar() {
                             </Link>
                             <Link
                               href={
-                                "mailto:info@anaknits.com?body=Hi Ana, this is my question..."
+                                'mailto:info@anaknits.com?body=Hi Ana, this is my question...'
                               }
                               target="_blank"
                             >

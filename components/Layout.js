@@ -24,7 +24,7 @@ function Layout({ title, children }) {
         <main className="container mx-auto md:px-[0.5%] max-h-max pt-8">
           {children}
         </main>
-        <footer className="h-40 md:px-[0.5%]">
+        <footer className="md:px-[0.5%]">
           <Footer />
         </footer>
       </>

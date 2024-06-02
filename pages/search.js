@@ -1,15 +1,15 @@
-import { useRouter } from "next/router";
-import { useContext } from "react";
-import { Store } from "../utils/Store";
-import { toast } from "react-toastify";
-import axios from "axios";
-import Layout from "../components/Layout";
-import { XCircleIcon } from "@heroicons/react/solid";
-import ProductItem from "../components/ProductItem";
-import db from "../utils/db";
-import Product from "../models/Product";
+import { useRouter } from 'next/router';
+import { useContext } from 'react';
+import { Store } from '../utils/Store';
+import { toast } from 'react-toastify';
+import axios from 'axios';
+import Layout from '../components/Layout';
+import { XCircleIcon } from '@heroicons/react/solid';
+import ProductItem from '../components/ProductItem';
+import db from '../utils/db';
+import Product from '../models/Product';
 
-const PAGE_SIZE = 3;
+const PAGE_SIZE = 6;
 
 const prices = [
   {
@@ -40,14 +40,17 @@ const prices = [
 
 const ratings = [1, 2, 3, 4, 5];
 
+const brands = ['Anaknits', 'Phildar', 'Rosarios4'];
+
 export default function Search(props) {
   const router = useRouter();
   const {
-    query = "all",
-    category = "all",
-    price = "all",
-    rating = "all",
-    sort = "featured",
+    query = 'all',
+    category = 'all',
+    price = 'all',
+    rating = 'all',
+    brand = 'all',
+    sort = 'featured',
     page = 1,
   } = router.query;
 
@@ -60,6 +63,7 @@ export default function Search(props) {
     searchQuery,
     price,
     rating,
+    brand,
   }) => {
     const path = router.pathname;
     const { query } = router;
@@ -69,6 +73,7 @@ export default function Search(props) {
     if (category) query.category = category;
     if (price) query.price = price;
     if (rating) query.rating = rating;
+    if (brand) query.brand = brand;
     if (min) query.min ? query.min : query.min === 0 ? 0 : min;
     if (max) query.max ? query.max : query.max === 0 ? 0 : max;
 
@@ -97,6 +102,9 @@ export default function Search(props) {
   const ratingHandler = (e) => {
     filterSearch({ rating: e.target.value });
   };
+  const brandHandler = (e) => {
+    filterSearch({ brand: e.target.value });
+  };
 
   const { state, dispatch } = useContext(Store);
   const { cart } = state;
@@ -107,10 +115,10 @@ export default function Search(props) {
     const { data } = await axios.get(`/api/products/${product._id}`);
 
     if (data.countInStock < quantity) {
-      return toast.error("Sorry, the product is not available");
+      return toast.error('Sorry, the product is not available');
     }
-    dispatch({ type: "CART_ADD_ITEM", payload: { ...product, quantity } });
-    router.push("/cart");
+    dispatch({ type: 'CART_ADD_ITEM', payload: { ...product, quantity } });
+    router.push('/cart');
   };
 
   // console.log("Inside Component: ", "\n", category, props.categories);
@@ -157,7 +165,20 @@ export default function Search(props) {
               {ratings.map((rating) => {
                 return (
                   <option key={rating} value={rating}>
-                    {rating} star {rating > 1 && "s"} & up
+                    {rating} star {rating > 1 && 's'} & up
+                  </option>
+                );
+              })}
+            </select>
+          </div>
+          <div className="my-3">
+            <h2>Brand</h2>
+            <select className="w-full" value={brand} onChange={brandHandler}>
+              <option value="all">All</option>
+              {brands.map((brand) => {
+                return (
+                  <option key={brand} value={brand}>
+                    {brand}
                   </option>
                 );
               })}
@@ -167,20 +188,20 @@ export default function Search(props) {
         <div className="md:col-span-3">
           <div className="mb-2 flex items-center justify-between border-b-2 pb-2">
             <div className="flex items-center">
-              {props.products.length === 0 ? "No" : props.countProducts} Results
-              {query !== "all" && query !== "" && " : " + query}
-              {category !== "all" && " : " + category}
-              {price !== "all" && " : Price " + price}
-              {(query !== "all" && query !== "") ||
-              category !== "all" ||
-              price !== "all" ? (
-                <button onClick={() => router.push("/search")}>
+              {props.products.length === 0 ? 'No' : props.countProducts} Results
+              {query !== 'all' && query !== '' && ' : ' + query}
+              {category !== 'all' && ' : ' + category}
+              {price !== 'all' && ' : Price ' + price}
+              {(query !== 'all' && query !== '') ||
+              category !== 'all' ||
+              price !== 'all' ? (
+                <button onClick={() => router.push('/search')}>
                   <XCircleIcon className="h-6 w-6 ml-2" />
                 </button>
               ) : null}
             </div>
             <div>
-              Sort by{" "}
+              Sort by{' '}
               <select value={sort} onChange={sortHandler}>
                 <option value="featured">Featured</option>
                 <option value="lowest">Price: Low to High</option>
@@ -211,7 +232,7 @@ export default function Search(props) {
                   <li key={pageNumber}>
                     <button
                       className={`default-button m-2 ${
-                        page == pageNumber + 1 ? "font-bold" : ""
+                        page == pageNumber + 1 ? 'font-bold' : ''
                       }`}
                       onClick={() => pageHandler(pageNumber)}
                     >
@@ -231,25 +252,28 @@ export async function getServerSideProps({ query }) {
   await db.connect();
   const pageSize = query.pageSize || PAGE_SIZE;
   const page = parseInt(query.page || 1);
-  const category = query.category || "";
-  const rating = query.rating || "";
-  const price = query.price || "";
-  const sort = query.sort || "";
-  const searchQuery = query.query || "";
+  const category = query.category || '';
+  const rating = query.rating || '';
+  const brand = query.brand || '';
+  const price = query.price || '';
+  const sort = query.sort || '';
+  const searchQuery = query.query || '';
 
   const queryFilter =
-    searchQuery && searchQuery !== "all"
+    searchQuery && searchQuery !== 'all'
       ? {
           name: {
             $regex: searchQuery,
-            $options: "i",
+            $options: 'i',
           },
         }
       : {};
-  const categoryFilter = category && category !== "all" ? { category } : {};
+  const categoryFilter = category && category !== 'all' ? { category } : {};
+
+  const brandFilter = brand && brand !== 'all' ? { brand } : {};
 
   const ratingFilter =
-    rating && rating !== "all"
+    rating && rating !== 'all'
       ? {
           rating: {
             $gte: Number(rating),
@@ -258,37 +282,38 @@ export async function getServerSideProps({ query }) {
       : {};
 
   const priceFilter =
-    price && price !== "all"
+    price && price !== 'all'
       ? {
           price: {
-            $gte: Number(price.split("-")[0]),
-            $lte: Number(price.split("-")[1]),
+            $gte: Number(price.split('-')[0]),
+            $lte: Number(price.split('-')[1]),
           },
         }
       : {};
 
   const order =
-    sort === "newest"
+    sort === 'newest'
       ? { createdAt: -1 }
-      : sort === "lowest"
+      : sort === 'lowest'
       ? { price: 1 }
-      : sort === "highest"
+      : sort === 'highest'
       ? { price: -1 }
-      : sort === "toprated"
+      : sort === 'toprated'
       ? { rating: -1 }
-      : sort === "featured"
+      : sort === 'featured'
       ? { isFeatured: -1 }
       : { _id: -1 };
 
-  const categories = await Product.find().distinct("category");
+  const categories = await Product.find().distinct('category');
   const productDocs = await Product.find(
     {
       ...queryFilter,
       ...categoryFilter,
       ...priceFilter,
       ...ratingFilter,
+      ...brandFilter,
     },
-    "-reviews"
+    '-reviews'
   )
     .sort(order)
     .skip(pageSize * (page - 1))
@@ -300,6 +325,7 @@ export async function getServerSideProps({ query }) {
     ...categoryFilter,
     ...priceFilter,
     ...ratingFilter,
+    ...brandFilter,
   });
 
   await db.disconnect();
@@ -312,6 +338,7 @@ export async function getServerSideProps({ query }) {
       page,
       pages: Math.ceil(countProducts / pageSize),
       categories,
+      brands,
     },
   };
 }
